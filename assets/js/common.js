@@ -74,6 +74,16 @@
             </a>
           </li>
           <li>
+            <a href="${pagePath}love-test.html" class="nav-link" data-page="love-test">
+              <span>💖</span> 연애 성향 테스트
+            </a>
+          </li>
+          <li>
+            <a href="${pagePath}typing-practice.html" class="nav-link" data-page="typing-practice">
+              <span>⌨️</span> 타자 연습
+            </a>
+          </li>
+          <li>
             <a href="#" class="nav-link disabled-link" title="곧 오픈 예정!">
               <span>⚡</span> 1분 반응속도
               <span class="badge badge-warning">준비중</span>
@@ -111,6 +121,8 @@
           <li><a href="${isSubpage ? '../index.html' : 'index.html'}">홈</a></li>
           <li><a href="${pagePath}color-match.html">카드 매칭</a></li>
           <li><a href="${pagePath}speed-math.html">스피드 암산</a></li>
+          <li><a href="${pagePath}love-test.html">연애 성향 테스트</a></li>
+          <li><a href="${pagePath}typing-practice.html">타자 연습</a></li>
           <li><a href="javascript:void(0)" onclick="alert('명예의 전당 랭킹 시스템은 곧 업데이트됩니다!')">명예의 전당</a></li>
         </ul>
       </div>
@@ -134,6 +146,10 @@
         $a.attr('href', isSubpage ? 'color-match.html' : 'page/color-match.html');
       } else if (href === 'speed-math.html') {
         $a.attr('href', isSubpage ? 'speed-math.html' : 'page/speed-math.html');
+      } else if (href === 'love-test.html') {
+        $a.attr('href', isSubpage ? 'love-test.html' : 'page/love-test.html');
+      } else if (href === 'typing-practice.html') {
+        $a.attr('href', isSubpage ? 'typing-practice.html' : 'page/typing-practice.html');
       }
     });
   }

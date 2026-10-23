@@ -1,0 +1,1098 @@
+/* ==========================================================================
+   나의 연애 성향 테스트 전용 스타일시트 (love-test.css)
+   ========================================================================== */
+
+/* 1. 인트로 섹션 */
+.intro-card {
+  text-align: center;
+  padding: 3.5rem 1.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.intro-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6);
+}
+
+.intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  background: rgba(236, 72, 153, 0.1);
+  border: 1px solid rgba(236, 72, 153, 0.25);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #db2777;
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .intro-badge {
+  background: rgba(236, 72, 153, 0.18);
+  border-color: rgba(236, 72, 153, 0.35);
+  color: #f472b6;
+}
+
+.intro-title {
+  font-family: var(--font-display), var(--font-sans);
+  font-size: clamp(2rem, 4.5vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.intro-title .gradient-love {
+  background: linear-gradient(135deg, #f43f5e 10%, #d946ef 50%, #6366f1 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.intro-desc {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 620px;
+  margin: 0 auto 2rem;
+}
+
+/* 테스트 요약 칩 그리드 */
+.intro-chips-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.intro-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.intro-chip strong {
+  color: var(--text-main);
+}
+
+/* 4대 기본 성향 프리뷰 */
+.intro-traits-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1rem;
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+}
+
+.trait-preview-item {
+  padding: 1rem 0.75rem;
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: transform var(--transition-fast);
+}
+
+.trait-preview-item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(236, 72, 153, 0.3);
+}
+
+.trait-preview-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.trait-preview-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: block;
+}
+
+.trait-preview-kw {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.intro-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* 이어하기 배너 */
+.resume-banner {
+  display: none;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.resume-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.resume-btn-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   2. 퀴즈 진행 화면 (Quiz Stage)
+   ========================================================================== */
+.quiz-wrapper {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* 상단 진행 상태 헤더 */
+.quiz-header-bar {
+  margin-bottom: 1.5rem;
+}
+
+.quiz-meta-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.question-counter {
+  font-family: var(--font-display), var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.progress-percent {
+  font-family: var(--font-display), var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.quiz-progress-track {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-card-sub);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.quiz-progress-bar {
+  height: 100%;
+  width: 5%;
+  background: linear-gradient(90deg, #ec4899, #8b5cf6);
+  border-radius: var(--radius-full);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 질문 카드 */
+.question-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 2rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.75rem;
+}
+
+.question-title {
+  font-size: clamp(1.2rem, 3vw, 1.45rem);
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--text-main);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* 선택지 리스트 */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 1.1rem 1.25rem;
+  background: var(--bg-card-sub);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  outline: none;
+}
+
+.option-btn:hover {
+  background: var(--bg-card);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.option-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-display), var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin-right: 1rem;
+  transition: all 0.2s ease;
+}
+
+.option-text {
+  flex: 1;
+}
+
+.option-check {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #db2777;
+  margin-left: 0.5rem;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* 선택되었을 때의 스타일 */
+.option-btn.selected {
+  background: rgba(236, 72, 153, 0.08);
+  border-color: #ec4899;
+  box-shadow: 0 0 0 1px #ec4899;
+  font-weight: 600;
+  color: #be185d;
+}
+
+[data-theme="dark"] .option-btn.selected {
+  background: rgba(236, 72, 153, 0.16);
+  border-color: #f472b6;
+  color: #fbcfe8;
+}
+
+.option-btn.selected .option-marker {
+  background: #ec4899;
+  border-color: #ec4899;
+  color: #ffffff;
+}
+
+/* 퀴즈 하단 네비게이션 */
+.quiz-nav-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ==========================================================================
+   3. 결과 화면 (Result View)
+   ========================================================================== */
+.result-wrapper {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* ① 최종 결과 헤더 카드 */
+.result-hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2rem 2.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.result-hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #ec4899, #8b5cf6, #06b6d4);
+}
+
+.result-subhead {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.result-icon-badge {
+  font-size: 3.5rem;
+  line-height: 1;
+  margin: 0.5rem auto 1rem;
+  display: inline-block;
+  animation: floatEmoji 3s ease-in-out infinite;
+}
+
+@keyframes floatEmoji {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.result-code-tag {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.result-main-title {
+  font-family: var(--font-display), var(--font-sans);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 900;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.result-quote-box {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  background: var(--bg-card-sub);
+  border-radius: var(--radius-full);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #db2777;
+  border: 1px solid var(--border-color);
+  margin-bottom: 1.5rem;
+}
+
+[data-theme="dark"] .result-quote-box {
+  color: #f472b6;
+}
+
+.result-keywords-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.keyword-tag {
+  padding: 0.35rem 0.85rem;
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* 섹션 타이틀 공통 */
+.result-section-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* 카드 공통 스타일 */
+.content-box-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.content-box-card p {
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+/* ② 나의 연애 성격 상세 설명 */
+.detailed-desc-text {
+  font-size: 1.02rem !important;
+  color: var(--text-main) !important;
+  line-height: 1.8 !important;
+  white-space: pre-line;
+}
+
+/* 2열 카드 그리드 (애정표현 & 갈등해결) */
+.dual-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.mini-detail-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mini-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+}
+
+.mini-detail-card p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+/* ⑤ 강점 & ⑥ 주의할 점 리스트 */
+.strength-weakness-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.sw-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sw-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.bullet-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  background: var(--success-bg);
+  color: var(--success);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+.bullet-warn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  background: var(--warning-bg);
+  color: var(--warning);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+/* ⑦ 조언 카드 */
+.advice-box {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(236, 72, 153, 0.08));
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.advice-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.advice-text {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.7;
+}
+
+/* ⑧ 4대 성향 점수 그래프 */
+.scores-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.scores-bars-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.score-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.score-bar-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.score-bar-title {
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.score-bar-values {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.score-raw-text {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.score-percent-text {
+  font-family: var(--font-display), var(--font-sans);
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.score-track {
+  width: 100%;
+  height: 12px;
+  background: var(--bg-card-sub);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fill-a { background: #ec4899; }
+.fill-b { background: #6366f1; }
+.fill-c { background: #ea580c; }
+.fill-d { background: #0284c7; }
+
+.scores-disclaimer {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* 주성향/보조성향 해설 리스트 */
+.trait-explanations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.trait-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: all var(--transition-fast);
+}
+
+.trait-card.highlight-primary {
+  border-color: #ec4899;
+  background: rgba(236, 72, 153, 0.04);
+}
+
+.trait-card.highlight-secondary {
+  border-color: #6366f1;
+  background: rgba(99, 102, 241, 0.04);
+}
+
+.trait-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.trait-icon {
+  font-size: 1.5rem;
+}
+
+.trait-title-wrap {
+  flex: 1;
+}
+
+.trait-title {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.trait-tag {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.trait-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ⑨ & ⑩ 궁합 추천 뱃지 */
+.matches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.match-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+.match-box-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.match-badges-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.match-badge {
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.match-good {
+  background: var(--secondary-bg);
+  border: 1px solid rgba(219, 39, 119, 0.3);
+  color: #db2777;
+}
+
+.match-careful {
+  background: var(--warning-bg);
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  color: #d97706;
+}
+
+/* ⑪ 64가지 궁합 비교 인터랙티브 섹션 */
+.compatibility-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.compat-form {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .compat-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+.compat-select-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.compat-select-box label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.compat-select {
+  padding: 0.65rem 0.9rem;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  color: var(--text-main);
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.compat-select:focus {
+  border-color: var(--primary);
+}
+
+.compat-heart-icon {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 1.2rem;
+}
+
+@media (max-width: 640px) {
+  .compat-heart-icon {
+    margin-top: 0;
+  }
+}
+
+.compat-action-wrap {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* 궁합 계산 결과 카드 */
+.compat-result-card {
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+}
+
+.compat-score-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.compat-types-header {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.compat-score-num {
+  font-family: var(--font-display), var(--font-sans);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--secondary);
+}
+
+.compat-score-track {
+  width: 100%;
+  height: 10px;
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.compat-score-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ec4899, #8b5cf6);
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease;
+}
+
+.compat-headline {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1.25rem;
+}
+
+.compat-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.compat-item-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+}
+
+.compat-item-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.compat-bullets {
+  list-style: disc;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ⑫ & ⑬ 하단 액션 버튼 바 */
+.result-actions-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+/* ==========================================================================
+   4. 이전 결과 모달 (History Modal)
+   ========================================================================== */
+.history-modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.history-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  max-width: 600px;
+  width: 100%;
+  padding: 2rem;
+  box-shadow: var(--shadow-modal);
+  position: relative;
+  margin: auto;
+}
+
+.history-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.history-modal-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-dim);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: var(--text-main);
+}
+
+.history-list-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-right: 0.25rem;
+}
+
+.history-item-card {
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  transition: border-color var(--transition-fast);
+}
+
+.history-item-card:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.history-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.history-card-icon {
+  font-size: 1.75rem;
+}
+
+.history-card-info {
+  flex: 1;
+}
+
+.history-type-title {
+  display: block;
+  font-size: 0.98rem;
+  color: var(--text-main);
+}
+
+.history-date {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.history-mini-scores {
+  display: flex;
+  gap: 0.85rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border-top: 1px dashed var(--border-color);
+  padding-top: 0.5rem;
+}
+
+.empty-history-notice {
+  text-align: center;
+  padding: 2.5rem 1rem;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+}
+
+.empty-sub {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.history-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.history-disclaimer {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}

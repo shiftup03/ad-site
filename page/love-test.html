@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나의 연애 성향 테스트 - 1-Min Challenge</title>
+  <meta name="description" content="좋아하는 사람 앞에서 달라지는 나의 모습! 연락, 애정 표현, 갈등 해결까지 20개의 질문으로 불안형·안정형·회피형·적극표현 성향과 8가지 연애 유형, 64가지 궁합을 확인해보세요.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
+
+  <!-- Anti-flash Dark Mode Theme Initializer -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('challenge_1min_theme') || 'light';
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/common.css">
+  <link rel="stylesheet" href="../assets/css/love-test.css">
+</head>
+<body data-current-page="love-test" data-is-subpage="true">
+
+  <div class="app-wrapper">
+    <!-- 공통 헤더 컴포넌트 마운트 영역 -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="main-content">
+      <div class="container container-md flex flex-col gap-3">
+
+        <!-- 이어하기 알림 배너 (새로고침 시 표시) -->
+        <div class="resume-banner" id="resumeBanner">
+          <div class="resume-info">
+            <span>⏱️</span>
+            <span id="resumeNoticeText">이전에 풀던 질문 기록이 있습니다.</span>
+          </div>
+          <div class="resume-btn-group">
+            <button type="button" class="btn btn-primary btn-xs" id="resumeTestBtn">
+              이어서 풀기
+            </button>
+            <button type="button" class="btn btn-outline btn-xs" id="dismissResumeBtn">
+              새로 시작
+            </button>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             단계 1: 인트로 시작 화면 (Stage Intro)
+             ================================================================ -->
+        <section class="test-stage-section active" id="stage-intro">
+          <div class="intro-card">
+            <div class="intro-badge">
+              <span>💖</span> 나의 연애 심리 탐색
+            </div>
+            
+            <h1 class="intro-title">
+              "나는 연애할 때 어떤 사람일까?"<br>
+              <span class="gradient-love">나의 연애 성향 테스트</span>
+            </h1>
+
+            <p class="intro-desc">
+              좋아하는 사람 앞에서 달라지는 나의 모습.<br>
+              연락을 기다리는 방식부터 애정 표현, 갈등 해결까지<br>
+              20개의 질문으로 나만의 특별한 연애 성향을 알아보세요.
+            </p>
+
+            <!-- 테스트 요약 칩 -->
+            <div class="intro-chips-grid">
+              <span class="intro-chip">📝 질문 <strong>20개</strong></span>
+              <span class="intro-chip">🔢 선택지 <strong>4개</strong></span>
+              <span class="intro-chip">✨ 결과 유형 <strong>8가지</strong></span>
+              <span class="intro-chip">⏱️ 소요 시간 <strong>3~4분</strong></span>
+              <span class="intro-chip">🔓 회원가입 <strong>불필요</strong></span>
+              <span class="intro-chip">💞 64개 <strong>연애 궁합</strong></span>
+            </div>
+
+            <!-- 4대 기본 성향 프리뷰 -->
+            <div class="intro-traits-summary">
+              <div class="trait-preview-item">
+                <div class="trait-preview-icon">💓</div>
+                <strong class="trait-preview-name">불안형 경향</strong>
+                <span class="trait-preview-kw">애정 확인 / 걱정</span>
+              </div>
+              <div class="trait-preview-item">
+                <div class="trait-preview-icon">🌿</div>
+                <strong class="trait-preview-name">안정형 경향</strong>
+                <span class="trait-preview-kw">신뢰 / 편안한 소통</span>
+              </div>
+              <div class="trait-preview-item">
+                <div class="trait-preview-icon">✨</div>
+                <strong class="trait-preview-name">적극 표현</strong>
+                <span class="trait-preview-kw">로맨틱 / 추진력</span>
+              </div>
+              <div class="trait-preview-item">
+                <div class="trait-preview-icon">🛡️</div>
+                <strong class="trait-preview-name">회피형 경향</strong>
+                <span class="trait-preview-kw">독립성 / 개인 공간</span>
+              </div>
+            </div>
+
+            <!-- 액션 버튼 그룹 -->
+            <div class="intro-actions">
+              <button type="button" class="btn btn-secondary btn-lg" id="startTestBtn">
+                <span>🔥 테스트 시작하기</span>
+              </button>
+              <button type="button" class="btn btn-outline btn-lg" id="openHistoryFromIntroBtn">
+                <span>📂 이전 결과 확인</span>
+                <span class="badge badge-primary ml-1" id="historyCountBadge" style="display: none;">0</span>
+              </button>
+            </div>
+
+            <p style="margin-top: 2rem; font-size: 0.8rem; color: var(--text-dim); line-height: 1.5;">
+              ※ 본 테스트는 자기 이해와 재미를 위한 자체 제작 심리 콘텐츠이며, 전문적인 정신의학적 진단이나 임상 애착 유형 검사가 아닙니다.
+            </p>
+          </div>
+        </section>
+
+
+        <!-- ================================================================
+             단계 2: 퀴즈 진행 화면 (Stage Quiz)
+             ================================================================ -->
+        <section class="test-stage-section" id="stage-quiz" style="display: none;">
+          <div class="quiz-wrapper">
+            
+            <!-- 상단 진행 바 & 카운터 -->
+            <div class="quiz-header-bar">
+              <div class="quiz-meta-info">
+                <span class="question-counter" id="questionCounter">QUESTION 01 / 20</span>
+                <span class="progress-percent" id="progressPercent">5%</span>
+              </div>
+              <div class="quiz-progress-track">
+                <div class="quiz-progress-bar" id="testProgressBar"></div>
+              </div>
+            </div>
+
+            <!-- 메인 질문 카드 -->
+            <div class="question-card">
+              <h2 class="question-title" id="questionTitle">질문을 불러오는 중입니다...</h2>
+              
+              <!-- 4가지 선택지 리스트 -->
+              <div class="options-list" id="optionsList">
+                <!-- Javascript 동적 생성 -->
+              </div>
+            </div>
+
+            <!-- 하단 네비게이션 버튼 바 -->
+            <div class="quiz-nav-footer">
+              <button type="button" class="btn btn-outline" id="prevQuestionBtn" disabled>
+                <span>← 이전 질문</span>
+              </button>
+              <button type="button" class="btn btn-primary" id="nextQuestionBtn" disabled>
+                <span>다음 질문 →</span>
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- ================================================================
+             단계 3: 결과 상세 화면 (Stage Result)
+             ================================================================ -->
+        <section class="test-stage-section" id="stage-result" style="display: none;">
+          <div class="result-wrapper">
+            
+            <!-- ① 최종 결과 헤더 카드 -->
+            <div class="result-hero-card">
+              <span class="result-subhead">당신의 연애 성향은?</span>
+              <div class="result-icon-badge" id="resultBadgeIcon">💌</div>
+              <div>
+                <span class="result-code-tag" id="resultTypeCode">TYPE 01</span>
+              </div>
+              <h1 class="result-main-title" id="resultTypeName">불안형 · 사랑 확인형</h1>
+              <div class="result-quote-box" id="resultQuote">"사랑을 확인할 때 마음이 놓이는 사람"</div>
+              <div class="result-keywords-wrap" id="resultKeywords">
+                <!-- 키워드 태그 -->
+              </div>
+            </div>
+
+            <!-- ② 나의 연애 성격 상세 설명 카드 -->
+            <div class="content-box-card">
+              <h3 class="result-section-title">
+                <span>📖</span> 나의 연애 성격
+              </h3>
+              <p class="detailed-desc-text" id="resultDescription">
+                상세 설명이 로드되는 중입니다...
+              </p>
+            </div>
+
+            <!-- ③ 애정 표현 방식 & ④ 갈등 상황에서의 행동 (2열 그리드) -->
+            <div class="dual-card-grid">
+              <div class="mini-detail-card">
+                <div class="mini-card-head">
+                  <span>💌</span> 애정 표현 방식
+                </div>
+                <p id="resultExpressionStyle">-</p>
+              </div>
+              <div class="mini-detail-card">
+                <div class="mini-card-head">
+                  <span>⚡</span> 갈등 상황에서의 행동
+                </div>
+                <p id="resultConflictStyle">-</p>
+              </div>
+            </div>
+
+            <!-- ⑤ 연애 강점 (3가지) & ⑥ 주의할 점 (3가지) -->
+            <div class="strength-weakness-grid">
+              <div class="content-box-card" style="margin-bottom: 0;">
+                <h3 class="result-section-title" style="color: var(--success);">
+                  <span>✨</span> 연애 강점
+                </h3>
+                <ul class="sw-list" id="resultStrengths">
+                  <!-- 강점 3가지 -->
+                </ul>
+              </div>
+              <div class="content-box-card" style="margin-bottom: 0;">
+                <h3 class="result-section-title" style="color: var(--warning);">
+                  <span>⚠️</span> 주의할 점
+                </h3>
+                <ul class="sw-list" id="resultWeaknesses">
+                  <!-- 주의점 3가지 -->
+                </ul>
+              </div>
+            </div>
+
+            <!-- ⑦ 관계를 위한 조언 -->
+            <div class="advice-box">
+              <div class="advice-head">
+                <span>💡</span> 관계를 위한 조언
+              </div>
+              <p class="advice-text" id="resultAdvice">-</p>
+            </div>
+
+            <!-- ⑧ 4대 성향 점수 그래프 카드 -->
+            <div class="scores-card">
+              <h3 class="result-section-title">
+                <span>📊</span> 성향 점수 분석
+              </h3>
+              <div class="scores-bars-wrap">
+                <!-- 불안형 -->
+                <div class="score-bar-row">
+                  <div class="score-bar-meta">
+                    <span class="score-bar-title"><span style="color: #ec4899;">●</span> 불안형 경향</span>
+                    <div class="score-bar-values">
+                      <span class="score-raw-text" id="scoreRawA">0/20점</span>
+                      <span class="score-percent-text" style="color: #ec4899;" id="scorePercentA">0%</span>
+                    </div>
+                  </div>
+                  <div class="score-track">
+                    <div class="score-fill fill-a" id="scoreBarA" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+                <!-- 안정형 -->
+                <div class="score-bar-row">
+                  <div class="score-bar-meta">
+                    <span class="score-bar-title"><span style="color: #6366f1;">●</span> 안정형 경향</span>
+                    <div class="score-bar-values">
+                      <span class="score-raw-text" id="scoreRawB">0/20점</span>
+                      <span class="score-percent-text" style="color: #6366f1;" id="scorePercentB">0%</span>
+                    </div>
+                  </div>
+                  <div class="score-track">
+                    <div class="score-fill fill-b" id="scoreBarB" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+                <!-- 적극 표현형 -->
+                <div class="score-bar-row">
+                  <div class="score-bar-meta">
+                    <span class="score-bar-title"><span style="color: #ea580c;">●</span> 적극 표현 경향</span>
+                    <div class="score-bar-values">
+                      <span class="score-raw-text" id="scoreRawC">0/20점</span>
+                      <span class="score-percent-text" style="color: #ea580c;" id="scorePercentC">0%</span>
+                    </div>
+                  </div>
+                  <div class="score-track">
+                    <div class="score-fill fill-c" id="scoreBarC" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+                <!-- 회피형 -->
+                <div class="score-bar-row">
+                  <div class="score-bar-meta">
+                    <span class="score-bar-title"><span style="color: #0284c7;">●</span> 회피형 경향</span>
+                    <div class="score-bar-values">
+                      <span class="score-raw-text" id="scoreRawD">0/20점</span>
+                      <span class="score-percent-text" style="color: #0284c7;" id="scorePercentD">0%</span>
+                    </div>
+                  </div>
+                  <div class="score-track">
+                    <div class="score-fill fill-d" id="scoreBarD" style="width: 0%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <p class="scores-disclaimer">
+                ※ 위 성향 점수는 20문항 중 각 선택지를 고른 비율이며, 전문적인 심리검사에서 산출한 확률이나 진단 수치가 아닙니다.
+              </p>
+            </div>
+
+            <!-- 애착 관련 4대 성향 심층 해설 (주성향/보조성향 우선배치) -->
+            <div style="margin-bottom: 2rem;">
+              <h3 class="result-section-title">
+                <span>🌱</span> 나의 행동 성향 해설
+              </h3>
+              <div class="trait-explanations-grid" id="traitExplanationsList">
+                <!-- Javascript 동적 생성 -->
+              </div>
+            </div>
+
+            <!-- ⑨ 잘 맞는 연애 유형 & ⑩ 서로 배려가 필요한 유형 -->
+            <div class="matches-grid">
+              <div class="match-box">
+                <div class="match-box-title">
+                  <span>💖</span> 잘 맞는 연애 유형
+                </div>
+                <div class="match-badges-list" id="resultBestMatches">
+                  <!-- 추천 유형 뱃지 -->
+                </div>
+              </div>
+              <div class="match-box">
+                <div class="match-box-title">
+                  <span>⚠️</span> 서로 배려가 필요한 유형
+                </div>
+                <div class="match-badges-list" id="resultCarefulMatches">
+                  <!-- 배려 필요 유형 뱃지 -->
+                </div>
+              </div>
+            </div>
+
+            <!-- ⑪ 두 사람의 연애 궁합 비교 인터랙티브 섹션 (64개 조합) -->
+            <div class="compatibility-card">
+              <h3 class="result-section-title">
+                <span>💞</span> 두 사람의 연애 궁합 알아보기 (64가지 조합)
+              </h3>
+              <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 1.25rem;">
+                나의 유형과 상대방(또는 관심 있는 사람)의 유형을 선택하여 궁합 점수와 관계 조언을 확인해보세요.
+              </p>
+
+              <div class="compat-form">
+                <div class="compat-select-box">
+                  <label for="compareMyType">나의 연애 유형</label>
+                  <select id="compareMyType" class="compat-select"></select>
+                </div>
+
+                <div class="compat-heart-icon">💘</div>
+
+                <div class="compat-select-box">
+                  <label for="comparePartnerType">상대방의 연애 유형</label>
+                  <select id="comparePartnerType" class="compat-select"></select>
+                </div>
+              </div>
+
+              <div class="compat-action-wrap">
+                <button type="button" class="btn btn-secondary" id="runCompatBtn">
+                  <span>우리 궁합 알아보기 ✨</span>
+                </button>
+              </div>
+
+              <!-- 궁합 결과 카드 -->
+              <div class="compat-result-card" id="compatibilityResultCard">
+                <div class="compat-score-wrap">
+                  <div class="compat-types-header">
+                    <span id="compatType1Name">TYPE 01</span> × <span id="compatType2Name">TYPE 04</span>
+                  </div>
+                  <div class="compat-score-num" id="compatScore">85점</div>
+                </div>
+
+                <div class="compat-score-track">
+                  <div class="compat-score-fill" id="compatScoreBar" style="width: 85%;"></div>
+                </div>
+
+                <div class="compat-headline" id="compatHeadline">관계의 핵심 특징</div>
+
+                <div class="compat-details-grid">
+                  <div class="compat-item-box">
+                    <div class="compat-item-title" style="color: var(--success);">
+                      <span>✓</span> 잘 맞는 부분 (2가지)
+                    </div>
+                    <ul class="compat-bullets" id="compatGoodPoints"></ul>
+                  </div>
+
+                  <div class="compat-item-box">
+                    <div class="compat-item-title" style="color: var(--warning);">
+                      <span>!</span> 배려가 필요한 부분 (2가지)
+                    </div>
+                    <ul class="compat-bullets" id="compatCarefulPoints"></ul>
+                  </div>
+
+                  <div class="compat-item-box" style="grid-column: 1 / -1;">
+                    <div class="compat-item-title" style="color: var(--primary);">
+                      <span>💡</span> 관계를 위한 조언 (2가지)
+                    </div>
+                    <ul class="compat-bullets" id="compatAdvices"></ul>
+                  </div>
+                </div>
+
+                <p style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-dim); text-align: center;">
+                  ※ 궁합 점수는 두 성향 간의 고정 특성 차이로 산출된 오락용 점수이며 실제 연애 성공률을 의미하지 않습니다.
+                </p>
+              </div>
+            </div>
+
+            <!-- ⑫ & ⑬ 하단 액션 버튼 바 (공유 버튼 제외 / 이미지 저장 & 다시하기 & 이전기록) -->
+            <div class="result-actions-bar">
+              <button type="button" class="btn btn-secondary btn-lg" id="downloadImageBtn">
+                <span>📷 결과 이미지 저장 (PNG)</span>
+              </button>
+              <button type="button" class="btn btn-primary btn-lg restart-test-btn">
+                <span>🔄 다시 테스트하기</span>
+              </button>
+              <button type="button" class="btn btn-outline btn-lg" id="openHistoryBtn">
+                <span>📂 이전 결과 목록</span>
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- 공통 푸터 컴포넌트 마운트 영역 -->
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <!-- ================================================================
+       이전 결과 보관 모달 (History Modal)
+       ================================================================ -->
+  <div class="history-modal-backdrop" id="historyModal" role="dialog" aria-modal="true" aria-labelledby="historyModalTitle">
+    <div class="history-modal">
+      <div class="history-modal-header">
+        <h3 class="history-modal-title" id="historyModalTitle">
+          <span>📂</span> 이전 검사 결과 보관함 (최대 10개)
+        </h3>
+        <button type="button" class="modal-close-btn" id="closeHistoryModalBtn" aria-label="닫기">✕</button>
+      </div>
+
+      <div class="history-list-wrapper" id="historyListWrapper">
+        <!-- Javascript 동적 로드 -->
+      </div>
+
+      <div class="history-modal-footer">
+        <p class="history-disclaimer">
+          ※ 브라우저 캐시 및 저장 데이터가 삭제되면 기록이 복원되지 않습니다.
+        </p>
+        <button type="button" class="btn btn-outline btn-xs" id="clearHistoryBtn" style="color: var(--danger); border-color: var(--danger);">
+          기록 전체 삭제
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <!-- jQuery 3.7.1 CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- 공통 컴포넌트 & 다크모드 로더 -->
+  <script src="../assets/js/common.js"></script>
+  <!-- 연애 성향 테스트 로직 -->
+  <script src="../assets/js/love-test.js"></script>
+</body>
+</html>
