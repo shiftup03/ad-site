@@ -367,30 +367,33 @@
     }, 500);
   }
 
-  // 결과 복사 기능
-  function copyResultToClipboard() {
-    const text = `⚡ [1분 챌린지 - 스피드 암산왕 결과]\n` +
-      `🏆 최종 점수: ${score.toLocaleString()}점\n` +
-      `🎯 맞춘 문제: ${solvedCount}문제\n` +
-      `🔥 최대 콤보: ${maxCombo}회\n` +
-      `지금 1분 챌린지에서 두뇌 암산 피지컬을 시험해보세요!`;
+  // 결과 이미지 저장 (Canvas PNG)
+  function handleDownloadResultImage() {
+    const accuracy = totalAttempts > 0 ? Math.round((solvedCount / totalAttempts) * 100) : 0;
+    const gradeFull = $('#resultGrade').text() || '[ Rank S ] - 빛의 연산 마스터';
+    const parts = gradeFull.split(' - ');
+    const gradeTag = parts[0] || '[ Rank S ]';
+    const gradeDesc = parts[1] || '빛의 연산 마스터';
+    const badgeText = $('#resultBadge').text() || '👑';
 
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert('🎉 결과가 클립보드에 복사되었습니다!');
-      }).catch(() => fallbackCopy(text));
+    if (typeof window.downloadGameResultImage === 'function') {
+      window.downloadGameResultImage({
+        title: '1분 스피드 암산왕',
+        category: 'MATH CHALLENGE',
+        rankBadge: badgeText,
+        grade: gradeTag,
+        gradeDesc: gradeDesc,
+        stats: [
+          { label: '최종 점수', value: score.toLocaleString() + '점', color: '#db2777' },
+          { label: '맞춘 문제', value: solvedCount + '문제', color: '#059669' },
+          { label: '최대 콤보', value: maxCombo + '회', color: '#d97706' },
+          { label: '계산 정답률', value: accuracy + '%', color: '#0284c7' }
+        ],
+        filename: '1분스피드암산_결과'
+      });
     } else {
-      fallbackCopy(text);
+      alert('결과 이미지 생성 모듈을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
     }
-  }
-
-  function fallbackCopy(text) {
-    const $temp = $('<textarea>');
-    $('body').append($temp);
-    $temp.val(text).select();
-    document.execCommand('copy');
-    $temp.remove();
-    alert('🎉 결과가 클립보드에 복사되었습니다!');
   }
 
   // 이벤트 등록
@@ -426,8 +429,8 @@
       }
     });
 
-    // 모달 결과 복사
-    $('#shareBtn').on('click', copyResultToClipboard);
+    // 모달 결과 이미지 저장
+    $('#downloadResultImgBtn').on('click', handleDownloadResultImage);
   });
 
 })(jQuery);

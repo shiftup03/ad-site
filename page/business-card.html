@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>무료 온라인 명함 만들기 - 나만의 명함을 직접 디자인해보세요 | 1-Min Challenge</title>
+  <meta name="description" content="이름과 연락처만 입력하면 앞·뒷면 명함 즉시 완성! 8종 비즈니스 템플릿, 실시간 캔버스 편집, 로고 업로드, QR코드 생성, 300DPI 고해상도 PNG 다운로드 및 인쇄용 PDF 출력을 100% 무료로 이용하세요.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪪</text></svg>">
+
+  <!-- Anti-flash Dark Mode Initializer -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('challenge_1min_theme') || 'light';
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
+  <!-- Google Web Fonts for Business Card Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Montserrat:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/common.css">
+  <link rel="stylesheet" href="../assets/css/business-card.css">
+</head>
+<body data-current-page="business-card" data-is-subpage="true">
+
+  <div class="app-wrapper">
+    <!-- 공통 헤더 컴포넌트 마운트 영역 -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="main-content">
+      <div class="container container-fluid flex flex-col gap-4">
+
+        <!-- 페이지 헤더 -->
+        <header class="subpage-hero card-hero-header">
+          <div class="hero-badge">
+            <span>✨ 100% 무료 온라인 명함 제작소</span>
+          </div>
+          <h1 class="hero-title">
+            나만의 특별한 명함을,<br>
+            <span class="gradient-text">원하는 스타일로 직접 디자인해보세요</span>
+          </h1>
+          <p class="hero-desc">
+            이름과 연락처만 입력하면 감각적인 명함이 완성됩니다.<br>
+            원하는 템플릿을 선택하고 글자, 색상, QR코드를 자유롭게 편집해보세요.
+          </p>
+
+          <div class="card-feature-pills">
+            <span class="pill-item">🪪 앞면·뒷면 독립 디자인</span>
+            <span class="pill-item">🎨 8종 감각적 템플릿</span>
+            <span class="pill-item">📱 QR코드 실시간 생성</span>
+            <span class="pill-item">🖨️ 300DPI 인쇄 규격 (90×50 / 85×55mm)</span>
+            <span class="pill-item">🔒 서버 전송 없는 안전한 로컬 편집</span>
+          </div>
+        </header>
+
+        <!-- 자동 저장 복원 안내 배너 (이전 작업 감지 시 노출) -->
+        <div id="autosaveBanner" class="autosave-notice-banner" style="display: none;">
+          <div class="banner-content">
+            <span class="banner-icon">💾</span>
+            <div class="banner-text">
+              <strong>이전에 편집하던 작업이 있습니다.</strong>
+              <p>마지막 자동 저장된 명함 디자인을 이어서 편집하시겠습니까?</p>
+            </div>
+          </div>
+          <div class="banner-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="btnResumeAutosave">
+              <span>이어서 편집</span>
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="btnDiscardAutosave">
+              <span>새로 시작</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3-컬럼 메인 에디터 워크스페이스 -->
+        <div class="card-editor-workspace">
+
+          <!-- 1. 좌측 툴 패널 (입력 폼 / 템플릿 / 요소 추가 / 배경 / 규격 / 프로젝트) -->
+          <aside class="editor-tools-pane" aria-label="명함 편집 도구">
+            <!-- 탭 네비게이션 -->
+            <nav class="tool-tabs" role="tablist">
+              <button type="button" class="tool-tab-btn active" data-tab="info" role="tab" aria-selected="true" title="명함 기본 정보 입력">
+                <span class="tab-icon">📝</span>
+                <span class="tab-label">정보 입력</span>
+              </button>
+              <button type="button" class="tool-tab-btn" data-tab="templates" role="tab" aria-selected="false" title="8종 템플릿 선택">
+                <span class="tab-icon">🎨</span>
+                <span class="tab-label">템플릿</span>
+              </button>
+              <button type="button" class="tool-tab-btn" data-tab="elements" role="tab" aria-selected="false" title="텍스트, 도형, 로고, QR 추가">
+                <span class="tab-icon">➕</span>
+                <span class="tab-label">요소 추가</span>
+              </button>
+              <button type="button" class="tool-tab-btn" data-tab="background" role="tab" aria-selected="false" title="명함 배경색 및 그라데이션">
+                <span class="tab-icon">🖼️</span>
+                <span class="tab-label">배경</span>
+              </button>
+              <button type="button" class="tool-tab-btn" data-tab="settings" role="tab" aria-selected="false" title="규격 및 인쇄 가이드">
+                <span class="tab-icon">📐</span>
+                <span class="tab-label">규격/안전선</span>
+              </button>
+              <button type="button" class="tool-tab-btn" data-tab="project" role="tab" aria-selected="false" title="작업 저장 및 불러오기">
+                <span class="tab-icon">💾</span>
+                <span class="tab-label">프로젝트</span>
+              </button>
+            </nav>
+
+            <!-- 탭 컨텐츠 영역 -->
+            <div class="tool-tab-contents">
+
+              <!-- TAB 1: 기본 정보 입력 -->
+              <section id="tab-info" class="tab-panel active">
+                <div class="panel-header">
+                  <h3>기본 정보 입력</h3>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnFillSampleInfo" title="샘플 데이터로 채워보기">
+                    <span>✨ 샘플 채우기</span>
+                  </button>
+                </div>
+                <p class="panel-tip">정보를 입력하면 명함 미리보기에 즉시 반영되며, 비어있는 항목은 자동으로 숨겨집니다.</p>
+
+                <form id="cardInfoForm" class="info-form" onsubmit="return false;">
+                  <div class="form-group">
+                    <label for="inputName">이름 <span class="required">*</span></label>
+                    <input type="text" id="inputName" class="form-control" placeholder="예: 김민수" value="김민수" required>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group flex-1">
+                      <label for="inputNameEn">영문 이름</label>
+                      <input type="text" id="inputNameEn" class="form-control" placeholder="예: MINSU KIM" value="MINSU KIM">
+                    </div>
+                    <div class="form-group flex-1">
+                      <label for="inputTitle">직책 / 직함</label>
+                      <input type="text" id="inputTitle" class="form-control" placeholder="예: 수석 디자이너 / 팀장" value="수석 디자이너">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group flex-1">
+                      <label for="inputCompany">회사명</label>
+                      <input type="text" id="inputCompany" class="form-control" placeholder="예: 넥스트 디자인 랩" value="넥스트 크리에이티브">
+                    </div>
+                    <div class="form-group flex-1">
+                      <label for="inputDept">부서명</label>
+                      <input type="text" id="inputDept" class="form-control" placeholder="예: 디자인 전략팀" value="디자인 혁신팀">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group flex-1">
+                      <label for="inputPhone">휴대전화</label>
+                      <input type="tel" id="inputPhone" class="form-control" placeholder="예: 010-1234-5678" value="010-1234-5678">
+                    </div>
+                    <div class="form-group flex-1">
+                      <label for="inputTel">회사 전화번호</label>
+                      <input type="tel" id="inputTel" class="form-control" placeholder="예: 02-555-0199" value="02-555-0199">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputEmail">이메일 주소</label>
+                    <input type="email" id="inputEmail" class="form-control" placeholder="예: hello@example.com" value="minsu.kim@example.com">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputWebsite">웹사이트 / 포트폴리오</label>
+                    <input type="text" id="inputWebsite" class="form-control" placeholder="예: www.example.com" value="www.creative-studio.kr">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputAddress">회사 주소</label>
+                    <input type="text" id="inputAddress" class="form-control" placeholder="예: 서울특별시 강남구 테헤란로 152 7층" value="서울특별시 강남구 테헤란로 152 7층">
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group flex-1">
+                      <label for="inputSns">SNS 계정</label>
+                      <input type="text" id="inputSns" class="form-control" placeholder="예: @minsu_design" value="@minsu_design">
+                    </div>
+                    <div class="form-group flex-1">
+                      <label for="inputTagline">슬로건 / 문구</label>
+                      <input type="text" id="inputTagline" class="form-control" placeholder="예: 가치를 디자인합니다" value="Design that creates meaningful moments">
+                    </div>
+                  </div>
+                </form>
+              </section>
+
+              <!-- TAB 2: 명함 템플릿 8종 -->
+              <section id="tab-templates" class="tab-panel">
+                <div class="panel-header">
+                  <h3>템플릿 선택 (8종)</h3>
+                </div>
+                <p class="panel-tip">원하는 템플릿을 클릭하면 현재 입력한 정보가 새로운 디자인으로 즉시 반영됩니다.</p>
+
+                <div class="template-grid" id="templateGrid">
+                  <!-- T1 -->
+                  <div class="template-card active" data-template-id="t1">
+                    <div class="tpl-thumb tpl-thumb-1">
+                      <div class="mini-card-preview">
+                        <div class="mini-bar"></div>
+                        <div class="mini-text-name">김민수</div>
+                        <div class="mini-text-sub">UX Designer</div>
+                        <div class="mini-contact-dots"></div>
+                      </div>
+                    </div>
+                    <div class="tpl-info">
+                      <span class="tpl-num">TEMPLATE 01</span>
+                      <strong class="tpl-title">미니멀 화이트</strong>
+                      <span class="tpl-desc">깔끔한 여백과 신뢰감의 비즈니스 표준</span>
+                    </div>
+                  </div>
+
+                  <!-- T2 -->
+                  <div class="template-card" data-template-id="t2">
+                    <div class="tpl-thumb tpl-thumb-2">
+                      <div class="mini-card-preview dark-card">
+                        <div class="mini-gold-badge"></div>
+                        <div class="mini-text-name gold">김민수</div>
+                        <div class="mini-text-sub">Art Director</div>
+                        <div class="mini-contact-dots gold"></div>
+                      </div>
+                    </div>
+                    <div class="tpl-info">
+                      <span class="tpl-num">TEMPLATE 02</span>
+                      <strong class="tpl-title">모던 블랙</strong>
+                      <span class="tpl-desc">골드 포인트와 묵직한 프리미엄 감성</span>
+                    </div>
+                  </div>
+
+                  <!-- T3 -->
+                  <div class="template-card" data-template-id="t3">
+                    <div class="tpl-thumb tpl-thumb-3">
+                      <div class="mini-card-preview">
+                        <div class="mini-blue-header"></div>
+                        <div class="mini-text-name">김민수</div>
+                        <div class="mini-text-sub blue">Finance / Tech</div>
+                        <div class="mini-contact-dots"></div>
+                      </div>
+                    </div>
+                    <div class="tpl-info">
+                      <span class="tpl-num">TEMPLATE 03</span>
+                      <strong class="tpl-title">블루 비즈니스</strong>
+                      <span class="tpl-desc">전문성과 스마트함을 강조하는 네이비 블루</span>
+                    </div>
+                  </div>
+
+                  <!-- T4 -->
+                  <div class="template-card" data-template-id="t4">
+                    <div class="tpl-thumb tpl-thumb-4">
+                      <div class="mini-card-preview beige-card">
+                        <div class="mini-serif-name">김민수</div>
+                        <div class="mini-text-sub brown">Atelier &amp; Cafe</div>
+                        <div class="mini-line-brown"></div>
+                      </div>
+                    </div>
+                    <div class="tpl-info">
+                      <span class="tpl-num">TEMPLATE 04</span>
+                      <strong class="tpl-title">감성 베이지</strong>
+                      <span class="tpl-desc">따뜻한 오트밀 톤과 명조 서체의 부드러움</span>
+                    </div>
+                  </div>
+
+                  <!-- T5 -->
+                  <div class="template-card" data-template-id="t5">
+                    <div class="tpl-thumb tpl-thumb-5">
+                      <div class="mini-card-preview">
+                        <div class="mini-corner-shape"></div>
+                        <div class="mini-text-name bold">김민수</div>
+                        <div class="mini-text-sub violet">Creative Agency</div>
+                      </div>
+                    </div>
+                    <div class="tpl-info">
+                      <span class="tpl-num">TEMPLATE 05</span>
+                      <strong class="tpl-title">크리에이티브 컬러</strong>
+                      <span class="tpl-desc">선명한 바이올렛 &amp; 코랄 기하학 디자인</span>
+                    </div>
+                  </div>
+
+                  <!-- T6 -->
+                  <div class="template-card" data-template-id="t6">
+                    <div class="tpl-thumb tpl-thumb-6">
+                      <div class="mini-card-preview vertical-card">
+                        <div class="mini-vert-name">김민수</div>
+                        <div class="mini-vert-line"></div>
+                        <div class="mini-vert-sub">Photo / Studio</div>
+                      </div>
+                    </div>
+                    <div class="tpl-info">
+                      <span class="tpl-num">TEMPLATE 06</span>
+                      <strong class="tpl-title">세로형 명함</strong>
+                      <span class="tpl-desc">독특하고 시선을 끄는 세로 방향 레이아웃</span>
+                    </div>
+                  </div>
+
+                  <!-- T7 -->
+                  <div class="template-card" data-template-id="t7">
+                    <div class="tpl-thumb tpl-thumb-7">
+                      <div class="mini-card-preview gradient-card">
+                        <div class="mini-text-name glow">김민수</div>
+                        <div class="mini-text-sub cyan">IT / Startup</div>
+                        <div class="mini-qr-box"></div>
+                      </div>
+                    </div>
+                    <div class="tpl-info">
+                      <span class="tpl-num">TEMPLATE 07</span>
+                      <strong class="tpl-title">그라데이션 모던</strong>
+                      <span class="tpl-desc">신비롭고 세련된 다크 사이버 그라데이션</span>
+                    </div>
+                  </div>
+
+                  <!-- T8 -->
+                  <div class="template-card" data-template-id="t8">
+                    <div class="tpl-thumb tpl-thumb-8">
+                      <div class="mini-card-preview classic-card">
+                        <div class="mini-double-border"></div>
+                        <div class="mini-text-name serif">김민수</div>
+                        <div class="mini-text-sub gold">Consultant</div>
+                      </div>
+                    </div>
+                    <div class="tpl-info">
+                      <span class="tpl-num">TEMPLATE 08</span>
+                      <strong class="tpl-title">클래식 프리미엄</strong>
+                      <span class="tpl-desc">더블 골드 라인과 정통 클래식 세리프</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- TAB 3: 요소 추가 (텍스트, 도형, 이미지/로고, QR코드) -->
+              <section id="tab-elements" class="tab-panel">
+                <div class="panel-header">
+                  <h3>요소 추가</h3>
+                </div>
+                <p class="panel-tip">텍스트, 도형, 내 로고 이미지 또는 실시간 QR코드를 명함에 자유롭게 배치하세요.</p>
+
+                <!-- 1) 텍스트 추가 -->
+                <div class="element-subgroup">
+                  <div class="subgroup-title">✏️ 텍스트 추가</div>
+                  <div class="button-group-row">
+                    <button type="button" class="btn btn-outline btn-sm flex-1" id="btnAddHeadingText">
+                      <span>+ 큰 제목</span>
+                    </button>
+                    <button type="button" class="btn btn-outline btn-sm flex-1" id="btnAddBodyText">
+                      <span>+ 본문 텍스트</span>
+                    </button>
+                    <button type="button" class="btn btn-outline btn-sm flex-1" id="btnAddLabelText">
+                      <span>+ 작은 라벨</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 2) 도형 추가 -->
+                <div class="element-subgroup">
+                  <div class="subgroup-title">🔷 도형 &amp; 라인 추가</div>
+                  <div class="button-group-row">
+                    <button type="button" class="btn btn-outline btn-sm flex-1" id="btnAddRectShape">
+                      <span>🔲 사각형</span>
+                    </button>
+                    <button type="button" class="btn btn-outline btn-sm flex-1" id="btnAddCircleShape">
+                      <span>⚪ 원형</span>
+                    </button>
+                    <button type="button" class="btn btn-outline btn-sm flex-1" id="btnAddLineShape">
+                      <span>➖ 구분선</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 3) 로고 / 이미지 업로드 -->
+                <div class="element-subgroup">
+                  <div class="subgroup-title">🖼️ 내 회사 로고 / 이미지 업로드</div>
+                  <div class="upload-dropzone" id="logoDropzone">
+                    <input type="file" id="logoFileInput" accept="image/png,image/jpeg,image/webp,image/svg+xml" style="display: none;">
+                    <div class="dropzone-inner" onclick="document.getElementById('logoFileInput').click();">
+                      <span class="upload-icon">📁</span>
+                      <p class="upload-msg"><strong>로고 이미지 파일 선택</strong> 또는 여기로 드래그</p>
+                      <span class="upload-hint">PNG, JPG, WEBP, SVG 지원 (최대 10MB)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 4) QR 코드 생성 및 삽입 -->
+                <div class="element-subgroup">
+                  <div class="subgroup-title">📱 실시간 스캔용 QR코드 삽입</div>
+                  <div class="qr-creator-box">
+                    <div class="form-group">
+                      <label for="inputQrContent">QR코드 연결 주소 또는 텍스트</label>
+                      <input type="text" id="inputQrContent" class="form-control form-control-sm" placeholder="https:// 또는 전화번호, 이메일" value="https://example.com">
+                    </div>
+                    <div class="qr-color-options">
+                      <div class="color-field">
+                        <span>코드 색상:</span>
+                        <input type="color" id="inputQrColorDark" value="#000000">
+                      </div>
+                      <div class="color-field">
+                        <span>배경 색상:</span>
+                        <input type="color" id="inputQrColorLight" value="#ffffff">
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-sm btn-block" id="btnAddQrCode">
+                      <span>📲 QR코드 명함에 추가</span>
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <!-- TAB 4: 배경 디자인 편집 -->
+              <section id="tab-background" class="tab-panel">
+                <div class="panel-header">
+                  <h3>배경 디자인 편집</h3>
+                </div>
+                <p class="panel-tip">현재 선택된 면(<span id="bgCurrentSideLabel" class="text-primary font-bold">앞면</span>)의 배경을 설정합니다.</p>
+
+                <!-- 배경 타입 선택 -->
+                <div class="bg-type-selector">
+                  <label class="radio-label">
+                    <input type="radio" name="bgTypeRadio" value="solid" checked>
+                    <span>단색 배경</span>
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="bgTypeRadio" value="gradient">
+                    <span>그라데이션</span>
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="bgTypeRadio" value="image">
+                    <span>배경 이미지</span>
+                  </label>
+                </div>
+
+                <!-- 1) 단색 배경 -->
+                <div id="bgSolidSection" class="bg-sub-section">
+                  <div class="form-group">
+                    <label>단색 컬러 선택</label>
+                    <div class="color-input-wrapper">
+                      <input type="color" id="inputBgSolidColor" value="#ffffff">
+                      <input type="text" id="inputBgSolidHex" class="form-control form-control-sm" value="#ffffff">
+                    </div>
+                  </div>
+                  <div class="preset-colors">
+                    <span class="preset-title">추천 비즈니스 컬러:</span>
+                    <div class="palette-swatches">
+                      <button type="button" class="swatch" style="background: #ffffff;" data-color="#ffffff" title="퓨어 화이트"></button>
+                      <button type="button" class="swatch" style="background: #f8fafc;" data-color="#f8fafc" title="소프트 화이트"></button>
+                      <button type="button" class="swatch" style="background: #f1f5f9;" data-color="#f1f5f9" title="라이트 그레이"></button>
+                      <button type="button" class="swatch" style="background: #0f172a;" data-color="#0f172a" title="옵시디언 블랙"></button>
+                      <button type="button" class="swatch" style="background: #1e3a8a;" data-color="#1e3a8a" title="네이비 블루"></button>
+                      <button type="button" class="swatch" style="background: #064e3b;" data-color="#064e3b" title="포레스트 그린"></button>
+                      <button type="button" class="swatch" style="background: #f7f4ee;" data-color="#f7f4ee" title="어반 베이지"></button>
+                      <button type="button" class="swatch" style="background: #4c1d95;" data-color="#4c1d95" title="딥 바이올렛"></button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2) 그라데이션 배경 -->
+                <div id="bgGradientSection" class="bg-sub-section" style="display: none;">
+                  <div class="form-row">
+                    <div class="form-group flex-1">
+                      <label>시작 색상</label>
+                      <div class="color-input-wrapper">
+                        <input type="color" id="inputGradColor1" value="#0f172a">
+                        <input type="text" id="inputGradHex1" class="form-control form-control-sm" value="#0f172a">
+                      </div>
+                    </div>
+                    <div class="form-group flex-1">
+                      <label>끝 색상</label>
+                      <div class="color-input-wrapper">
+                        <input type="color" id="inputGradColor2" value="#312e81">
+                        <input type="text" id="inputGradHex2" class="form-control form-control-sm" value="#312e81">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>방향 각도: <strong id="gradAngleDisplay">135°</strong></label>
+                    <div class="angle-grid">
+                      <button type="button" class="btn btn-outline btn-xs btn-angle" data-angle="0">0° (수직)</button>
+                      <button type="button" class="btn btn-outline btn-xs btn-angle" data-angle="45">45°</button>
+                      <button type="button" class="btn btn-outline btn-xs btn-angle" data-angle="90">90° (수평)</button>
+                      <button type="button" class="btn btn-outline btn-xs btn-angle active" data-angle="135">135° (대각선)</button>
+                      <button type="button" class="btn btn-outline btn-xs btn-angle" data-angle="180">180°</button>
+                      <button type="button" class="btn btn-outline btn-xs btn-angle" data-angle="270">270°</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3) 배경 이미지 -->
+                <div id="bgImageSection" class="bg-sub-section" style="display: none;">
+                  <div class="upload-dropzone">
+                    <input type="file" id="bgFileInput" accept="image/png,image/jpeg,image/webp" style="display: none;">
+                    <div class="dropzone-inner" onclick="document.getElementById('bgFileInput').click();">
+                      <span class="upload-icon">🖼️</span>
+                      <p class="upload-msg">배경 사진 파일 업로드</p>
+                      <span class="upload-hint">명함 비율에 맞춰 자동 배치됩니다</span>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-outline btn-xs btn-block mt-2" id="btnRemoveBgImage" style="display: none;">
+                    배경 이미지 제거
+                  </button>
+                </div>
+              </section>
+
+              <!-- TAB 5: 규격 & 인쇄 안전선 설정 -->
+              <section id="tab-settings" class="tab-panel">
+                <div class="panel-header">
+                  <h3>명함 규격 &amp; 인쇄 안전선</h3>
+                </div>
+                <p class="panel-tip">실제 명함 인쇄 규격을 선택하고, 재단선 및 안전 영역 가이드를 설정하세요.</p>
+
+                <!-- 명함 규격 선택 -->
+                <div class="form-group">
+                  <label>명함 크기 규격</label>
+                  <div class="spec-selector-boxes">
+                    <div class="spec-box active" data-spec="90x50">
+                      <strong>90 × 50 mm</strong>
+                      <span>국내 및 아시아 표준 (가장 대중적)</span>
+                      <small class="spec-px">약 1063 × 591 px (300 DPI)</small>
+                    </div>
+                    <div class="spec-box" data-spec="85x55">
+                      <strong>85 × 55 mm</strong>
+                      <span>유럽 및 글로벌 표준 (신용카드 비율)</span>
+                      <small class="spec-px">약 1004 × 650 px (300 DPI)</small>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 가로/세로 방향 전환 -->
+                <div class="form-group">
+                  <label>명함 방향</label>
+                  <div class="button-group-row orientation-btn-group">
+                    <button type="button" class="btn btn-outline btn-sm flex-1 active" id="btnOrientationLandscape">
+                      <span>가로형 (Landscape)</span>
+                    </button>
+                    <button type="button" class="btn btn-outline btn-sm flex-1" id="btnOrientationPortrait">
+                      <span>세로형 (Portrait)</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 도련 및 가이드라인 스위치 -->
+                <div class="guide-switches-box">
+                  <div class="switch-row">
+                    <div>
+                      <strong>인쇄 안전 영역 및 재단선 가이드 표시</strong>
+                      <p>편집 화면에서 잘림 방지 안전선과 재단 기준선을 표시합니다.</p>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="chkShowGuides" checked>
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+
+                  <div class="switch-row">
+                    <div>
+                      <strong>인쇄용 도련 (Bleed 3mm) 적용</strong>
+                      <p>인쇄소 재단 오차를 방지하기 위해 외곽으로 3mm 여백을 확장합니다.</p>
+                    </div>
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="chkApplyBleed">
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="guide-legend-box">
+                  <div class="legend-item"><span class="legend-dot dot-bleed"></span> 빨간 점선: 도련선 (+3mm 외곽)</div>
+                  <div class="legend-item"><span class="legend-dot dot-trim"></span> 실선 테두리: 실제 완성 재단선 (Trim)</div>
+                  <div class="legend-item"><span class="legend-dot dot-safe"></span> 초록 점선: 안전 영역 (텍스트 권장 영역, 안쪽 3mm)</div>
+                </div>
+              </section>
+
+              <!-- TAB 6: 프로젝트 관리 (저장/불러오기/JSON) -->
+              <section id="tab-project" class="tab-panel">
+                <div class="panel-header">
+                  <h3>작업 프로젝트 관리</h3>
+                </div>
+                <p class="panel-tip">작업 내용을 브라우저에 저장하거나, JSON 백업 파일로 내보내어 나중에 언제든 다시 불러올 수 있습니다.</p>
+
+                <div class="project-actions-list">
+                  <button type="button" class="btn btn-primary btn-block" id="btnSaveProject">
+                    <span>💾 현재 명함 프로젝트 저장</span>
+                  </button>
+                  <button type="button" class="btn btn-outline btn-block" id="btnOpenProjectsModal">
+                    <span>📂 저장된 프로젝트 열기 (<span id="savedProjectCount">0</span>/10)</span>
+                  </button>
+                  <hr class="panel-divider">
+                  <button type="button" class="btn btn-secondary btn-block" id="btnExportJson">
+                    <span>📥 프로젝트 파일 (.json) 내보내기</span>
+                  </button>
+                  <label class="btn btn-outline btn-block file-btn-label">
+                    <span>📤 프로젝트 파일 (.json) 가져오기</span>
+                    <input type="file" id="jsonFileInput" accept=".json" style="display: none;">
+                  </label>
+                  <hr class="panel-divider">
+                  <button type="button" class="btn btn-outline btn-block text-danger border-danger" id="btnResetAll">
+                    <span>🔄 새 명함 만들기 (초기화)</span>
+                  </button>
+                </div>
+              </section>
+
+            </div>
+          </aside>
+
+          <!-- 2. 중앙 캔버스 편집 스튜디오 -->
+          <main class="editor-canvas-pane" aria-label="명함 실시간 캔버스 편집 영역">
+
+            <!-- 캔버스 상단 툴바 -->
+            <div class="canvas-top-bar">
+              <!-- 앞면 / 뒷면 탭 -->
+              <div class="side-selector-tabs">
+                <button type="button" class="side-tab-btn active" id="btnSideFront">
+                  <span>앞면 (Front)</span>
+                </button>
+                <button type="button" class="side-tab-btn" id="btnSideBack">
+                  <span>뒷면 (Back)</span>
+                </button>
+                <button type="button" class="btn-flip-card" id="btnFlipCard" title="명함 뒤집기">
+                  <span>🔄 뒤집기</span>
+                </button>
+              </div>
+
+              <!-- 캔버스 줌 & 실행취소/다시실행 컨트롤 -->
+              <div class="canvas-quick-controls">
+                <!-- 실행 취소 & 다시 실행 -->
+                <div class="undo-redo-group">
+                  <button type="button" class="btn-icon" id="btnUndo" title="실행 취소 (Ctrl + Z)" disabled>
+                    ↩️
+                  </button>
+                  <button type="button" class="btn-icon" id="btnRedo" title="다시 실행 (Ctrl + Y)" disabled>
+                    ↪️
+                  </button>
+                </div>
+
+                <span class="control-divider">|</span>
+
+                <!-- 줌 컨트롤 -->
+                <div class="zoom-group">
+                  <button type="button" class="btn-icon" id="btnZoomOut" title="축소">➖</button>
+                  <span class="zoom-value" id="zoomLevelDisplay">100%</span>
+                  <button type="button" class="btn-icon" id="btnZoomIn" title="확대">➕</button>
+                  <button type="button" class="btn-xs btn-outline" id="btnZoomFit" title="화면 크기에 맞춤">맞춤</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 캔버스 뷰포트 (스크롤 및 확대/축소 기준) -->
+            <div class="canvas-viewport" id="canvasViewport">
+              <div class="card-stage" id="cardStage">
+                
+                <!-- 실제 명함 캔버스 엘리먼트 (고해상도 렌더링) -->
+                <div class="card-paper-wrapper" id="cardPaperWrapper">
+                  <canvas id="businessCardCanvas" width="1063" height="591"></canvas>
+                  
+                  <!-- 인쇄 안전 영역 및 가이드라인 오버레이 -->
+                  <div class="guides-overlay" id="guidesOverlay">
+                    <div class="guide-box-safe" id="guideSafeBox">
+                      <span class="guide-label-safe">안전선 (Safe Margin 3mm)</span>
+                    </div>
+                    <div class="guide-box-trim" id="guideTrimBox">
+                      <span class="guide-label-trim">재단선 (Trim Line)</span>
+                    </div>
+                  </div>
+
+                  <!-- 드래그 & 리사이즈 & 회전용 상호작용 오버레이 레이어 -->
+                  <div class="interaction-overlay" id="interactionOverlay">
+                    <!-- 선택된 엘리먼트 바운딩 박스 & 핸들 (JS로 동적 제어) -->
+                    <div class="selection-box" id="selectionBox" style="display: none;">
+                      <div class="handle handle-nw" data-handle="nw"></div>
+                      <div class="handle handle-n" data-handle="n"></div>
+                      <div class="handle handle-ne" data-handle="ne"></div>
+                      <div class="handle handle-e" data-handle="e"></div>
+                      <div class="handle handle-se" data-handle="se"></div>
+                      <div class="handle handle-s" data-handle="s"></div>
+                      <div class="handle handle-sw" data-handle="sw"></div>
+                      <div class="handle handle-w" data-handle="w"></div>
+                      <div class="rotation-stem"></div>
+                      <div class="rotation-handle" data-handle="rot" title="드래그하여 회전"></div>
+                      <div class="rotation-badge" id="rotationBadge">0°</div>
+                    </div>
+
+                    <!-- 중앙 스냅 가이드라인 -->
+                    <div class="snap-line snap-h" id="snapLineH" style="display: none;"></div>
+                    <div class="snap-line snap-v" id="snapLineV" style="display: none;"></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- 캔버스 하단 출력 및 저장 바 -->
+            <div class="canvas-bottom-bar">
+              <div class="save-indicator" id="saveIndicator">
+                <span class="save-status-dot"></span>
+                <span class="save-status-text">모든 변경사항 자동 저장됨</span>
+              </div>
+
+              <div class="export-actions-group">
+                <button type="button" class="btn btn-outline" id="btnQuickDuplicateSide" title="현재 면의 모든 요소를 반대 면으로 복제">
+                  <span>📑 면 복제</span>
+                </button>
+                <button type="button" class="btn btn-secondary" id="btnOpenPrintModal">
+                  <span>🖨️ 인쇄 / PDF 저장</span>
+                </button>
+                <div class="dropdown-export-wrap">
+                  <button type="button" class="btn btn-primary" id="btnOpenPngModal">
+                    <span>📥 고화질 PNG 다운로드</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+          <!-- 3. 우측 속성 설정 패널 (선택 요소의 상세 옵션) -->
+          <aside class="editor-props-pane" id="editorPropsPane" aria-label="선택 요소 속성 편집">
+            
+            <!-- 요소 미선택 시 기본 안내 화면 -->
+            <div class="no-selection-view" id="noSelectionView">
+              <div class="empty-state-icon">👆</div>
+              <h4>선택된 요소가 없습니다</h4>
+              <p>명함 위의 텍스트나 로고, 도형을 클릭하여 선택하시면 크기, 색상, 글꼴, 정렬 등 세부 속성을 수정할 수 있습니다.</p>
+              
+              <div class="quick-tips-card">
+                <h5>💡 디자인 팁</h5>
+                <ul>
+                  <li>요소를 마우스나 터치로 드래그하여 이동할 수 있습니다.</li>
+                  <li>모서리 핸들을 당겨 크기를 조절할 수 있습니다.</li>
+                  <li>상단 초록색 원형 핸들을 드래그하면 원하는 각도로 회전됩니다.</li>
+                  <li>Ctrl + Z를 누르면 언제든 이전 상태로 되돌릴 수 있습니다.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 요소 선택 시 활성화되는 속성 편집 폼 -->
+            <div class="selection-props-view" id="selectionPropsView" style="display: none;">
+              
+              <div class="props-header">
+                <div class="elem-badge" id="propElemTypeBadge">텍스트</div>
+                <div class="elem-actions">
+                  <button type="button" class="btn-icon" id="btnPropDuplicate" title="요소 복제">📋</button>
+                  <button type="button" class="btn-icon text-danger" id="btnPropDelete" title="요소 삭제">🗑️</button>
+                </div>
+              </div>
+
+              <!-- 공통: 위치 및 크기, 회전 -->
+              <div class="prop-section">
+                <div class="prop-section-title">위치, 크기 및 회전</div>
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label>가로(W)</label>
+                    <input type="number" id="propWidth" class="form-control form-control-sm" min="10">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label>세로(H)</label>
+                    <input type="number" id="propHeight" class="form-control form-control-sm" min="5">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label>X 좌표</label>
+                    <input type="number" id="propX" class="form-control form-control-sm">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label>Y 좌표</label>
+                    <input type="number" id="propY" class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row align-items-center">
+                  <div class="form-group flex-2">
+                    <label>회전 각도 (<span id="propRotVal">0</span>°)</label>
+                    <input type="range" id="propRotRange" min="0" max="360" value="0" class="form-range">
+                  </div>
+                  <div class="form-group flex-1">
+                    <button type="button" class="btn btn-outline btn-xs btn-block mt-4" id="btnResetRot">
+                      0° 리셋
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 텍스트 전용 속성 -->
+              <div class="prop-section" id="sectionTextProps">
+                <div class="prop-section-title">텍스트 스타일</div>
+                
+                <div class="form-group">
+                  <label for="propTextContent">내용</label>
+                  <textarea id="propTextContent" class="form-control form-control-sm" rows="2"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="propFontFamily">글꼴 (Font)</label>
+                  <select id="propFontFamily" class="form-control form-control-sm">
+                    <option value="Pretendard, sans-serif">Pretendard (현대적 산세리프)</option>
+                    <option value="'Noto Sans KR', sans-serif">Noto Sans KR (정돈된 고딕)</option>
+                    <option value="'Gowun Batang', serif">고운바탕 (단아한 세리프)</option>
+                    <option value="'Montserrat', sans-serif">Montserrat (영문 타이틀)</option>
+                    <option value="'Playfair Display', serif">Playfair Display (클래식)</option>
+                  </select>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label for="propFontSize">크기(px)</label>
+                    <input type="number" id="propFontSize" class="form-control form-control-sm" min="10" max="150" value="24">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="propFontWeight">두께</label>
+                    <select id="propFontWeight" class="form-control form-control-sm">
+                      <option value="300">Light (300)</option>
+                      <option value="400" selected>Regular (400)</option>
+                      <option value="600">SemiBold (600)</option>
+                      <option value="700">Bold (700)</option>
+                      <option value="900">Black (900)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row align-items-center">
+                  <div class="form-group flex-1">
+                    <label>글자 색상</label>
+                    <div class="color-input-wrapper">
+                      <input type="color" id="propTextColor" value="#0f172a">
+                      <input type="text" id="propTextColorHex" class="form-control form-control-sm" value="#0f172a">
+                    </div>
+                  </div>
+                  <div class="form-group flex-1">
+                    <label>스타일</label>
+                    <div class="btn-group-toggle">
+                      <button type="button" class="btn-toggle" id="btnToggleItalic" title="기울임꼴"><i>I</i></button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>정렬 방식</label>
+                  <div class="button-group-row">
+                    <button type="button" class="btn btn-outline btn-xs flex-1" data-align="left" id="btnAlignTextL">좌측</button>
+                    <button type="button" class="btn btn-outline btn-xs flex-1" data-align="center" id="btnAlignTextC">가운데</button>
+                    <button type="button" class="btn btn-outline btn-xs flex-1" data-align="right" id="btnAlignTextR">우측</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 도형 전용 속성 -->
+              <div class="prop-section" id="sectionShapeProps" style="display: none;">
+                <div class="prop-section-title">도형 스타일</div>
+                
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label>채우기 색상</label>
+                    <div class="color-input-wrapper">
+                      <input type="color" id="propShapeFillColor" value="#2563eb">
+                      <input type="text" id="propShapeFillHex" class="form-control form-control-sm" value="#2563eb">
+                    </div>
+                  </div>
+                  <div class="form-group flex-1">
+                    <label>테두리 색상</label>
+                    <div class="color-input-wrapper">
+                      <input type="color" id="propShapeBorderColor" value="#000000">
+                      <input type="text" id="propShapeBorderHex" class="form-control form-control-sm" value="#000000">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label>테두리 두께(px)</label>
+                    <input type="number" id="propShapeBorderWidth" class="form-control form-control-sm" min="0" max="30" value="0">
+                  </div>
+                  <div class="form-group flex-1" id="shapeRadiusWrap">
+                    <label>모서리 곡률(px)</label>
+                    <input type="number" id="propShapeRadius" class="form-control form-control-sm" min="0" max="100" value="0">
+                  </div>
+                </div>
+              </div>
+
+              <!-- 이미지 / QR 전용 속성 -->
+              <div class="prop-section" id="sectionMediaProps" style="display: none;">
+                <div class="prop-section-title">이미지 / QR 속성</div>
+                <div class="form-group">
+                  <label>불투명도 (Opacity)</label>
+                  <input type="range" id="propOpacityRange" min="0.1" max="1" step="0.05" value="1" class="form-range">
+                </div>
+                <div class="form-group" id="qrContentEditWrap" style="display: none;">
+                  <label for="propQrContentInput">연결 주소 (URL)</label>
+                  <input type="text" id="propQrContentInput" class="form-control form-control-sm">
+                  <button type="button" class="btn btn-outline btn-xs btn-block mt-2" id="btnUpdateQrContent">
+                    QR코드 내용 갱신
+                  </button>
+                </div>
+              </div>
+
+              <!-- 명함 기준 정렬 (Align to Card) -->
+              <div class="prop-section">
+                <div class="prop-section-title">명함 기준 정렬</div>
+                <div class="align-buttons-grid">
+                  <button type="button" class="btn btn-outline btn-xs" id="btnAlignCardCenterH" title="가로 중앙 맞춤">가로 중앙</button>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnAlignCardCenterV" title="세로 중앙 맞춤">세로 중앙</button>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnAlignCardLeft" title="명함 좌측 맞춤">좌측 맞춤</button>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnAlignCardRight" title="명함 우측 맞춤">우측 맞춤</button>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnAlignCardTop" title="명함 상단 맞춤">상단 맞춤</button>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnAlignCardBottom" title="명함 하단 맞춤">하단 맞춤</button>
+                </div>
+              </div>
+
+              <!-- 레이어 순서 관리 -->
+              <div class="prop-section">
+                <div class="prop-section-title">레이어 순서</div>
+                <div class="layer-buttons-grid">
+                  <button type="button" class="btn btn-outline btn-xs" id="btnLayerFront" title="맨 앞으로 가져오기">맨 앞으로</button>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnLayerForward" title="앞으로 가져오기">앞으로</button>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnLayerBackward" title="뒤로 보내기">뒤로</button>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnLayerBack" title="맨 뒤로 보내기">맨 뒤로</button>
+                </div>
+              </div>
+
+            </div>
+          </aside>
+
+        </div>
+
+        <!-- 하단 교육 & 안내 콘텐츠 (SEO & 유저 가이드) -->
+        <section class="card-info-content-section" aria-label="명함 제작 가이드 및 상식">
+          <div class="content-header-wrap">
+            <h2 class="content-section-title">💡 프로페셔널 명함 디자인 및 제작 가이드</h2>
+            <p class="content-section-subtitle">성공적인 비즈니스를 만드는 첫인상, 깔끔한 명함 디자인 노하우와 인쇄 상식을 확인해보세요.</p>
+          </div>
+
+          <div class="info-articles-grid">
+            <!-- 기사 1 -->
+            <article class="info-article-card">
+              <div class="article-icon">📋</div>
+              <h3>1. 명함에 들어가야 할 5대 필수 정보</h3>
+              <p>
+                명함의 가장 본질적인 역할은 <strong>'신뢰할 수 있는 연락망 구축'</strong>입니다. 
+                ① 이름과 직책(전문 분야), ② 회사명과 부서, ③ 휴대전화 번호, ④ 공식 이메일 주소, ⑤ 웹사이트(또는 회사 주소)는 어떤 명함이든 반드시 갖추어야 할 기본 요소입니다. 
+                SNS 계정이나 사용자 지정 문구는 브랜드 성격에 맞추어 선택적으로 배치하는 것이 정돈된 느낌을 줍니다.
+              </p>
+            </article>
+
+            <!-- 기사 2 -->
+            <article class="info-article-card">
+              <div class="article-icon">✨</div>
+              <h3>2. 깔끔한 명함을 만드는 디자인 원칙</h3>
+              <p>
+                명함은 손바닥보다 작은 공간(90×50mm)에 정보를 담는 고밀도 매체입니다. 
+                모든 여백을 채우려 하지 말고, <strong>시선의 흐름과 충분한 여백(Negative Space)</strong>을 확보하세요. 
+                글꼴은 최대 2가지 이내로 제한하고, 직함과 이름의 글자 크기 대비를 주어 한눈에 핵심 인물이 눈에 띄도록 위계를 설정하는 것이 핵심입니다.
+              </p>
+            </article>
+
+            <!-- 기사 3 -->
+            <article class="info-article-card">
+              <div class="article-icon">📏</div>
+              <h3>3. 명함 규격 비교 (90×50 vs 85×55mm)</h3>
+              <p>
+                대한민국과 일본 등 아시아권에서 가장 보편적으로 통용되는 표준 규격은 <strong>90 × 50 mm</strong>입니다. 
+                반면 미국과 유럽, 글로벌 기업에서는 신용카드 규격과 동일한 <strong>85 × 55 mm</strong> 비율을 선호합니다. 
+                지갑에 딱 맞게 보관하기를 원하거나 해외 바이어와의 미팅이 잦다면 85×55mm 규격을 추천합니다.
+              </p>
+            </article>
+
+            <!-- 기사 4 -->
+            <article class="info-article-card">
+              <div class="article-icon">🔄</div>
+              <h3>4. 명함 앞면과 뒷면의 역할 분담</h3>
+              <p>
+                성공적인 명함은 앞면과 뒷면의 역할을 명확히 구분합니다. 
+                <strong>앞면</strong>에는 이름, 직책, 개인 연락처를 명확히 배치하여 '나 자신'을 소개하고, 
+                <strong>뒷면</strong>에는 회사 로고, 기업 이념, 찾아오는 길, 또는 모바일 웹사이트로 연결되는 QR코드를 담아 '회사의 브랜드 가치'를 전달하는 것이 정석입니다.
+              </p>
+            </article>
+
+            <!-- 기사 5 -->
+            <article class="info-article-card">
+              <div class="article-icon">🖨️</div>
+              <h3>5. 인쇄소 발주 시 꼭 확인할 사항</h3>
+              <p>
+                화면에서 예쁘게 보이더라도 실제 인쇄에서는 오차가 발생할 수 있습니다. 
+                글자 크기가 너무 작지 않은지(최소 6pt 이상 권장), 잉크 번짐이나 종이 재단 오차를 고려했는지 확인해야 합니다. 
+                특히 중요한 텍스트는 명함 가장자리로부터 최소 3mm 이상 안쪽(안전 영역)에 위치해야 재단 칼날에 잘려 나가는 불상사를 방지할 수 있습니다.
+              </p>
+            </article>
+
+            <!-- 기사 6 -->
+            <article class="info-article-card">
+              <div class="article-icon">🖼️</div>
+              <h3>6. 300 DPI와 인쇄용 PDF의 차이점</h3>
+              <p>
+                웹 화면용 이미지는 통상 72~96 DPI를 사용하지만, 인쇄소 인쇄기에서는 <strong>300 DPI(Dots Per Inch)</strong> 이상의 고해상도 이미지가 필수적입니다. 
+                본 에디터에서 출력하는 PNG는 90×50mm 기준 1063×591픽셀로 정확히 300 DPI를 지원하며, 인쇄용 출력 버튼을 통해 1:1 실사이즈 벡터 PDF로도 보관할 수 있습니다.
+              </p>
+            </article>
+
+            <!-- 기사 7 -->
+            <article class="info-article-card">
+              <div class="article-icon">📐</div>
+              <h3>7. 재단선(Trim)과 도련(Bleed 3mm)의 원리</h3>
+              <p>
+                인쇄소에서는 대형 종이에 여러 장의 명함을 한 번에 인쇄한 뒤 고속 칼날로 자릅니다. 
+                이때 1~2mm의 물리적 미세 오차가 발생할 수 있어, 배경색이나 이미지가 명함 테두리에 흰 여백 없이 꽉 차게 나오도록 외곽으로 3mm 더 넓게 인쇄하는 것을 <strong>'도련(Bleed)'</strong>이라고 합니다. 
+                본 에디터의 [도련 3mm 적용] 기능을 켜면 전문 인쇄 규격에 부합하게 출력됩니다.
+              </p>
+            </article>
+
+            <!-- 기사 8 -->
+            <article class="info-article-card">
+              <div class="article-icon">💾</div>
+              <h3>8. 프로젝트 파일 백업 및 스마트한 관리</h3>
+              <p>
+                명함 디자인을 완성한 후 <strong>[프로젝트 JSON 내보내기]</strong> 버튼을 누르면 모든 글자, 배치 좌표, 로고 이미지가 포함된 단일 파일로 다운로드됩니다. 
+                직책이나 연락처가 변경되었을 때 언제든지 해당 JSON 파일을 불러와 1초 만에 최신 명함으로 업데이트하고 재출력할 수 있습니다.
+              </p>
+            </article>
+          </div>
+
+          <!-- FAQ 아코디언 -->
+          <div class="faq-accordion-wrap">
+            <h3 class="faq-title">❓ 자주 묻는 질문 (FAQ)</h3>
+            <div class="faq-list">
+              <details class="faq-item" open>
+                <summary class="faq-question">Q. 회원가입이나 비용 결제 없이 완전 무료로 이용할 수 있나요?</summary>
+                <div class="faq-answer">
+                  네, 100% 완전 무료입니다. 별도의 로그인이나 개인정보 입력 없이 누구나 브라우저 접속 즉시 명함을 자유롭게 디자인하고 300DPI 고화질 PNG 및 인쇄용 PDF로 무제한 다운로드할 수 있습니다.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">Q. 입력한 내 개인정보(이름, 연락처, 이메일)는 안전한가요?</summary>
+                <div class="faq-answer">
+                  절대 안전합니다! 본 명함 제작기는 사용자가 입력한 모든 정보와 업로드한 로고 이미지를 외부 서버로 전송하지 않습니다. 모든 그래픽 처리와 데이터 저장은 고객님의 컴퓨터 또는 스마트폰 웹 브라우저 로컬 저장소(LocalStorage) 내부에서만 독립적으로 처리됩니다.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">Q. 다운로드한 파일로 일반 인쇄소나 온라인 인쇄몰(오프린트미, 성원애드피아 등)에 발주할 수 있나요?</summary>
+                <div class="faq-answer">
+                  네, 가능합니다! 에디터 상단의 규격(90×50mm 표준)을 확인하시고, [규격/안전선] 탭에서 '도련(Bleed 3mm)' 옵션을 체크한 뒤 PNG 또는 PDF로 저장하시면 전문 인쇄소 발주 규격에 그대로 부합하는 고해상도 결과물을 얻으실 수 있습니다.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">Q. 스마트폰 모바일 화면에서도 명함을 편집하고 다운로드할 수 있나요?</summary>
+                <div class="faq-answer">
+                  네, 완벽하게 지원합니다. 모바일 브라우저에서도 손가락 터치 드래그로 요소를 이동하거나 크기를 조절할 수 있으며, 텍스트 수정 및 앞·뒷면 전환, 고화질 이미지 저장이 PC와 동일하게 작동합니다.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">Q. 명함에 삽입된 QR 코드는 스마트폰 카메라로 실제 스캔이 되나요?</summary>
+                <div class="faq-answer">
+                  네! 가짜 이미지가 아닌 실시간 표준 QR 코드 매트릭스 엔진을 탑재하여, 입력하신 웹사이트 URL이나 연락처가 스마트폰 카메라 및 네이버·카카오 QR 리더기로 즉시 인식되고 연결됩니다.
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- 공통 푸터 컴포넌트 마운트 영역 -->
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <!-- 모달 1: PNG 다운로드 옵션 모달 -->
+  <div class="card-modal-backdrop" id="modalPngDownload" style="display: none;">
+    <div class="card-modal-dialog">
+      <div class="modal-header">
+        <h3>고화질 300 DPI PNG 다운로드</h3>
+        <button type="button" class="btn-close-modal" data-close="modalPngDownload">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-intro">출력할 명함 면을 선택하세요. 300 DPI 고해상도로 렌더링되어 즉시 다운로드됩니다.</p>
+        
+        <div class="download-card-options">
+          <div class="download-option-card" id="btnDownloadFrontPng">
+            <div class="opt-icon">🖼️</div>
+            <strong>앞면 (Front) PNG 저장</strong>
+            <span>해상도: <span class="calc-res-front">1063 × 591 px</span></span>
+          </div>
+
+          <div class="download-option-card" id="btnDownloadBackPng">
+            <div class="opt-icon">🔄</div>
+            <strong>뒷면 (Back) PNG 저장</strong>
+            <span>해상도: <span class="calc-res-back">1063 × 591 px</span></span>
+          </div>
+
+          <div class="download-option-card primary-opt" id="btnDownloadBothPng">
+            <div class="opt-icon">📦</div>
+            <strong>앞면 · 뒷면 일괄 저장</strong>
+            <span>앞면과 뒷면 파일을 각각 순차적으로 다운로드합니다</span>
+          </div>
+        </div>
+
+        <div class="modal-notice">
+          ℹ️ 선택 테두리, 편집용 핸들, 안전 가이드선은 다운로드 이미지에 포함되지 않으며 순수한 명함 디자인만 저장됩니다.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" data-close="modalPngDownload">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 모달 2: 인쇄 및 PDF 저장 모달 -->
+  <div class="card-modal-backdrop" id="modalPrintOptions" style="display: none;">
+    <div class="card-modal-dialog">
+      <div class="modal-header">
+        <h3>명함 인쇄 및 PDF 저장</h3>
+        <button type="button" class="btn-close-modal" data-close="modalPrintOptions">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-intro">
+          실제 명함 규격(1:1 실사이즈)으로 인쇄하거나 고화질 PDF로 저장할 수 있습니다.
+        </p>
+
+        <div class="form-group">
+          <label>인쇄 대상 선택</label>
+          <div class="button-group-row">
+            <button type="button" class="btn btn-outline btn-sm flex-1 active" data-print-target="both" id="btnPrintTargetBoth">앞면 + 뒷면</button>
+            <button type="button" class="btn btn-outline btn-sm flex-1" data-print-target="front" id="btnPrintTargetFront">앞면만</button>
+            <button type="button" class="btn btn-outline btn-sm flex-1" data-print-target="back" id="btnPrintTargetBack">뒷면만</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="chkPrintCropMarks" checked>
+            <span>재단 안내선(Crop Marks) 표시</span>
+          </label>
+        </div>
+
+        <div class="pdf-guidance-card">
+          <span class="guide-pdf-icon">💡</span>
+          <div>
+            <strong>PDF 파일로 저장하는 방법:</strong>
+            <p>아래 [인쇄창 열기] 버튼을 누른 후, 브라우저 인쇄 화면의 <strong>[대상(프린터)] 설정에서 'PDF로 저장'</strong>을 선택하시면 고해상도 PDF 문서로 저장됩니다.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" data-close="modalPrintOptions">취소</button>
+        <button type="button" class="btn btn-primary" id="btnExecutePrint">인쇄창 열기 (PDF 저장)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 모달 3: 저장된 프로젝트 목록 모달 -->
+  <div class="card-modal-backdrop" id="modalSavedProjects" style="display: none;">
+    <div class="card-modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3>저장된 명함 프로젝트 (<span id="modalProjectCount">0</span>/10)</h3>
+        <button type="button" class="btn-close-modal" data-close="modalSavedProjects">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="savedProjectsList" class="saved-projects-grid">
+          <!-- JS로 동적 생성 -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" data-close="modalSavedProjects">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 인쇄 전용 숨김 레이아웃 (Print Layout) -->
+  <div id="printLayoutContainer" class="print-only-layout" style="display: none;">
+    <!-- JS에서 인쇄 실행 시 실측 mm 카드 렌더링 주입 -->
+  </div>
+
+  <!-- Scripts -->
+  <!-- 1. jQuery 3.7.1 CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- 2. 순수 JS QRCode Generator 라이브러리 (오프라인 지원) -->
+  <script src="../assets/js/qrcode.min.js"></script>
+  <!-- 3. 공통 헤더/푸터 로더 & 테마 매니저 -->
+  <script src="../assets/js/common.js"></script>
+  <!-- 4. 명함 만들기 핵심 에디터 스크립트 -->
+  <script src="../assets/js/business-card.js"></script>
+</body>
+</html>

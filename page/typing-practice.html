@@ -31,15 +31,18 @@
     <main class="main-content">
       <div class="container container-md flex flex-col gap-3">
 
-        <!-- 페이지 헤더 -->
-        <header class="page-header" style="text-align: center; margin-bottom: 0.5rem;">
-          <h1 class="page-title" style="font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 900;">
-            <span class="text-gradient">⌨️ 오늘의 타자 실력은 몇 타일까?</span>
+        <!-- 서브페이지 공통 히어로 -->
+        <section class="subpage-hero">
+          <div class="hero-badge">⌨️ 스마트 타자 피지컬 트레이닝</div>
+          <h1 class="hero-title">
+            오늘 나의 타자 실력은,<br>
+            <span class="gradient-text">과연 몇 타까지 나올까요?</span>
           </h1>
-          <p class="page-desc" style="max-width: 650px; margin: 0.5rem auto 0; font-size: 0.98rem; line-height: 1.6;">
-            한글부터 영어까지, 짧은 문장과 긴 글을 연습하며 나의 타자 속도(환산 타/분)와 정확도를 실시간으로 확인해보세요.
+          <p class="hero-desc">
+            한글부터 영어까지, 낱말·짧은 글·긴 글 및 1분 타임어택을 연습해보세요.<br>
+            실시간 환산 타수(CPM)와 정확도를 측정하고 실력을 업그레이드하세요.
           </p>
-        </header>
+        </section>
 
         <!-- 상단 컨트롤 툴바 (언어, 모드, 내 문장) -->
         <section class="typing-toolbar" aria-label="타자 연습 모드 설정">
@@ -158,17 +161,17 @@
             </button>
           </div>
 
-          <!-- 사용자 텍스트 입력 인풋 필드 -->
+          <!-- 사용자 텍스트 입력 영역 (엔터 줄바꿈 및 전체 모드 완벽 지원) -->
           <div class="typing-input-wrapper">
-            <input type="text"
-                   id="typingInput"
-                   class="typing-input-field"
-                   placeholder="위의 문장을 보고 그대로 타이핑하세요..."
-                   autocomplete="off"
-                   autocorrect="off"
-                   autocapitalize="off"
-                   spellcheck="false"
-                   aria-label="타자 입력창">
+            <textarea id="typingInput"
+                      class="typing-input-field"
+                      rows="2"
+                      placeholder="위의 문장을 보고 그대로 타이핑하세요... (줄바꿈은 Enter 키)"
+                      autocomplete="off"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      spellcheck="false"
+                      aria-label="타자 입력창"></textarea>
           </div>
 
           <!-- 하단 액션 컨트롤러 바 -->
@@ -385,10 +388,13 @@
         <button type="button" class="btn btn-primary" id="modalRestartBtn">
           <span>🔥 다시 연습하기</span>
         </button>
+        <button type="button" class="btn btn-secondary" id="downloadResultImgBtn">
+          <span>📷 결과 이미지 저장 (PNG)</span>
+        </button>
         <button type="button" class="btn btn-outline" id="modalNextBtn">
           <span>⏭ 다음 문장</span>
         </button>
-        <button type="button" class="btn btn-secondary" id="closeResultModalBtn">
+        <button type="button" class="btn btn-outline" id="closeResultModalBtn">
           <span>확인 닫기</span>
         </button>
       </div>

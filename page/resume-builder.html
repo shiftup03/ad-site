@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>무료 이력서 및 자기소개서 작성 - 실시간 미리보기 & 문장 검사 | 1-Min Challenge</title>
+  <meta name="description" content="왼쪽에서 작성하고 오른쪽에서 완성된 A4 문서를 실시간으로 확인하세요! 5종 이력서 + 3종 자소서 양식, 실시간 오타·맞춤법·반복표현 검사, 글자수 계산 및 100% 무료 PDF 인쇄 저장을 지원합니다.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+
+  <!-- Anti-flash Dark Mode Initializer -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('challenge_1min_theme') || 'light';
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
+  <!-- Google Web Fonts for Professional Documents -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Montserrat:wght@400;600;700;800&family=Nanum+Myeongjo:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/common.css">
+  <link rel="stylesheet" href="../assets/css/resume-builder.css">
+</head>
+<body data-current-page="resume-builder" data-is-subpage="true">
+
+  <div class="app-wrapper">
+    <!-- 공통 헤더 컴포넌트 마운트 영역 -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="main-content">
+      <div class="container container-fluid flex flex-col gap-3">
+
+        <!-- 페이지 헤더 -->
+        <header class="subpage-hero resume-hero-header">
+          <div class="hero-badge">
+            <span>✨ 스마트 취업 서류 빌더</span>
+          </div>
+          <h1 class="hero-title">
+            이력서와 자기소개서를,<br>
+            <span class="gradient-text">쉽고 완성도 높게 작성해보세요</span>
+          </h1>
+          <p class="hero-desc">
+            왼쪽에서 내용을 작성하면 오른쪽에서 완성된 A4 문서를 실시간으로 확인할 수 있습니다.<br>
+            다양한 템플릿과 맞춤법·문장 검사 기능을 활용해 서류 완성도를 높여보세요.
+          </p>
+
+          <div class="feature-pills-wrap">
+            <span class="pill-chip">👁️ 55:45 실시간 A4 미리보기</span>
+            <span class="pill-chip">🔍 실시간 맞춤법 &amp; 반복표현 검사</span>
+            <span class="pill-chip">📊 공백포함/제외 글자수 &amp; 바이트 계산</span>
+            <span class="pill-chip">🖨️ 1:1 실사이즈 A4 PDF 인쇄</span>
+            <span class="pill-chip">🔒 서버 전송 없는 안전한 브라우저 로컬 저장</span>
+          </div>
+        </header>
+
+        <!-- 자동 저장 복원 안내 배너 -->
+        <div id="autosaveBanner" class="autosave-alert-banner" style="display: none;">
+          <div class="banner-inner">
+            <span class="banner-icon">💾</span>
+            <div class="banner-msg">
+              <strong>이전에 작성하던 문서가 있습니다.</strong>
+              <p>마지막으로 자동 저장된 취업 서류 데이터를 이어서 작성하시겠습니까?</p>
+            </div>
+          </div>
+          <div class="banner-btns">
+            <button type="button" class="btn btn-primary btn-sm" id="btnResumeAutosave">
+              <span>이어서 작성</span>
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="btnDiscardAutosave">
+              <span>새로 작성</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 메인 작성 모드 툴바 & 전역 액션 -->
+        <div class="doc-mode-toolbar">
+          <!-- 작성 모드 탭 (이력서 vs 자기소개서) -->
+          <div class="mode-tab-buttons" role="tablist">
+            <button type="button" class="mode-tab-btn active" id="tabBtnResume" role="tab" aria-selected="true">
+              <span class="tab-emoji">📋</span>
+              <span>이력서 작성</span>
+            </button>
+            <button type="button" class="mode-tab-btn" id="tabBtnCoverLetter" role="tab" aria-selected="false">
+              <span class="tab-emoji">✍️</span>
+              <span>자기소개서 작성</span>
+            </button>
+          </div>
+
+          <!-- 모바일 전용: 작성하기 / 미리보기 화면 전환 스위치 -->
+          <div class="mobile-view-toggle">
+            <button type="button" class="mobile-toggle-btn active" id="btnMobileEditView">✏️ 작성하기</button>
+            <button type="button" class="mobile-toggle-btn" id="btnMobilePreviewView">👁️ 미리보기</button>
+          </div>
+
+          <!-- 전역 제어 액션들 -->
+          <div class="global-actions">
+            <button type="button" class="btn btn-outline btn-xs" id="btnFillSampleData" title="실제 양식 예시 샘플 데이터 채우기">
+              <span>✨ 샘플 채우기</span>
+            </button>
+            <button type="button" class="btn btn-outline btn-xs" id="btnSaveDocument">
+              <span>💾 문서 저장</span>
+            </button>
+            <button type="button" class="btn btn-outline btn-xs" id="btnOpenDocList">
+              <span>📂 보관함 (<span id="savedDocCount">0</span>)</span>
+            </button>
+            <button type="button" class="btn btn-outline btn-xs" id="btnExportJson">
+              <span>📥 JSON 백업</span>
+            </button>
+            <label class="btn btn-outline btn-xs file-import-label" title="저장한 JSON 파일 불러오기">
+              <span>📤 JSON 불러오기</span>
+              <input type="file" id="jsonFileInput" accept=".json" style="display: none;">
+            </label>
+            <button type="button" class="btn btn-outline btn-xs text-danger border-danger" id="btnResetDocument">
+              <span>🔄 초기화</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2분할 메인 에디터 워크스페이스 (PC: 좌측 45% 작성, 우측 55% 미리보기) -->
+        <div class="resume-workspace-split">
+
+          <!-- ============================================== -->
+          <!-- LEFT: 문서 작성 영역 (45%) -->
+          <!-- ============================================== -->
+          <div class="editor-input-pane" id="editorInputPane">
+
+            <!-- -------------------------------------------- -->
+            <!-- 1) 이력서 작성 모드 패널 (RESUME FORM) -->
+            <!-- -------------------------------------------- -->
+            <div id="paneResumeForm" class="doc-form-view active">
+              
+              <!-- 이력서 템플릿 선택 바 -->
+              <div class="template-selector-bar">
+                <span class="tpl-label">양식 선택:</span>
+                <div class="tpl-radio-group">
+                  <label class="tpl-chip active">
+                    <input type="radio" name="resumeTemplate" value="t1" checked>
+                    <span>기본형</span>
+                  </label>
+                  <label class="tpl-chip">
+                    <input type="radio" name="resumeTemplate" value="t2">
+                    <span>모던형</span>
+                  </label>
+                  <label class="tpl-chip">
+                    <input type="radio" name="resumeTemplate" value="t3">
+                    <span>경력 중심형</span>
+                  </label>
+                  <label class="tpl-chip">
+                    <input type="radio" name="resumeTemplate" value="t4">
+                    <span>신입 중심형</span>
+                  </label>
+                  <label class="tpl-chip">
+                    <input type="radio" name="resumeTemplate" value="t5">
+                    <span>미니멀형</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- 섹션 1: 인적사항 및 프로필 사진 -->
+              <section class="form-section-card">
+                <div class="section-title-wrap">
+                  <h3 class="section-heading">👤 인적사항</h3>
+                  <span class="section-subtext">기본 연락처와 지원 직무를 입력하세요</span>
+                </div>
+
+                <div class="profile-photo-row">
+                  <!-- 프로필 사진 업로드 -->
+                  <div class="photo-upload-box">
+                    <div class="photo-preview-frame" id="photoPreviewFrame">
+                      <span class="photo-placeholder-icon">📷</span>
+                      <img id="resumePhotoImg" alt="프로필 사진" style="display: none;">
+                    </div>
+                    <div class="photo-btn-group">
+                      <label class="btn btn-outline btn-xs" id="labelAddPhoto" for="photoFileInput">
+                        <span>사진 추가</span>
+                      </label>
+                      <input type="file" id="photoFileInput" accept="image/jpeg,image/png,image/webp" style="display: none;">
+                      <button type="button" class="btn btn-outline btn-xs text-danger" id="btnDeletePhoto" style="display: none;">
+                        <span>사진 삭제</span>
+                      </button>
+                    </div>
+                    <small class="photo-hint">권장 3:4 비율 (최대 5MB)</small>
+                  </div>
+
+                  <!-- 인적사항 기본 입력 필드들 -->
+                  <div class="personal-fields-grid">
+                    <div class="form-row">
+                      <div class="form-group flex-1">
+                        <label for="resName">이름 <span class="required">*</span></label>
+                        <input type="text" id="resName" class="form-control form-control-sm" placeholder="홍길동" value="김민수" required>
+                      </div>
+                      <div class="form-group flex-1">
+                        <label for="resNameEn">영문 이름</label>
+                        <input type="text" id="resNameEn" class="form-control form-control-sm" placeholder="Gildong Hong" value="MINSU KIM">
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="form-group flex-1">
+                        <label for="resTargetField">지원 분야</label>
+                        <input type="text" id="resTargetField" class="form-control form-control-sm" placeholder="IT / 소프트웨어 개발" value="IT 서비스 / 프로덕트 디자인">
+                      </div>
+                      <div class="form-group flex-1">
+                        <label for="resTargetRole">희망 직무</label>
+                        <input type="text" id="resTargetRole" class="form-control form-control-sm" placeholder="웹 프론트엔드 개발자" value="UI/UX 디자이너 &amp; 기획자">
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="form-group flex-1">
+                        <label for="resEmail">이메일 <span class="required">*</span></label>
+                        <input type="email" id="resEmail" class="form-control form-control-sm" placeholder="name@example.com" value="minsu.kim@example.com">
+                      </div>
+                      <div class="form-group flex-1">
+                        <label for="resPhone">휴대전화 <span class="required">*</span></label>
+                        <input type="tel" id="resPhone" class="form-control form-control-sm" placeholder="010-1234-5678" value="010-1234-5678">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group mt-2">
+                  <label for="resAddress">주소</label>
+                  <input type="text" id="resAddress" class="form-control form-control-sm" placeholder="서울특별시 강남구 테헤란로..." value="서울특별시 강남구 테헤란로 152">
+                </div>
+
+                <div class="form-row mt-2">
+                  <div class="form-group flex-1">
+                    <label for="resPortfolio">포트폴리오 URL</label>
+                    <input type="text" id="resPortfolio" class="form-control form-control-sm" placeholder="https://portfolio.com" value="https://minsu-portfolio.com">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="resWebsite">개인 웹사이트 / GitHub</label>
+                    <input type="text" id="resWebsite" class="form-control form-control-sm" placeholder="https://github.com/username" value="https://github.com/minsu-design">
+                  </div>
+                </div>
+              </section>
+
+              <!-- 섹션 2: 학력 사항 -->
+              <section class="form-section-card">
+                <div class="section-title-wrap">
+                  <h3 class="section-heading">🎓 학력 사항</h3>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnAddEducation">
+                    <span>+ 학력 추가</span>
+                  </button>
+                </div>
+                <div id="educationList" class="dynamic-items-list">
+                  <!-- JS로 동적 생성 -->
+                </div>
+              </section>
+
+              <!-- 섹션 3: 경력 사항 -->
+              <section class="form-section-card">
+                <div class="section-title-wrap">
+                  <h3 class="section-heading">💼 경력 사항</h3>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnAddExperience">
+                    <span>+ 경력 추가</span>
+                  </button>
+                </div>
+                <div id="experienceList" class="dynamic-items-list">
+                  <!-- JS로 동적 생성 -->
+                </div>
+              </section>
+
+              <!-- 섹션 4: 프로젝트 및 주요 활동 -->
+              <section class="form-section-card">
+                <div class="section-title-wrap">
+                  <h3 class="section-heading">🚀 프로젝트 및 활동 경험</h3>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnAddProject">
+                    <span>+ 프로젝트 추가</span>
+                  </button>
+                </div>
+                <div id="projectList" class="dynamic-items-list">
+                  <!-- JS로 동적 생성 -->
+                </div>
+              </section>
+
+              <!-- 섹션 5: 자격증 및 어학 성적 -->
+              <section class="form-section-card">
+                <div class="section-title-wrap">
+                  <h3 class="section-heading">📜 자격증 및 어학 능력</h3>
+                  <div class="btn-group-sm">
+                    <button type="button" class="btn btn-outline btn-xs" id="btnAddCert"><span>+ 자격증</span></button>
+                    <button type="button" class="btn btn-outline btn-xs" id="btnAddLang"><span>+ 어학</span></button>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="flex-1">
+                    <h5 class="sub-list-title">자격증 목록</h5>
+                    <div id="certList" class="dynamic-items-list"></div>
+                  </div>
+                  <div class="flex-1">
+                    <h5 class="sub-list-title">어학 성적</h5>
+                    <div id="langList" class="dynamic-items-list"></div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- 섹션 6: 보유 기술 및 역량 -->
+              <section class="form-section-card">
+                <div class="section-title-wrap">
+                  <h3 class="section-heading">⚡ 기술 및 역량</h3>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnAddSkill">
+                    <span>+ 기술/역량 추가</span>
+                  </button>
+                </div>
+                <div id="skillsTagList" class="skills-input-wrap">
+                  <!-- JS로 동적 태그 렌더링 -->
+                </div>
+              </section>
+
+            </div>
+
+            <!-- -------------------------------------------- -->
+            <!-- 2) 자기소개서 작성 모드 패널 (COVER LETTER FORM) -->
+            <!-- -------------------------------------------- -->
+            <div id="paneCoverLetterForm" class="doc-form-view">
+              
+              <!-- 자소서 템플릿 선택 바 -->
+              <div class="template-selector-bar">
+                <span class="tpl-label">양식 선택:</span>
+                <div class="tpl-radio-group">
+                  <label class="tpl-chip active">
+                    <input type="radio" name="clTemplate" value="t1" checked>
+                    <span>기본형</span>
+                  </label>
+                  <label class="tpl-chip">
+                    <input type="radio" name="clTemplate" value="t2">
+                    <span>항목 강조형</span>
+                  </label>
+                  <label class="tpl-chip">
+                    <input type="radio" name="clTemplate" value="t3">
+                    <span>미니멀형</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- 자소서 문서 제목 및 기본 정보 헤더 -->
+              <section class="form-section-card">
+                <div class="form-row">
+                  <div class="form-group flex-2">
+                    <label for="clDocTitle">자기소개서 문서 제목</label>
+                    <input type="text" id="clDocTitle" class="form-control form-control-sm" placeholder="예: [지원분야] 김민수 자기소개서" value="[UI/UX 디자이너] 김민수 입사지원 자기소개서">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="clAuthorName">작성자 이름</label>
+                    <input type="text" id="clAuthorName" class="form-control form-control-sm" value="김민수">
+                  </div>
+                </div>
+              </section>
+
+              <!-- 자소서 문항 목록 헤더 & 항목 추가 버튼 -->
+              <div class="cl-items-header">
+                <h4 class="cl-list-title">자기소개서 문항 목록</h4>
+                <button type="button" class="btn btn-primary btn-xs" id="btnAddClItem">
+                  <span>+ 새 문항 추가</span>
+                </button>
+              </div>
+
+              <!-- 자소서 개별 문항 컨테이너 (실시간 문장 검사기 포함) -->
+              <div id="clItemsContainer" class="cl-items-container">
+                <!-- JS로 동적 렌더링 -->
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- ============================================== -->
+          <!-- RIGHT: 실시간 문서 미리보기 영역 (55%) -->
+          <!-- ============================================== -->
+          <div class="editor-preview-pane" id="editorPreviewPane">
+            
+            <!-- 상단 미리보기 서식 & 줌 툴바 -->
+            <div class="preview-toolbar">
+              <!-- 글꼴 및 스타일 제어 -->
+              <div class="doc-format-controls">
+                <div class="format-control-item">
+                  <label>글꼴:</label>
+                  <select id="docFontFamily" class="select-sm">
+                    <option value="'Noto Sans KR', sans-serif">Noto Sans KR (기본 고딕)</option>
+                    <option value="'Pretendard', sans-serif">Pretendard (현대적)</option>
+                    <option value="'Gowun Batang', serif">고운바탕 (단아한 세리프)</option>
+                    <option value="'Nanum Myeongjo', serif">나눔명조 (정통 명조)</option>
+                  </select>
+                </div>
+
+                <div class="format-control-item">
+                  <label>크기:</label>
+                  <select id="docFontSize" class="select-sm">
+                    <option value="10pt">10pt (조밀)</option>
+                    <option value="11pt" selected>11pt (표준)</option>
+                    <option value="12pt">12pt (여유)</option>
+                  </select>
+                </div>
+
+                <div class="format-control-item">
+                  <label>줄간격:</label>
+                  <select id="docLineHeight" class="select-sm">
+                    <option value="1.4">1.4배</option>
+                    <option value="1.5">1.5배</option>
+                    <option value="1.6" selected>1.6배</option>
+                    <option value="1.8">1.8배</option>
+                  </select>
+                </div>
+
+                <div class="format-control-item">
+                  <label>여백:</label>
+                  <select id="docMargin" class="select-sm">
+                    <option value="compact">좁게 (10mm)</option>
+                    <option value="normal" selected>표준 (15mm/18mm)</option>
+                    <option value="wide">넓게 (20mm)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- 줌 컨트롤 및 다운로드 버튼 -->
+              <div class="preview-action-group">
+                <div class="zoom-controls-mini">
+                  <button type="button" class="btn-icon-xs" id="btnZoomOut" title="축소">➖</button>
+                  <span id="previewZoomDisplay" class="zoom-label-text">100%</span>
+                  <button type="button" class="btn-icon-xs" id="btnZoomIn" title="확대">➕</button>
+                  <button type="button" class="btn btn-outline btn-xs" id="btnZoomFit" title="창에 맞춤">맞춤</button>
+                </div>
+
+                <!-- 인쇄 / PDF 저장 버튼 -->
+                <button type="button" class="btn btn-primary btn-sm" id="btnPrintPdf">
+                  <span>🖨️ PDF로 저장 / 인쇄</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" id="btnDownloadTxt" style="display: none;" title="자기소개서 내용을 텍스트 파일로 저장">
+                  <span>📄 TXT 저장</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 실시간 A4 뷰포트 (회색 바탕 위의 A4 백지) -->
+            <div class="preview-viewport" id="previewViewport">
+              <div class="a4-stage" id="a4Stage">
+
+                <!-- 실제 A4 규격 시트 (210mm × 297mm) -->
+                <article class="a4-sheet" id="a4Sheet">
+                  <!-- JS로 이력서 또는 자기소개서 내용이 실시간 렌더링됩니다 -->
+                  <div id="renderedDocContent" class="a4-document-content"></div>
+                </article>
+
+              </div>
+            </div>
+
+            <!-- 하단 상태 바 -->
+            <div class="preview-status-bar">
+              <span class="status-dot"></span>
+              <span class="status-text" id="autoSaveStatusText">모든 변경사항 자동 저장됨</span>
+              <span class="doc-page-counter" id="docPageCounter">A4 1페이지 분량</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- 하단 취업 서류 작성 가이드 및 안내 콘텐츠 (SEO & 유저 가이드) -->
+        <section class="resume-guide-content-section" aria-label="이력서 및 자기소개서 작성 가이드">
+          <div class="guide-header-center">
+            <h2 class="guide-main-title">💡 합격을 부르는 취업 서류 작성 및 맞춤법 가이드</h2>
+            <p class="guide-main-subtitle">서류 통과율을 높이는 프로페셔널한 이력서 구성법과 인사담당자의 시선을 사로잡는 자기소개서 작성 노하우를 확인해보세요.</p>
+          </div>
+
+          <div class="guide-articles-grid">
+            <!-- 기사 1 -->
+            <article class="guide-article-card">
+              <div class="art-icon">🎯</div>
+              <h3>1. 합격을 부르는 이력서 기본 원칙 5가지</h3>
+              <p>
+                인사담당자가 이력서 한 장을 검토하는 데 걸리는 시간은 평균 30초 내외입니다.
+                ① 지원 직무와의 연관성을 최우선으로 배치하고, 
+                ② 최신순(역연대기순)으로 경력과 학력을 정돈하며, 
+                ③ 한눈에 들어오는 가독성 높은 글꼴을 선택해야 합니다. 
+                불필요한 개인 신상(가족관계, 성별, 혼인 여부)은 과감히 생략하여 직무 역량에 집중시키는 것이 현대적인 이력서의 표준입니다.
+              </p>
+            </article>
+
+            <!-- 기사 2 -->
+            <article class="guide-article-card">
+              <div class="art-icon">🌱</div>
+              <h3>2. 신입 지원자를 위한 잠재력 강조 팁</h3>
+              <p>
+                경력이 없는 신입 지원자는 <strong>'직무를 위해 어떤 준비를 했는가'</strong>를 증명해야 합니다.
+                대학교 전공 수업의 캡스톤 프로젝트, 인턴십, 공모전, 대외활동, 동아리 활동을 구체적으로 기재하세요. 
+                특히 프로젝트에서 본인이 담당한 핵심 역할과 문제 해결 과정, 그리고 그 경험에서 습득한 실무 도구(Tool) 및 기술 스택을 명확히 명시하는 것이 중요합니다.
+              </p>
+            </article>
+
+            <!-- 기사 3 -->
+            <article class="guide-article-card">
+              <div class="art-icon">📈</div>
+              <h3>3. 경력직을 위한 수치 중심 성과 서술법</h3>
+              <p>
+                단순히 '무슨 업무를 담당했다'는 나열은 경쟁력이 없습니다.
+                <strong>'행동(Action) + 결과(Result) + 수치(Metric)'</strong> 공식으로 서술하세요. 
+                예: "서비스 결제 전환율 18% 개선 달성", "데이터 캐싱 도입으로 로딩 속도 40% 단축", "분기 매출 전년 대비 125% 증대" 등 명확한 정량적 데이터를 제시할 때 신뢰도가 급상승합니다.
+              </p>
+            </article>
+
+            <!-- 기사 4 -->
+            <article class="guide-article-card">
+              <div class="art-icon">⭐</div>
+              <h3>4. 자기소개서 STAR 기법 완벽 활용</h3>
+              <p>
+                인사담당자가 가장 신뢰하는 서술 방식은 <strong>STAR 기법</strong>입니다.
+                <strong>S(Situation, 상황)</strong>: 직면했던 배경이나 계기, 
+                <strong>T(Task, 과제)</strong>: 본인이 달성해야 했던 목표나 문제점, 
+                <strong>A(Action, 행동)</strong>: 문제를 해결하기 위해 주도적으로 취한 구체적 행동, 
+                <strong>R(Result, 결과)</strong>: 성과와 그 과정을 통해 깨달은 인사이트 순으로 작성하면 논리성이 극대화됩니다.
+              </p>
+            </article>
+
+            <!-- 기사 5 -->
+            <article class="guide-article-card">
+              <div class="art-icon">🤝</div>
+              <h3>5. 진정성 있는 지원동기 및 포부 작성법</h3>
+              <p>
+                "어릴 적부터 귀사를 동경하여"와 같은 진부한 서두는 피해야 합니다.
+                해당 기업의 최근 사업 방향이나 산업 이슈를 언급하고, <strong>'왜 많은 기업 중 이곳이어야 하는지'</strong>, 그리고 <strong>'나의 어떤 역량이 회사의 성장에 기여할 수 있는지'</strong>를 구체적으로 연결하세요. 입사 후 포부는 1년 차, 3년 차, 5년 차 단계별 현실적인 성장 로드맵을 제시하는 것이 효과적입니다.
+              </p>
+            </article>
+
+            <!-- 기사 6 -->
+            <article class="guide-article-card">
+              <div class="art-icon">✏️</div>
+              <h3>6. 자주 틀리는 취업 서류 맞춤법 베스트</h3>
+              <p>
+                사소한 오타 하나가 지원자의 꼼꼼함과 신뢰도를 떨어뜨릴 수 있습니다.
+                자주 혼동하는 맞춤법: 
+                <strong>'며칠'</strong>(O, '몇일' X), 
+                <strong>'금세'</strong>(O, '금새' X), 
+                <strong>'웬일'</strong>(O, '왠일' X), 
+                <strong>'안 돼요'</strong>(O, '안 되요' X), 
+                <strong>'결재'</strong>(서류 승인) vs <strong>'결제'</strong>(대금 지불) 등을 본 에디터의 실시간 문장 검사기를 통해 제출 전 반드시 교정하세요.
+              </p>
+            </article>
+
+            <!-- 기사 7 -->
+            <article class="guide-article-card">
+              <div class="art-icon">📏</div>
+              <h3>7. 공백 포함 vs 공백 제외 글자수 관리</h3>
+              <p>
+                기업 채용 공고에 명시된 글자수 기준을 정확히 확인해야 합니다.
+                통상적으로 <strong>500자 기준은 400~480자(80~95%)</strong>, <strong>1,000자 기준은 850~950자</strong> 수준으로 채우는 것이 성의 있어 보입니다. 
+                자간 공백과 줄바꿈(엔터)이 포함되는지 여부에 따라 분량 차이가 발생하므로, 본 에디터의 공백 포함/제외 및 바이트수 실시간 카운터를 적극 활용하세요.
+              </p>
+            </article>
+
+            <!-- 기사 8 -->
+            <article class="guide-article-card">
+              <div class="art-icon">🖨️</div>
+              <h3>8. A4 규격과 PDF 인쇄 시 체크리스트</h3>
+              <p>
+                온라인 지원 시 Word나 HWP 파일 대신 <strong>PDF 형식</strong>으로 제출하면 운영체제나 뷰어 버전에 상관없이 작성자가 의도한 글꼴, 줄바꿈, 여백 레이아웃이 100% 동일하게 유지됩니다. 
+                인쇄 대화상자에서 여백을 '없음'으로 설정하고 배율을 100%로 지정하면 왜곡 없는 깨끗한 문서를 얻을 수 있습니다.
+              </p>
+            </article>
+          </div>
+
+          <!-- FAQ 아코디언 -->
+          <div class="resume-faq-section">
+            <h3 class="faq-header-title">❓ 자주 묻는 질문 (FAQ)</h3>
+            <div class="faq-accordion-list">
+              <details class="faq-accordion-item" open>
+                <summary class="faq-item-question">Q. 별도 회원가입이나 결제 없이 100% 무료로 이용할 수 있나요?</summary>
+                <div class="faq-item-answer">
+                  네, 완전 무료입니다! 회원가입이나 로그인 절차 없이 누구나 브라우저 접속 즉시 이력서와 자기소개서를 자유롭게 작성하고 A4 PDF 문서로 무제한 출력 및 저장하실 수 있습니다.
+                </div>
+              </details>
+
+              <details class="faq-accordion-item">
+                <summary class="faq-item-question">Q. 입력한 개인정보나 자기소개서 내용이 외부 서버로 전송되나요?</summary>
+                <div class="faq-answer">
+                  절대 전송되지 않습니다. 사용자가 입력한 모든 인적사항, 학력, 경력, 자기소개서 본문 및 사진 파일은 고객님의 기기(웹 브라우저 LocalStorage) 내부에서만 안전하게 처리되며 외부 서버로 일체 전송되지 않습니다.
+                </div>
+              </details>
+
+              <details class="faq-accordion-item">
+                <summary class="faq-item-question">Q. 작성 중 실수로 새로고침을 하거나 브라우저를 닫으면 내용이 날아가나요?</summary>
+                <div class="faq-answer">
+                  날아가지 않습니다! 본 에디터는 사용자가 한 글자라도 입력하면 1.5초 이내에 브라우저에 실시간 자동 저장(Auto-save)합니다. 다시 접속하시면 상단 배너를 통해 '이어서 작성' 버튼을 눌러 직전 상태를 그대로 복원하실 수 있습니다.
+                </div>
+              </details>
+
+              <details class="faq-accordion-item">
+                <summary class="faq-item-question">Q. PDF 파일로 깔끔하게 저장하려면 어떻게 해야 하나요?</summary>
+                <div class="faq-answer">
+                  우측 상단의 [PDF로 저장 / 인쇄] 버튼을 클릭하시면 브라우저 인쇄 대화상자가 열립니다. 이때 프린터 대상 설정에서 <strong>'PDF로 저장'</strong>을 선택하시고, 용지 크기는 <strong>A4</strong>, 여백은 <strong>'없음'</strong> 또는 <strong>'기본'</strong>으로 지정하시면 깔끔한 PDF 파일로 다운로드됩니다.
+                </div>
+              </details>
+
+              <details class="faq-accordion-item">
+                <summary class="faq-item-question">Q. 모바일 스마트폰 환경에서도 문서를 작성하고 다운로드할 수 있나요?</summary>
+                <div class="faq-answer">
+                  네! 모바일 환경에서는 상단에 [작성하기]와 [미리보기] 탭이 제공되어 손쉽게 화면을 전환하며 입력할 수 있으며, 실시간 문장 검사와 글자수 계산, PDF 인쇄 저장이 PC와 동일하게 작동합니다.
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- 공통 푸터 컴포넌트 마운트 영역 -->
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <!-- 모달 1: 보관된 문서 목록 모달 -->
+  <div class="doc-modal-backdrop" id="modalSavedDocs" style="display: none;">
+    <div class="doc-modal-box modal-lg">
+      <div class="modal-head">
+        <h3>저장된 문서 보관함 (<span id="modalDocCount">0</span>/20)</h3>
+        <button type="button" class="btn-modal-close" data-close="modalSavedDocs">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="savedDocsGrid" class="saved-docs-grid">
+          <!-- JS로 동적 렌더링 -->
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-outline" data-close="modalSavedDocs">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 모달 2: PDF 인쇄 안내 팝업 -->
+  <div class="doc-modal-backdrop" id="modalPrintNotice" style="display: none;">
+    <div class="doc-modal-box">
+      <div class="modal-head">
+        <h3>A4 PDF 저장 및 인쇄 안내</h3>
+        <button type="button" class="btn-modal-close" data-close="modalPrintNotice">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="print-instruction-card">
+          <div class="instruction-icon">💡</div>
+          <div class="instruction-text">
+            <strong>PDF 파일로 저장하는 방법:</strong>
+            <p>1. 아래 <strong>[인쇄창 열기]</strong> 버튼을 누릅니다.</p>
+            <p>2. 인쇄 미리보기 화면의 <strong>[대상(프린터)] 설정에서 'PDF로 저장'</strong>을 선택합니다.</p>
+            <p>3. 여백 설정은 <strong>'없음'</strong> 또는 <strong>'기본'</strong>으로 지정하시면 작성한 A4 양식 그대로 저장됩니다.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-outline" data-close="modalPrintNotice">취소</button>
+        <button type="button" class="btn btn-primary" id="btnExecuteRealPrint">인쇄창 열기 (PDF 저장)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 인쇄 전용 A4 컨테이너 (브라우저 print 시 노출) -->
+  <div id="printDocumentContainer" class="print-document-container" style="display: none;">
+    <!-- 인쇄 실행 시 실측 A4 HTML 주입 -->
+  </div>
+
+  <!-- Scripts -->
+  <!-- 1. jQuery 3.7.1 CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- 2. 공통 헤더/푸터 로더 & 테마 매니저 -->
+  <script src="../assets/js/common.js"></script>
+  <!-- 3. 이력서 & 자기소개서 빌더 핵심 엔진 -->
+  <script src="../assets/js/resume-builder.js"></script>
+</body>
+</html>

@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1-Min Challenge (1분 챌린지) - 매일 1분 두뇌 트레이닝</title>
-  <meta name="description" content="1분(60초) 동안 펼쳐지는 극한의 집중력 챌린지! 카드 색상 맞추기, 스피드 암산 등 다양한 1분 게임을 즐겨보세요.">
-  
+  <title>1-Min Challenge (1분 챌린지) - 테스트하고, 만들어보고, 새로운 나를 발견하세요</title>
+  <meta name="description"
+    content="재미있는 심리 테스트부터 유용한 생활 도구까지! 1분 카드 매칭, 스피드 암산, 반응속도, 연애 성향 테스트, 감정 분석, 타자 연습, 명함 만들기, 이력서 작성, 습관 챌린지를 무료로 즐겨보세요.">
+  <meta name="google-site-verification" content="L1VlD9m1qAINT0wnjpogBDAsrVMdxI3ddV5OdKKkYM8" />
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
   <!-- Anti-flash Dark Mode Theme Initializer -->
   <script>
-    (function() {
+    (function () {
       var theme = localStorage.getItem('challenge_1min_theme') || 'light';
       if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
     })();
   </script>
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;800;900&display=swap"
+    rel="stylesheet">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="assets/css/common.css">
@@ -23,8 +33,8 @@
     /* Home Hero Section */
     .home-hero {
       text-align: center;
-      padding: 3rem 1rem 4rem;
-      max-width: 800px;
+      padding: 3rem 1rem 3.5rem;
+      max-width: 820px;
       margin: 0 auto;
     }
 
@@ -32,7 +42,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.35rem 0.9rem;
+      padding: 0.35rem 1rem;
       background: rgba(79, 70, 229, 0.08);
       border: 1px solid rgba(79, 70, 229, 0.2);
       border-radius: var(--radius-full);
@@ -44,9 +54,9 @@
 
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(2.3rem, 5vw, 3.5rem);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
       font-weight: 900;
-      line-height: 1.2;
+      line-height: 1.25;
       margin-bottom: 1.2rem;
       letter-spacing: -0.02em;
       color: var(--text-main);
@@ -58,11 +68,17 @@
       -webkit-text-fill-color: transparent;
     }
 
+    [data-theme="dark"] .hero-title span.gradient-text {
+      background: linear-gradient(135deg, #f8fafc 20%, #818cf8 65%, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
     .hero-desc {
       color: var(--text-muted);
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       margin-bottom: 2.2rem;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     .hero-actions {
@@ -72,9 +88,71 @@
       flex-wrap: wrap;
     }
 
-    /* Challenge Grid Section */
+    /* Record Summary Bar ("나의 활동 기록") */
+    .record-banner {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .record-info h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .record-info p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .record-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .record-stat-box {
+      text-align: right;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: transform var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .record-stat-box:hover {
+      transform: translateY(-2px);
+    }
+
+    .record-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.15rem;
+    }
+
+    .record-stat-num {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    /* Services Section ("지금 이용할 수 있는 기능") */
     .section-title-wrap {
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
@@ -87,16 +165,56 @@
       font-size: 1.6rem;
       font-weight: 800;
       color: var(--text-main);
+      margin: 0 0 0.25rem;
     }
 
     .section-subtitle {
       color: var(--text-dim);
       font-size: 0.95rem;
+      margin: 0;
     }
 
+    /* Category Filter Chips */
+    .category-filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .filter-chip {
+      padding: 0.45rem 1.1rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      user-select: none;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--primary);
+      color: var(--text-main);
+      background: var(--bg-card-sub);
+    }
+
+    .filter-chip.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+
+    /* Card Grid */
     .game-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
       gap: 1.5rem;
       margin-bottom: 4rem;
     }
@@ -105,7 +223,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
-      padding: 1.75rem;
+      padding: 1.6rem 1.5rem;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -136,13 +254,8 @@
       opacity: 1;
     }
 
-    .game-card.disabled {
-      opacity: 0.65;
-      background: var(--bg-card-sub);
-    }
-
     .game-card-icon {
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       margin-bottom: 1rem;
       width: 56px;
       height: 56px;
@@ -151,16 +264,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     .game-card-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 800;
       margin-bottom: 0.5rem;
       color: var(--text-main);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
     .game-card-desc {
@@ -175,68 +291,101 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 1.5rem;
+      /* 버튼과 왼쪽 메타 텍스트 사이 넉넉한 갭 확보 */
       border-top: 1px solid var(--border-color);
       padding-top: 1.2rem;
+      margin-top: auto;
     }
 
     .game-card-meta {
       font-size: 0.8rem;
       color: var(--text-dim);
       display: flex;
-      gap: 0.8rem;
-    }
-
-    /* Record Summary Bar */
-    .record-banner {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      padding: 1.75rem 2rem;
-      display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 0.65rem;
       flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-      box-shadow: var(--shadow-sm);
+      flex: 1;
+      min-width: 0;
     }
 
-    .record-info h3 {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 0.25rem;
+    .game-card-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      white-space: nowrap;
     }
 
-    .record-info p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
+    /* 통일된 카드 액션 버튼 디자인 */
+    .card-action-btn,
+    .game-card .btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.28) !important;
+      border-radius: var(--radius-md) !important;
+      font-size: 0.88rem !important;
+      font-weight: 700 !important;
+      padding: 0.48rem 1.15rem !important;
+      min-height: 38px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0.35rem;
+      transition: all var(--transition-fast) !important;
+      margin-left: auto;
     }
 
-    .record-stats {
-      display: flex;
-      gap: 2rem;
+    .card-action-btn:hover,
+    .game-card .btn:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 22px rgba(219, 39, 119, 0.38) !important;
+      color: #ffffff !important;
     }
 
-    .record-stat-box {
-      text-align: right;
-    }
-
-    .record-stat-label {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
+    /* Category indicator badge */
+    .cat-tag {
+      font-size: 0.72rem;
       font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
     }
 
-    .record-stat-num {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 800;
+    .cat-tag.game {
+      background: rgba(79, 70, 229, 0.1);
+      color: var(--primary);
+    }
+
+    .cat-tag.test {
+      background: rgba(236, 72, 153, 0.1);
       color: var(--secondary);
+    }
+
+    .cat-tag.tool {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+
+    @media (max-width: 768px) {
+      .record-stats {
+        width: 100%;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .record-stat-box {
+        text-align: left;
+      }
+
+      .game-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
+
 <body data-current-page="home">
 
   <div class="app-wrapper">
@@ -245,167 +394,289 @@
 
     <!-- 메인 컨텐츠 영역 -->
     <main class="main-content">
-      
-      <!-- 히어로 배너 -->
+
+      <!-- 2. 히어로 배너 (새로운 통합 카피 & 액션 버튼) -->
       <section class="home-hero">
-        <div class="hero-badge">⚡ 매일 1분의 두뇌 스파크</div>
+        <div class="hero-badge">✨ 일상 속 작은 재미와 발견</div>
         <h1 class="hero-title">
-          하루 딱 1분,<br>
-          <span class="gradient-text">당신의 순간 피지컬을 시험하세요!</span>
+          테스트하고, 만들어보고,<br>
+          <span class="gradient-text">새로운 나를 발견하세요.</span>
         </h1>
         <p class="hero-desc">
-          바쁜 일상 속 가볍지만 짜릿한 60초 승부.<br>
-          카드를 맞추고, 빠르게 계산하고, 순간 반응속도로 두뇌를 깨워보세요.
+          재미있는 심리 테스트부터 유용한 생활 도구까지,<br>
+          원하는 기능을 자유롭게 이용해보세요.
         </p>
         <div class="hero-actions">
-          <a href="page/color-match.html" class="btn btn-primary btn-lg">
-            <span>🎨 1분 카드 매칭</span>
-          </a>
-          <a href="page/speed-math.html" class="btn btn-accent btn-lg">
-            <span>🔢 1분 스피드 암산</span>
-          </a>
+          <button type="button" class="btn btn-primary btn-lg" id="btnExploreTests">
+            <span>인기 테스트 둘러보기</span>
+          </button>
+          <button type="button" class="btn btn-accent btn-lg" id="btnExploreTools">
+            <span>유용한 도구 살펴보기</span>
+          </button>
         </div>
       </section>
 
-      <!-- 내 최고 기록 배너 -->
-      <div class="record-banner">
+      <!-- 4. 나의 활동 기록 (실제 저장된 로컬 데이터 반영) -->
+      <div class="record-banner" id="activityRecordBanner">
         <div class="record-info">
-          <h3>🏆 나의 1분 챌린지 최고 기록실</h3>
-          <p>브라우저에 자동 저장된 카드 매칭 및 스피드 암산 최고 기록입니다.</p>
+          <h3>🏆 나의 활동 기록</h3>
+          <p>이 브라우저에 저장된 테스트와 연습 기록을 확인해보세요.</p>
         </div>
-        <div class="record-stats" style="flex-wrap: wrap; gap: 1.5rem;">
-          <div class="record-stat-box">
+        <div class="record-stats">
+          <a href="page/reaction-speed.html" class="record-stat-box" title="1분 반응 속도 기록 확인 및 도전">
+            <div class="record-stat-label">반응 속도 최고</div>
+            <div class="record-stat-num" id="homeReactionScore" style="color: var(--warning);">-</div>
+          </a>
+          <a href="page/typing-practice.html" class="record-stat-box" title="타자 연습 기록 확인 및 연습">
+            <div class="record-stat-label">타자 최고 타수</div>
+            <div class="record-stat-num" id="homeTypingScore" style="color: var(--primary);">-</div>
+          </a>
+          <a href="page/color-match.html" class="record-stat-box" title="1분 카드 색상 매칭 기록 확인 및 게임">
             <div class="record-stat-label">카드 매칭 점수</div>
-            <div class="record-stat-num" id="homeBestScore">0점</div>
-          </div>
-          <div class="record-stat-box">
-            <div class="record-stat-label">카드 매칭 짝</div>
-            <div class="record-stat-num" id="homeBestPairs" style="color: var(--success);">0쌍</div>
-          </div>
-          <div class="record-stat-box" style="border-left: 1px solid #c7d2fe; padding-left: 1.5rem;">
+            <div class="record-stat-num" id="homeBestScore" style="color: var(--secondary);">-</div>
+          </a>
+          <a href="page/speed-math.html" class="record-stat-box" title="1분 스피드 암산 기록 확인 및 도전">
             <div class="record-stat-label">스피드 암산 점수</div>
-            <div class="record-stat-num" id="homeMathScore" style="color: var(--accent);">0점</div>
-          </div>
-          <div class="record-stat-box">
-            <div class="record-stat-label">암산 맞춘 문제</div>
-            <div class="record-stat-num" id="homeMathSolved" style="color: var(--warning);">0개</div>
-          </div>
+            <div class="record-stat-num" id="homeMathScore" style="color: var(--accent);">-</div>
+          </a>
         </div>
       </div>
 
-      <!-- 챌린지 목록 섹션 -->
-      <section id="challengeList">
+      <!-- 5. 지금 이용할 수 있는 기능 (서비스 목록 & 카테고리 필터) -->
+      <section id="featuresSection">
         <div class="section-title-wrap">
           <div>
-            <h2 class="section-title">⚡ 1분 챌린지 라인업</h2>
-            <p class="section-subtitle">다양한 두뇌 피지컬 게임을 선택해 60초 동안 도전해보세요.</p>
+            <h2 class="section-title">지금 이용할 수 있는 기능</h2>
+            <p class="section-subtitle">재미있는 테스트와 유용한 도구 중 원하는 기능을 선택해보세요.</p>
           </div>
         </div>
 
-        <div class="game-grid">
-          
-          <!-- 서비스 1: 1분 카드 색상 매칭 (활성화) -->
-          <article class="game-card">
+        <!-- 카테고리 필터 바: [전체] [게임] [테스트] [도구] -->
+        <div class="category-filter-bar" role="tablist" aria-label="기능 카테고리 필터">
+          <button type="button" class="filter-chip active" data-category="all" role="tab" aria-selected="true">
+            전체
+          </button>
+          <button type="button" class="filter-chip" data-category="game" role="tab" aria-selected="false">
+            🎮 게임
+          </button>
+          <button type="button" class="filter-chip" data-category="test" role="tab" aria-selected="false">
+            🧠 테스트
+          </button>
+          <button type="button" class="filter-chip" data-category="tool" role="tab" aria-selected="false">
+            🛠️ 도구
+          </button>
+        </div>
+
+        <!-- 카드 그리드 (실제 존재하는 10가지 기능) -->
+        <div class="game-grid" id="servicesGrid">
+
+          <!-- [게임 1] 1분 카드 색상 매칭 -->
+          <article class="game-card" data-category="game">
             <div class="game-card-icon">🎨</div>
             <h3 class="game-card-title">
-              1분 카드 색상 매칭
-              <span class="badge badge-success">PLAY NOW</span>
+              <span>1분 카드 매칭</span>
+              <span class="cat-tag game">게임</span>
             </h3>
             <p class="game-card-desc">
-              16장의 카드 뒤에 숨겨진 8가지 감각적인 컬러와 이모지의 짝을 60초 안에 최대한 많이 찾아내는 순간 기억력 챌린지입니다.
+              색상과 위치를 기억하고 빠르게 짝을 찾아보는 60초 기억력 게임
             </p>
             <div class="game-card-footer">
               <div class="game-card-meta">
                 <span>⏱️ 제한시간: 60초</span>
-                <span>🔥 콤보 시스템</span>
+                <span>🔥 기억력 트레이닝</span>
               </div>
-              <a href="page/color-match.html" class="btn btn-primary btn-sm">
-                도전하기 →
+              <a href="page/color-match.html" class="btn btn-primary btn-sm card-action-btn">
+                <span>도전하기</span> <span class="btn-arrow">→</span>
               </a>
             </div>
           </article>
 
-          <!-- 서비스 2: 1분 스피드 암산왕 (신규 오픈 & 활성화) -->
-          <article class="game-card">
+          <!-- [게임 2] 1분 스피드 암산 -->
+          <article class="game-card" data-category="game">
             <div class="game-card-icon">🔢</div>
             <h3 class="game-card-title">
-              1분 스피드 암산왕
-              <span class="badge badge-primary">PLAY NOW</span>
+              <span>1분 스피드 암산</span>
+              <span class="cat-tag game">게임</span>
             </h3>
             <p class="game-card-desc">
-              1분 동안 화면에 끊임없이 쏟아지는 +, -, ×, ÷ 사칙연산 문제를 풀어 몇 개나 맞췄는지 겨루는 스피드 수학 챌린지입니다.
+              60초 동안 사칙연산 문제를 해결하며 계산 속도에 도전하세요.
             </p>
             <div class="game-card-footer">
               <div class="game-card-meta">
                 <span>⏱️ 제한시간: 60초</span>
-                <span>🧠 +, -, ×, ÷ 연산</span>
+                <span>🧠 사칙연산 스피드</span>
               </div>
-              <a href="page/speed-math.html" class="btn btn-accent btn-sm">
-                도전하기 →
+              <a href="page/speed-math.html" class="btn btn-primary btn-sm card-action-btn">
+                <span>도전하기</span> <span class="btn-arrow">→</span>
               </a>
             </div>
           </article>
 
-          <!-- 서비스 3: 나의 연애 성향 테스트 (신규 오픈) -->
-          <article class="game-card">
-            <div class="game-card-icon">💖</div>
-            <h3 class="game-card-title">
-              나의 연애 성향 테스트
-              <span class="badge badge-secondary">NEW</span>
-            </h3>
-            <p class="game-card-desc">
-              좋아하는 사람 앞에서 달라지는 나의 모습! 20가지 질문으로 불안·안정·회피·적극 표현 성향과 8가지 연애 유형, 64가지 궁합을 분석합니다.
-            </p>
-            <div class="game-card-footer">
-              <div class="game-card-meta">
-                <span>⏱️ 소요시간: 3~4분</span>
-                <span>✨ 8가지 연애 유형</span>
-              </div>
-              <a href="page/love-test.html" class="btn btn-secondary btn-sm">
-                테스트 시작 →
-              </a>
-            </div>
-          </article>
-
-          <!-- 서비스 4: 온라인 타자 연습 (신규 오픈) -->
-          <article class="game-card">
-            <div class="game-card-icon">⌨️</div>
-            <h3 class="game-card-title">
-              온라인 타자 연습
-              <span class="badge badge-success">NEW</span>
-            </h3>
-            <p class="game-card-desc">
-              한글부터 영어까지! 낱말, 짧은 글, 긴 글 연습 및 1분·3분 실시간 타자 속도(타/분)와 정확도를 측정해보세요.
-            </p>
-            <div class="game-card-footer">
-              <div class="game-card-meta">
-                <span>⏱️ 실시간 타수 측정</span>
-                <span>📊 개인 기록 통계</span>
-              </div>
-              <a href="page/typing-practice.html" class="btn btn-primary btn-sm">
-                타자 연습 →
-              </a>
-            </div>
-          </article>
-
-          <!-- 서비스 5: 1분 반응속도 챌린지 (준비중) -->
-          <article class="game-card disabled">
+          <!-- [게임 3] 1분 반응 속도 -->
+          <article class="game-card" data-category="game">
             <div class="game-card-icon">⚡</div>
             <h3 class="game-card-title">
-              1분 반응속도 챌린지
-              <span class="badge badge-warning">COMING SOON</span>
+              <span>1분 반응 속도</span>
+              <span class="cat-tag game">게임</span>
             </h3>
             <p class="game-card-desc">
-              신호가 바뀌는 순간을 포착하여 1분 동안 가장 빠른 반사신경으로 터치하는 순발력 테스트 챌린지입니다.
+              색이 바뀌는 순간 클릭하고 나의 평균 반응 시간을 측정해보세요.
             </p>
             <div class="game-card-footer">
               <div class="game-card-meta">
                 <span>⏱️ 제한시간: 60초</span>
                 <span>⚡ 순발력 테스트</span>
               </div>
-              <button type="button" class="btn btn-outline btn-sm disabled-link">
-                준비중
-              </button>
+              <a href="page/reaction-speed.html" class="btn btn-primary btn-sm card-action-btn">
+                <span>도전하기</span> <span class="btn-arrow">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- [테스트 1] 연애 성향 테스트 -->
+          <article class="game-card" data-category="test">
+            <div class="game-card-icon">💖</div>
+            <h3 class="game-card-title">
+              <span>연애 성향 테스트</span>
+              <span class="cat-tag test">테스트</span>
+            </h3>
+            <p class="game-card-desc">
+              20개 질문으로 알아보는 나의 연애 스타일과 유형별 연애 궁합
+            </p>
+            <div class="game-card-footer">
+              <div class="game-card-meta">
+                <span>📋 20문항 분석</span>
+                <span>✨ 8가지 연애 유형</span>
+              </div>
+              <a href="page/love-test.html" class="btn btn-primary btn-sm card-action-btn">
+                <span>테스트 시작</span> <span class="btn-arrow">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- [테스트 2] 감정 비율 분석 테스트 -->
+          <article class="game-card" data-category="test">
+            <div class="game-card-icon">🧠</div>
+            <h3 class="game-card-title">
+              <span>감정 비율 분석</span>
+              <span class="cat-tag test">테스트</span>
+            </h3>
+            <p class="game-card-desc">
+              질문을 통해 최근 내 마음의 감정 비율을 그래프로 살펴보세요.
+            </p>
+            <div class="game-card-footer">
+              <div class="game-card-meta">
+                <span>📊 8가지 감정</span>
+                <span>🎨 도넛 차트 시각화</span>
+              </div>
+              <a href="page/emotion-ratio.html" class="btn btn-primary btn-sm card-action-btn">
+                <span>테스트 시작</span> <span class="btn-arrow">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- [도구 1] 온라인 타자 연습 -->
+          <article class="game-card" data-category="tool">
+            <div class="game-card-icon">⌨️</div>
+            <h3 class="game-card-title">
+              <span>온라인 타자 연습</span>
+              <span class="cat-tag tool">도구</span>
+            </h3>
+            <p class="game-card-desc">
+              한글과 영문 타자 연습으로 속도와 정확도를 확인해보세요.
+            </p>
+            <div class="game-card-footer">
+              <div class="game-card-meta">
+                <span>⚡ 실시간 타수 측정</span>
+                <span>📊 개인 기록 분석</span>
+              </div>
+              <a href="page/typing-practice.html" class="btn btn-primary btn-sm card-action-btn">
+                <span>사용하기</span> <span class="btn-arrow">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- [도구 2] 명함 만들기 -->
+          <article class="game-card" data-category="tool">
+            <div class="game-card-icon">🪪</div>
+            <h3 class="game-card-title">
+              <span>명함 만들기</span>
+              <span class="cat-tag tool">도구</span>
+            </h3>
+            <p class="game-card-desc">
+              다양한 템플릿으로 명함을 디자인하고 이미지나 PDF로 저장하세요.
+            </p>
+            <div class="game-card-footer">
+              <div class="game-card-meta">
+                <span>🎨 8종 템플릿</span>
+                <span>🖨️ 300DPI 인쇄 지원</span>
+              </div>
+              <a href="page/business-card.html" class="btn btn-primary btn-sm card-action-btn">
+                <span>사용하기</span> <span class="btn-arrow">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- [도구 3] 이력서·자기소개서 작성 -->
+          <article class="game-card" data-category="tool">
+            <div class="game-card-icon">📄</div>
+            <h3 class="game-card-title">
+              <span>이력서·자기소개서</span>
+              <span class="cat-tag tool">도구</span>
+            </h3>
+            <p class="game-card-desc">
+              왼쪽에서 작성하고 오른쪽에서 확인하는 실시간 문서 편집기
+            </p>
+            <div class="game-card-footer">
+              <div class="game-card-meta">
+                <span>🔍 실시간 문장 검사</span>
+                <span>🖨️ A4 PDF 인쇄</span>
+              </div>
+              <a href="page/resume-builder.html" class="btn btn-primary btn-sm card-action-btn">
+                <span>사용하기</span> <span class="btn-arrow">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- [도구 4] 습관 챌린지 -->
+          <article class="game-card" data-category="tool">
+            <div class="game-card-icon">🌱</div>
+            <h3 class="game-card-title">
+              <span>습관 챌린지</span>
+              <span class="cat-tag tool">도구</span>
+            </h3>
+            <p class="game-card-desc">
+              7일·21일·30일 동안 매일 목표를 체크하고 달성 기록을 관리하세요.
+            </p>
+            <div class="game-card-footer">
+              <div class="game-card-meta">
+                <span>📅 7·21·30일 도전</span>
+                <span>🏆 달성 배지 보상</span>
+              </div>
+              <a href="page/habit-challenge.html" class="btn btn-primary btn-sm card-action-btn">
+                <span>사용하기</span> <span class="btn-arrow">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- [도구 5] 살아온 시간 계산기 -->
+          <article class="game-card" data-category="tool">
+            <div class="game-card-icon">⏳</div>
+            <h3 class="game-card-title">
+              <span>살아온 시간 계산기</span>
+              <span class="cat-tag tool">도구</span>
+            </h3>
+            <p class="game-card-desc">
+              생년월일을 입력하고 지금까지 살아온 날과 시간을 확인하세요.
+            </p>
+            <div class="game-card-footer">
+              <div class="game-card-meta">
+                <span>⏱️ 실시간 시간 카운터</span>
+                <span>💎 10,000일 기념일</span>
+              </div>
+              <a href="page/life-time-calc.html" class="btn btn-primary btn-sm card-action-btn">
+                <span>사용하기</span> <span class="btn-arrow">→</span>
+              </a>
             </div>
           </article>
 
@@ -422,20 +693,112 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="assets/js/common.js"></script>
   <script>
-    // 홈 화면에서 각 챌린지 최고 기록 로드
-    $(document).ready(function() {
-      // 카드 매칭 기록
-      const colorScore = localStorage.getItem('challenge_1min_color_best_score') || 0;
-      const colorPairs = localStorage.getItem('challenge_1min_color_best_pairs') || 0;
-      $('#homeBestScore').text(Number(colorScore).toLocaleString() + '점');
-      $('#homeBestPairs').text(colorPairs + '쌍');
+    $(document).ready(function () {
+      // 1. 카테고리 필터 동작
+      function setCategoryFilter(category) {
+        $('.filter-chip').removeClass('active').attr('aria-selected', 'false');
+        $(`.filter-chip[data-category="${category}"]`).addClass('active').attr('aria-selected', 'true');
 
-      // 스피드 암산 기록
-      const mathScore = localStorage.getItem('challenge_1min_math_best_score') || 0;
-      const mathSolved = localStorage.getItem('challenge_1min_math_best_solved') || 0;
-      $('#homeMathScore').text(Number(mathScore).toLocaleString() + '점');
-      $('#homeMathSolved').text(mathSolved + '개');
+        if (category === 'all') {
+          $('.game-card').fadeIn(200);
+        } else {
+          $('.game-card').each(function () {
+            if ($(this).data('category') === category) {
+              $(this).fadeIn(200);
+            } else {
+              $(this).hide();
+            }
+          });
+        }
+      }
+
+      $('.filter-chip').on('click', function () {
+        const cat = $(this).data('category');
+        setCategoryFilter(cat);
+      });
+
+      // 2. 히어로 버튼 스크롤 이동 및 필터 연동
+      $('#btnExploreTests').on('click', function (e) {
+        e.preventDefault();
+        setCategoryFilter('test');
+        const targetOffset = $('#featuresSection').offset().top - 70;
+        $('html, body').animate({ scrollTop: targetOffset }, 400);
+      });
+
+      $('#btnExploreTools').on('click', function (e) {
+        e.preventDefault();
+        setCategoryFilter('tool');
+        const targetOffset = $('#featuresSection').offset().top - 70;
+        $('html, body').animate({ scrollTop: targetOffset }, 400);
+      });
+
+      // 3. 실제 저장된 로컬 활동 기록 로드
+      loadUserActivityRecords();
+
+      function loadUserActivityRecords() {
+        // 1) 반응 속도 개인 최고 기록 (challenge_1min_reaction_records)
+        try {
+          const rawReaction = localStorage.getItem('challenge_1min_reaction_records');
+          if (rawReaction) {
+            const records = JSON.parse(rawReaction);
+            const valid = records.filter(function (r) { return r.isValid && r.avgTime > 0; });
+            if (valid.length > 0) {
+              const best = valid.reduce(function (min, curr) {
+                return curr.avgTime < min.avgTime ? curr : min;
+              }, valid[0]);
+              $('#homeReactionScore').text(best.avgTime + ' ms');
+            } else {
+              $('#homeReactionScore').text('-');
+            }
+          } else {
+            $('#homeReactionScore').text('-');
+          }
+        } catch (e) {
+          $('#homeReactionScore').text('-');
+        }
+
+        // 2) 타자 연습 최고 기록 (challenge_1min_typing_records)
+        try {
+          const rawTyping = localStorage.getItem('challenge_1min_typing_records');
+          if (rawTyping) {
+            const records = JSON.parse(rawTyping);
+            if (records.length > 0) {
+              const bestCpm = records.reduce(function (max, r) {
+                return Math.max(max, r.cpm || 0);
+              }, 0);
+              if (bestCpm > 0) {
+                $('#homeTypingScore').text(bestCpm + ' 타/분');
+              } else {
+                $('#homeTypingScore').text('-');
+              }
+            } else {
+              $('#homeTypingScore').text('-');
+            }
+          } else {
+            $('#homeTypingScore').text('-');
+          }
+        } catch (e) {
+          $('#homeTypingScore').text('-');
+        }
+
+        // 3) 카드 매칭 최고 기록 (challenge_1min_color_best_score)
+        const colorScore = parseInt(localStorage.getItem('challenge_1min_color_best_score') || '0', 10);
+        if (colorScore > 0) {
+          $('#homeBestScore').text(colorScore.toLocaleString() + '점');
+        } else {
+          $('#homeBestScore').text('-');
+        }
+
+        // 4) 스피드 암산 최고 기록 (challenge_1min_math_best_score)
+        const mathScore = parseInt(localStorage.getItem('challenge_1min_math_best_score') || '0', 10);
+        if (mathScore > 0) {
+          $('#homeMathScore').text(mathScore.toLocaleString() + '점');
+        } else {
+          $('#homeMathScore').text('-');
+        }
+      }
     });
   </script>
 </body>
+
 </html>

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>살아온 시간 계산기 - 나는 지금까지 얼마나 많은 시간을 살아왔을까? | 1-Min Challenge</title>
+  <meta name="description" content="태어난 날부터 지금 이 순간까지 내가 살아온 총 일수, 실시간 시간·분·초 누적 카운터, 만 나이, 다음 생일 카운트다운, 1,000일·10,000일 기념일 및 인생 타임라인을 무료로 확인하세요.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏳</text></svg>">
+
+  <!-- Anti-flash Dark Mode Initializer -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('challenge_1min_theme') || 'light';
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/common.css">
+  <link rel="stylesheet" href="../assets/css/life-time-calc.css">
+</head>
+<body data-current-page="life-time-calc" data-is-subpage="true">
+
+  <div class="app-wrapper">
+    <!-- 공통 헤더 컴포넌트 마운트 영역 -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="main-content">
+      <div class="container container-fluid flex flex-col gap-4">
+
+        <!-- ① 메인 소개 영역 -->
+        <header class="subpage-hero lifetime-hero-header">
+          <div class="hero-badge">
+            <span>✨ 인생 시간 실시간 기록기</span>
+          </div>
+          <h1 class="hero-title">
+            나는 지금까지,<br>
+            <span class="gradient-text">얼마나 많은 시간을 살아왔을까요?</span>
+          </h1>
+          <p class="hero-desc">
+            태어난 날부터 지금 이 순간까지, 내가 지나온 날과 시간을 정밀하게 계산해 드립니다.<br>
+            인생 타임라인과 다가올 소중한 기념일 카운트다운을 함께 확인해보세요.
+          </p>
+
+          <div class="lifetime-feature-tags">
+            <span class="lt-chip">📅 총 살아온 일수 정밀 계산</span>
+            <span class="lt-chip">⏱️ 실시간 시간·분·초 카운터</span>
+            <span class="lt-chip">🎂 만 나이 &amp; 다음 생일 카운트다운</span>
+            <span class="lt-chip">💎 1,000일 · 10,000일 기념일</span>
+            <span class="lt-chip">📜 인생 타임라인</span>
+            <span class="lt-chip">📷 1080×1350 PNG 카드 저장</span>
+          </div>
+        </header>
+
+        <!-- ② 생년월일 및 출생 시각 입력 카드 -->
+        <section class="lifetime-input-section" aria-label="생년월일 입력">
+          <div class="input-card-box">
+            <div class="card-head-title">
+              <h3>🎂 나의 출생 정보 입력</h3>
+              <p>생년월일을 입력하면 지금까지 지나온 모든 시간이 실시간으로 계산됩니다.</p>
+            </div>
+
+            <form id="lifeCalcForm" class="calc-form" onsubmit="return false;">
+              <div class="form-grid-row">
+                <!-- 필수: 생년월일 -->
+                <div class="form-group flex-2">
+                  <label for="inputBirthDate">
+                    생년월일 <span class="required">*</span>
+                  </label>
+                  <input type="date" id="inputBirthDate" class="form-control" required>
+                  <span class="input-hint" id="birthDateHint">예: 1998-05-15</span>
+                </div>
+
+                <!-- 선택: 출생 시각 -->
+                <div class="form-group flex-1">
+                  <label for="inputBirthTime">
+                    출생 시각 <span class="optional-badge">(선택)</span>
+                  </label>
+                  <input type="time" id="inputBirthTime" class="form-control" value="00:00">
+                  <span class="input-hint">모를 경우 00:00 유지</span>
+                </div>
+              </div>
+
+              <!-- 출생 시각 미입력 안내 문구 -->
+              <div class="time-notice-alert" id="timeNoticeAlert">
+                <span class="notice-icon">ℹ️</span>
+                <span>출생 시간을 입력하지 않아 누적 시간·분·초는 생년월일의 00:00을 기준으로 계산한 참고값입니다.</span>
+              </div>
+
+              <!-- 브라우저 정보 저장 동의 체크박스 (개인정보 보호 준수) -->
+              <div class="save-consent-wrap">
+                <label class="consent-checkbox-label">
+                  <input type="checkbox" id="checkSaveConsent">
+                  <span class="chk-custom"></span>
+                  <span class="consent-text">다음 방문에도 정보 기억하기 <small class="text-muted">(브라우저 로컬 스토리지에만 안전하게 저장)</small></span>
+                </label>
+              </div>
+
+              <!-- 액션 버튼 바 -->
+              <div class="form-actions-bar">
+                <div class="actions-left">
+                  <button type="button" class="btn btn-primary" id="btnCalculate">
+                    <span>⚡ 계산하기</span>
+                  </button>
+                  <button type="button" class="btn btn-outline" id="btnResetInput">
+                    <span>🔄 초기화</span>
+                  </button>
+                </div>
+                <div class="actions-right">
+                  <button type="button" class="btn btn-outline btn-sm text-danger" id="btnClearSavedData" style="display: none;">
+                    <span>🗑️ 저장 정보 삭제</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 오류 메시지 박스 -->
+              <div class="error-feedback-box" id="calcErrorBox" style="display: none;"></div>
+            </form>
+          </div>
+        </section>
+
+        <!-- 계산 결과 래퍼 (유효한 생년월일 입력 시 노출) -->
+        <div id="resultsContainer" class="results-container" style="display: none;">
+
+          <!-- 생일 당일 축하 배너 -->
+          <div class="birthday-banner-box" id="birthdayBanner" style="display: none;">
+            <div class="bday-icon">🎂</div>
+            <div class="bday-text">
+              <h3>오늘 생일을 진심으로 축하합니다! 🎉</h3>
+              <p>세상에 태어난 가장 소중한 날, 오늘 하루 누구보다 행복하고 의미 있는 시간 보내시길 응원합니다.</p>
+            </div>
+          </div>
+
+          <!-- ③ 가장 중요한 핵심 결과 — 살아온 총 일수 (페이지에서 가장 큰 타이포그래피) -->
+          <section class="lifetime-primary-hero-card" aria-label="살아온 총 일수">
+            <div class="hero-card-inner">
+              <span class="primary-lead-text">당신이 지금까지 살아온 날은</span>
+              <div class="primary-days-number-wrap">
+                <span class="primary-days-num" id="resTotalDaysNum">0</span>
+                <span class="primary-days-unit">일</span>
+              </div>
+              <p class="primary-tail-text">입니다.</p>
+
+              <!-- 달력 일차 안내 배지 -->
+              <div class="calendar-days-badge" id="resCalendarDaysBadge">
+                <span>태어난 날을 1일 차로 계산하면 오늘은 <strong>0일 차</strong>예요.</span>
+              </div>
+
+              <!-- 이미지 저장 퀵 버튼 -->
+              <div class="hero-card-actions">
+                <button type="button" class="btn btn-primary btn-sm" id="btnOpenSaveImageModal">
+                  <span>📷 결과 이미지 저장 (PNG)</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ④ 실시간 누적 시간 카운터 -->
+          <section class="lifetime-realtime-section" aria-label="실시간 누적 시간">
+            <div class="section-title-bar">
+              <div>
+                <h2 class="section-title">⏱️ 실시간 살아온 시간</h2>
+                <p class="section-subtitle">태어난 순간부터 지금 이 순간까지 1초마다 실시간으로 누적되는 기록입니다.</p>
+              </div>
+            </div>
+
+            <!-- 복합 시간 카운터 (일 시간 분 초) -->
+            <div class="compound-time-display-card">
+              <span class="compound-label">살아온 시간</span>
+              <div class="compound-digits-row">
+                <div class="c-unit-box">
+                  <span class="c-val" id="cDays">0</span>
+                  <span class="c-lbl">일</span>
+                </div>
+                <span class="c-colon">:</span>
+                <div class="c-unit-box">
+                  <span class="c-val" id="cHours">00</span>
+                  <span class="c-lbl">시간</span>
+                </div>
+                <span class="c-colon">:</span>
+                <div class="c-unit-box">
+                  <span class="c-val" id="cMinutes">00</span>
+                  <span class="c-lbl">분</span>
+                </div>
+                <span class="c-colon">:</span>
+                <div class="c-unit-box is-seconds">
+                  <span class="c-val" id="cSeconds">00</span>
+                  <span class="c-lbl">초</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 총 시간, 총 분, 총 초 3단 카드 -->
+            <div class="time-metrics-grid">
+              <div class="time-metric-card">
+                <span class="t-icon">⏳</span>
+                <div class="t-info">
+                  <span class="t-label">총 살아온 시간</span>
+                  <strong class="t-value text-primary" id="resTotalHours">0시간</strong>
+                </div>
+              </div>
+              <div class="time-metric-card">
+                <span class="t-icon">⚡</span>
+                <div class="t-info">
+                  <span class="t-label">총 살아온 분</span>
+                  <strong class="t-value text-secondary" id="resTotalMinutes">0분</strong>
+                </div>
+              </div>
+              <div class="time-metric-card">
+                <span class="t-icon">✨</span>
+                <div class="t-info">
+                  <span class="t-label">총 살아온 초</span>
+                  <strong class="t-value text-accent" id="resTotalSeconds">0초</strong>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ⑤ 현재 나이 & 경과 기간 & ⑥ 다음 생일 카운트다운 (2열 배치) -->
+          <section class="age-birthday-dual-grid" aria-label="나이 및 생일 정보">
+            
+            <!-- 나이 및 달력 경과 카드 -->
+            <div class="detail-info-card">
+              <div class="dcard-head">
+                <span class="dcard-icon">👤</span>
+                <div>
+                  <h4>현재 나이 및 경과 기간</h4>
+                  <p class="dcard-sub">달력 기준 실제 경과 연·월·일</p>
+                </div>
+              </div>
+              <div class="dcard-body">
+                <div class="age-highlight-box">
+                  <span class="age-label">만 나이</span>
+                  <strong class="age-value text-primary" id="resManAge">만 0세</strong>
+                  <span class="age-sub" id="resBirthYearDetail">1998년생</span>
+                </div>
+
+                <div class="calendar-duration-box">
+                  <span class="dur-label">살아온 기간 (달력 기준)</span>
+                  <strong class="dur-val" id="resCalendarDuration">0년 0개월 0일</strong>
+                </div>
+
+                <div class="birth-trivia-chips">
+                  <span class="trivia-chip" id="chipDayOfWeek">📅 금요일 출생</span>
+                  <span class="trivia-chip" id="chipZodiac">🐯 호랑이띠</span>
+                  <span class="trivia-chip" id="chipConstellation">♉ 황소자리</span>
+                </div>
+
+                <div class="leap-year-notice" id="leapYearNotice" style="display: none;">
+                  <span>💡 2월 29일 윤달 출생자: 평년에는 2월 28일 자정(3월 1일 도래 시점)을 기준으로 만 나이 및 생일이 적용됩니다.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 다음 생일 카운트다운 카드 -->
+            <div class="detail-info-card birthday-countdown-card">
+              <div class="dcard-head">
+                <span class="dcard-icon">🎂</span>
+                <div>
+                  <h4>다음 생일 카운트다운</h4>
+                  <p class="dcard-sub" id="nextBirthdayDateText">2027년 5월 15일</p>
+                </div>
+              </div>
+              <div class="dcard-body">
+                <span class="next-bday-lead">다음 생일까지</span>
+                
+                <div class="next-bday-timer-wrap">
+                  <div class="nb-box">
+                    <strong id="nbDays">0</strong>
+                    <span>일</span>
+                  </div>
+                  <div class="nb-box">
+                    <strong id="nbHours">00</strong>
+                    <span>시간</span>
+                  </div>
+                  <div class="nb-box">
+                    <strong id="nbMins">00</strong>
+                    <span>분</span>
+                  </div>
+                  <div class="nb-box is-sec">
+                    <strong id="nbSecs">00</strong>
+                    <span>초</span>
+                  </div>
+                </div>
+
+                <p class="next-bday-tail">남았어요.</p>
+
+                <div class="next-bday-age-pill">
+                  <span>다음 생일에 맞이하는 나이: <strong id="nextAgeText">만 0세</strong></span>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ⑦ 특별한 누적 일수 기념일 & 가장 가까운 기념일 -->
+          <section class="milestones-section" aria-label="특별한 누적 일수 기념일">
+            <div class="section-title-bar">
+              <div>
+                <h2 class="section-title">💎 특별한 누적 일수 기념일</h2>
+                <p class="section-subtitle">1,000일, 5,000일, 10,000일 등 인생의 소중한 마일스톤 날짜입니다.</p>
+              </div>
+            </div>
+
+            <!-- 가장 가까운 특별한 기념일 하이라이트 배너 -->
+            <div class="nearest-milestone-banner" id="nearestMilestoneBanner">
+              <span class="nm-icon">🎯</span>
+              <div class="nm-text-wrap">
+                <span class="nm-tag">가장 가까운 특별한 날</span>
+                <h4 id="nmTitle">태어난 지 10,000일</h4>
+                <p id="nmDate">2027년 5월 12일</p>
+              </div>
+              <div class="nm-dday-badge" id="nmDdayBadge">
+                <strong>D-82</strong>
+                <span>앞으로 82일 남았어요</span>
+              </div>
+            </div>
+
+            <!-- 기념일 카드 그리드 (100일 ~ 30,000일) -->
+            <div class="milestones-grid" id="milestonesGrid">
+              <!-- JS로 동적 생성 -->
+            </div>
+          </section>
+
+          <!-- ⑧ 사용자가 원하는 일수의 기념일 계산 & ⑨ 특정 날짜 기준 계산 (2열) -->
+          <section class="custom-calc-dual-grid" aria-label="사용자 지정 날짜 계산">
+            
+            <!-- 카드 1: 원하는 일수 입력 -> 날짜 계산 -->
+            <div class="custom-calc-card">
+              <div class="cc-head">
+                <span class="cc-icon">🔢</span>
+                <div>
+                  <h4>내가 원하는 누적 일수 날짜 계산</h4>
+                  <p>태어난 지 몇 일째 되는 날짜를 알고 싶나요?</p>
+                </div>
+              </div>
+              <div class="cc-body">
+                <div class="cc-input-row">
+                  <div class="input-with-unit">
+                    <input type="number" id="inputCustomDays" class="form-control" placeholder="예: 15000" min="1" max="100000" value="15000">
+                    <span class="unit-text">일</span>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-sm" id="btnCalcCustomDays">계산하기</button>
+                </div>
+
+                <div class="custom-calc-result-box" id="resCustomDaysBox">
+                  <span class="cc-res-label">태어난 지 15,000일이 되는 날짜</span>
+                  <strong class="cc-res-date" id="resCustomDaysDate">-</strong>
+                  <div class="cc-res-meta">
+                    <span id="resCustomDaysDday">-</span>
+                    <span id="resCustomDaysAge">-</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 카드 2: 특정 날짜 선택 -> 그 날까지 살아온 일수 계산 -->
+            <div class="custom-calc-card">
+              <div class="cc-head">
+                <span class="cc-icon">📅</span>
+                <div>
+                  <h4>특정 날짜 기준 살아온 시간 계산</h4>
+                  <p>특정 미래나 과거 날짜에 내가 몇 일을 살았을까?</p>
+                </div>
+              </div>
+              <div class="cc-body">
+                <div class="cc-input-row">
+                  <input type="date" id="inputTargetDate" class="form-control">
+                  <button type="button" class="btn btn-primary btn-sm" id="btnCalcTargetDate">계산하기</button>
+                </div>
+
+                <div class="custom-calc-result-box" id="resTargetDateBox">
+                  <span class="cc-res-label" id="resTargetDateLabel">선택한 날짜까지 살아온 시간</span>
+                  <strong class="cc-res-date" id="resTargetDateDays">-</strong>
+                  <div class="cc-res-meta">
+                    <span id="resTargetDateDiff">-</span>
+                    <span id="resTargetDateAge">-</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ⑩ 인생 타임라인 -->
+          <section class="timeline-section" aria-label="인생 타임라인">
+            <div class="section-title-bar">
+              <div>
+                <h2 class="section-title">📜 인생 타임라인</h2>
+                <p class="section-subtitle">출생부터 현재, 그리고 앞으로 찾아올 인생의 주요 순간들입니다.</p>
+              </div>
+            </div>
+
+            <div class="timeline-container" id="lifeTimelineContainer">
+              <!-- JS로 타임라인 노드 동적 생성 -->
+            </div>
+          </section>
+
+          <!-- ⑪ 개인 기념일 관리 (최대 30개) -->
+          <section class="personal-anniversaries-section" aria-label="개인 기념일 관리">
+            <div class="section-title-bar">
+              <div>
+                <h2 class="section-title">⭐ 나만의 소중한 기념일</h2>
+                <p class="section-subtitle">입학, 졸업, 첫 직장, 여행 등 기억하고 싶은 나만의 순간을 기록해보세요. (최대 30개)</p>
+              </div>
+              <button type="button" class="btn btn-primary btn-sm" id="btnOpenAddAnnivModal">
+                <span>➕ 기념일 추가</span>
+              </button>
+            </div>
+
+            <div class="anniversaries-grid" id="anniversariesGrid">
+              <!-- JS로 개인 기념일 카드 동적 생성 -->
+            </div>
+
+            <div class="empty-anniv-box" id="emptyAnnivNotice" style="display: none;">
+              <span class="empty-icon">🌱</span>
+              <p>아직 등록된 개인 기념일이 없어요. 기억하고 싶은 소중한 날을 추가해보세요!</p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ⑫ 페이지 하단 안내 가이드 & FAQ (10개 주제) -->
+        <section class="lifetime-guide-section" aria-label="살아온 시간 계산 가이드 및 FAQ">
+          <div class="guide-header-wrap">
+            <h2 class="guide-title">💡 살아온 시간 계산 원리와 시간학 이야기</h2>
+            <p class="guide-subtitle">정밀한 시간 계산 방식과 윤년, 만 나이, 그리고 기념일의 의미를 알아보세요.</p>
+          </div>
+
+          <!-- 8종 가이드 아티클 그리드 -->
+          <div class="guide-articles-grid">
+            <article class="guide-card">
+              <div class="art-icon">📅</div>
+              <h3>1. 살아온 일수 계산 방법</h3>
+              <p>
+                본 계산기는 사용자가 태어난 시점부터 현재 시점까지 경과한 밀리초(ms)를 86,400,000ms(24시간)로 나눈 <strong>'완전한 24시간 단위의 경과 일수'</strong>를 기준으로 합니다. 
+                태어난 당일을 1일 차로 세는 달력 일차와는 1일 차이가 발생할 수 있습니다.
+              </p>
+            </article>
+
+            <article class="guide-card">
+              <div class="art-icon">⏰</div>
+              <h3>2. 출생 시간을 알면 달라지는 점</h3>
+              <p>
+                출생 시각을 정확히 입력하면 태어난 시간 기준의 정밀한 초 단위 누적량과 기념일 도래 시각을 계산할 수 있습니다. 
+                시각을 모르는 경우 출생일 00:00을 가정한 표준 참고값으로 계산됩니다.
+              </p>
+            </article>
+
+            <article class="guide-card">
+              <div class="art-icon">⏳</div>
+              <h3>3. 총 살아온 시간·분·초 계산</h3>
+              <p>
+                단순히 숫자를 더하는 방식이 아니라, 브라우저가 비활성화되거나 화면을 껐다 켜더라도 컴퓨터의 현재 시계와 출생 시점을 비교하여 언제나 한 치의 오차 없는 실시간 값을 표시합니다.
+              </p>
+            </article>
+
+            <article class="guide-card">
+              <div class="art-icon">⚖️</div>
+              <h3>4. 대한민국 만 나이 기준</h3>
+              <p>
+                생일이 지난 경우 현재 연도에서 출생 연도를 뺀 값이 만 나이가 되며, 아직 올해 생일이 지나지 않은 경우 1세를 더 뺍니다. 
+                생일 당일 00시가 되는 순간 자동으로 새로운 만 나이로 갱신됩니다.
+              </p>
+            </article>
+
+            <article class="guide-card">
+              <div class="art-icon">🪐</div>
+              <h3>5. 윤년과 2월 29일 생일 반영</h3>
+              <p>
+                지구의 공전 주기(약 365.2422일)를 보정하기 위해 4년마다 돌아오는 윤년(2월 29일)을 정확히 계산에 포함합니다. 
+                2월 29일 출생자의 평년 생일은 2월 28일 만료 시점(3월 1일 도래)으로 처리됩니다.
+              </p>
+            </article>
+
+            <article class="guide-card">
+              <div class="art-icon">💎</div>
+              <h3>6. 10,000일 기념일의 의미</h3>
+              <p>
+                태어난 지 10,000일은 대략 만 27세 4개월 무렵에 맞이하는 인생의 커다란 마일스톤입니다. 
+                백일이나 돌처럼 살아온 날들의 노고를 축하하고 앞으로의 미래를 다짐하는 특별한 날로 널리 기념되고 있습니다.
+              </p>
+            </article>
+
+            <article class="guide-card">
+              <div class="art-icon">🎂</div>
+              <h3>7. 다음 생일 카운트다운</h3>
+              <p>
+                생일은 1년에 단 한 번 찾아오는 나만의 축제입니다. 
+                남은 일·시간·분·초를 실시간으로 확인하며 다가올 나이를 긍정적인 마음으로 맞이할 수 있는 동기부여를 제공합니다.
+              </p>
+            </article>
+
+            <article class="guide-card">
+              <div class="art-icon">🔒</div>
+              <h3>8. 안전한 브라우저 로컬 저장</h3>
+              <p>
+                본 사이트는 어떠한 개인정보도 외부 서버로 전송하지 않습니다. 
+                사용자가 [정보 기억하기]에 명시적으로 동의한 경우에만 본인 기기의 브라우저 로컬 스토리지에 암호화 보관되며, 언제든 [저장 정보 삭제]로 지울 수 있습니다.
+              </p>
+            </article>
+          </div>
+
+          <!-- FAQ 아코디언 -->
+          <div class="lifetime-faq-wrap">
+            <h3 class="faq-head-title">❓ 자주 묻는 질문 (FAQ)</h3>
+            <div class="faq-accordion-list">
+              <details class="faq-item" open>
+                <summary class="faq-question">Q. 태어난 시간을 정확히 모르는데 계산할 수 있나요?</summary>
+                <div class="faq-answer">
+                  네, 문제없이 계산할 수 있습니다! 출생 시각을 입력하지 않으면 출생일 00:00을 기준으로 계산되며, 총 살아온 일수, 만 나이, 다음 생일 및 기념일은 정확하게 표시됩니다.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">Q. 살아온 일수가 왜 달력 날짜보다 하루 적게 느껴지나요?</summary>
+                <div class="faq-answer">
+                  태어난 날을 1일 차로 세는 방식(달력 일차)과, 태어난 순간부터 24시간이 온전히 흘렀을 때 1일이 경과했다고 세는 방식(만 24시간 경과일)의 차이입니다. 본 계산기에서는 두 가지 수치를 모두 안내해 드리고 있습니다.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">Q. 윤년(2월 29일)도 계산에 완벽히 반영되나요?</summary>
+                <div class="faq-answer">
+                  네! 4년마다 찾아오는 윤년의 366일과 평년의 365일을 실제 달력 알고리즘으로 계산하므로 윤년으로 인한 날짜 밀림 현상이 전혀 없습니다.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">Q. 입력한 생년월일이 서버에 저장되거나 유출될 위험이 있나요?</summary>
+                <div class="faq-answer">
+                  전혀 없습니다. 본 서비스는 회원가입 없이 동작하며, 모든 계산은 사용자의 기기(웹 브라우저) 내부에서만 즉시 수행됩니다.
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">Q. 결과 이미지는 어떤 크기로 저장되나요?</summary>
+                <div class="faq-answer">
+                  [결과 이미지 저장]을 누르시면 인스타그램이나 모바일 화면에 최적화된 1080×1350px 고해상도 PNG 파일로 즉시 다운로드됩니다.
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- 공통 푸터 컴포넌트 마운트 영역 -->
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <!-- 모달 1: 결과 이미지 PNG 생성 및 미리보기 모달 -->
+  <div class="lifetime-modal-backdrop" id="modalSaveImage" style="display: none;">
+    <div class="lifetime-modal-box modal-md">
+      <div class="modal-head">
+        <h3>📷 결과 이미지 저장</h3>
+        <button type="button" class="btn-modal-close" data-close="modalSaveImage">✕</button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="modal-sub-desc">1080×1350px 고해상도 PNG 카드로 소장하세요.</p>
+        
+        <!-- 옵션: 생년월일 표기 여부 -->
+        <div class="img-option-row">
+          <label class="consent-checkbox-label">
+            <input type="checkbox" id="checkIncludeBirthdateInImage" checked>
+            <span class="chk-custom"></span>
+            <span>이미지에 생년월일 텍스트 포함하기</span>
+          </label>
+        </div>
+
+        <!-- 캔버스 미리보기 래퍼 -->
+        <div class="canvas-preview-wrap">
+          <canvas id="resultCardCanvas" width="1080" height="1350"></canvas>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-outline" data-close="modalSaveImage">닫기</button>
+        <button type="button" class="btn btn-primary" id="btnDownloadPng">PNG 이미지 다운로드</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 모달 2: 개인 기념일 추가 및 수정 모달 -->
+  <div class="lifetime-modal-backdrop" id="modalAddAnniversary" style="display: none;">
+    <div class="lifetime-modal-box modal-sm">
+      <div class="modal-head">
+        <h3 id="modalAnnivTitle">개인 기념일 추가</h3>
+        <button type="button" class="btn-modal-close" data-close="modalAddAnniversary">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="annivForm" onsubmit="return false;">
+          <input type="hidden" id="editAnnivId" value="">
+
+          <div class="form-group mb-3">
+            <label for="inputAnnivName">기념일 이름 <span class="required">*</span></label>
+            <input type="text" id="inputAnnivName" class="form-control" placeholder="예: 첫 직장 입사일, 대학 졸업식" required maxlength="30">
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="inputAnnivDate">기념일 날짜 <span class="required">*</span></label>
+            <input type="date" id="inputAnnivDate" class="form-control" required>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="inputAnnivNote">메모 (선택)</label>
+            <input type="text" id="inputAnnivNote" class="form-control" placeholder="예: 평생 잊지 못할 설레는 첫 출근!" maxlength="50">
+          </div>
+
+          <div class="form-group mb-3">
+            <label>대표 아이콘</label>
+            <div class="anniv-icon-grid" id="annivIconGrid">
+              <!-- JS로 이모지 버튼 생성 -->
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-outline" data-close="modalAddAnniversary">취소</button>
+        <button type="button" class="btn btn-primary" id="btnSaveAnniversary">저장하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <!-- 1. jQuery 3.7.1 CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- 2. 공통 헤더/푸터 로더 & 테마 매니저 -->
+  <script src="../assets/js/common.js"></script>
+  <!-- 3. 살아온 시간 계산기 핵심 스크립트 -->
+  <script src="../assets/js/life-time-calc.js"></script>
+</body>
+</html>

@@ -31,15 +31,18 @@
     <main class="main-content">
       <div class="container container-md flex flex-col gap-3">
         
-        <!-- 공통 페이지 헤더 컴포넌트 (타이틀, 설명) -->
-        <header class="page-header">
-          <h1 class="page-title">
-            <span class="text-gradient">🔢 1분 스피드 암산왕</span>
+        <!-- 공통 페이지 히어로 컴포넌트 (홈 화면과 동일한 공통 디자인) -->
+        <section class="subpage-hero">
+          <div class="hero-badge">⚡ 1분 초고속 두뇌 암산왕</div>
+          <h1 class="hero-title">
+            사칙연산 문제를 빠르게 풀고,<br>
+            <span class="gradient-text">나의 계산 피지컬에 도전하세요.</span>
           </h1>
-          <p class="page-desc">
-            제한 시간 <strong class="text-accent font-bold">60초</strong>! 무작위로 쏟아지는 <strong class="text-secondary font-bold">+, -, ×, ÷</strong> 사칙연산을 빠르게 암산해 맞추세요.
+          <p class="hero-desc">
+            제한 시간 60초 동안 무작위로 쏟아지는 덧셈, 뺄셈, 곱셈, 나눗셈!<br>
+            정답을 맞출수록 레벨이 상승하고 콤보 보너스가 누적됩니다.
           </p>
-        </header>
+        </section>
 
         <!-- 상단 대시보드 카드 컴포넌트 (타이머, 점수, 맞춘 수, 콤보) -->
         <section class="card status-dashboard" aria-label="게임 상태 현황판">
@@ -180,11 +183,11 @@
         </div>
 
         <div class="result-actions">
-          <button type="button" class="btn btn-accent" id="modalRestartBtn">
+          <button type="button" class="btn btn-primary" id="modalRestartBtn">
             <span>🔥 다시 도전</span>
           </button>
-          <button type="button" class="btn btn-secondary" id="shareBtn">
-            <span>📋 결과 공유</span>
+          <button type="button" class="btn btn-secondary" id="downloadResultImgBtn">
+            <span>📷 결과 이미지 저장 (PNG)</span>
           </button>
         </div>
       </div>

@@ -6,42 +6,103 @@
       <span class="logo-sub">BETA</span>
     </a>
 
-    <button class="mobile-nav-toggle" id="mobileNavBtn" aria-label="메뉴 토글">
-      ☰
-    </button>
-
-    <nav class="nav-menu">
+    <nav class="nav-menu" id="mainNavMenu" aria-label="메인 네비게이션">
       <ul class="nav-links" id="mainNavLinks">
-        <li>
+        <li class="nav-item">
           <a href="index.html" class="nav-link" data-page="home">
-            <span>🏠</span> 홈
+            <span class="menu-icon">🏠</span>
+            <span class="menu-text">홈</span>
           </a>
         </li>
-        <li>
-          <a href="color-match.html" class="nav-link" data-page="color-match">
-            <span>🎨</span> 1분 카드 매칭
-          </a>
+
+        <li class="nav-item nav-dropdown" data-category="game">
+          <button type="button" class="nav-link dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            <span class="menu-icon">🎮</span>
+            <span class="menu-text">게임</span>
+            <span class="dropdown-chevron" aria-hidden="true">▾</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li role="none">
+              <a href="color-match.html" class="dropdown-link" data-page="color-match" role="menuitem">
+                <span class="dropdown-icon">🎨</span>
+                <span class="dropdown-text">1분 카드 매칭</span>
+              </a>
+            </li>
+            <li role="none">
+              <a href="speed-math.html" class="dropdown-link" data-page="speed-math" role="menuitem">
+                <span class="dropdown-icon">🔢</span>
+                <span class="dropdown-text">1분 스피드 암산</span>
+              </a>
+            </li>
+            <li role="none">
+              <a href="reaction-speed.html" class="dropdown-link" data-page="reaction-speed" role="menuitem">
+                <span class="dropdown-icon">⚡</span>
+                <span class="dropdown-text">1분 반응 속도</span>
+              </a>
+            </li>
+          </ul>
         </li>
-        <li>
-          <a href="speed-math.html" class="nav-link" data-page="speed-math">
-            <span>🔢</span> 1분 스피드 암산
-          </a>
+
+        <li class="nav-item nav-dropdown" data-category="test">
+          <button type="button" class="nav-link dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            <span class="menu-icon">🧪</span>
+            <span class="menu-text">테스트</span>
+            <span class="dropdown-chevron" aria-hidden="true">▾</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li role="none">
+              <a href="love-test.html" class="dropdown-link" data-page="love-test" role="menuitem">
+                <span class="dropdown-icon">💖</span>
+                <span class="dropdown-text">연애 성향 테스트</span>
+              </a>
+            </li>
+            <li role="none">
+              <a href="emotion-ratio.html" class="dropdown-link" data-page="emotion-ratio" role="menuitem">
+                <span class="dropdown-icon">🧠</span>
+                <span class="dropdown-text">감정 비율 테스트</span>
+              </a>
+            </li>
+          </ul>
         </li>
-        <li>
-          <a href="love-test.html" class="nav-link" data-page="love-test">
-            <span>💖</span> 연애 성향 테스트
-          </a>
-        </li>
-        <li>
-          <a href="typing-practice.html" class="nav-link" data-page="typing-practice">
-            <span>⌨️</span> 타자 연습
-          </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link disabled-link" title="곧 오픈 예정!">
-            <span>⚡</span> 1분 반응속도
-            <span class="badge badge-warning">준비중</span>
-          </a>
+
+        <li class="nav-item nav-dropdown" data-category="tool">
+          <button type="button" class="nav-link dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            <span class="menu-icon">🛠️</span>
+            <span class="menu-text">도구</span>
+            <span class="dropdown-chevron" aria-hidden="true">▾</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li role="none">
+              <a href="typing-practice.html" class="dropdown-link" data-page="typing-practice" role="menuitem">
+                <span class="dropdown-icon">⌨️</span>
+                <span class="dropdown-text">온라인 타자 연습</span>
+              </a>
+            </li>
+            <li role="none">
+              <a href="business-card.html" class="dropdown-link" data-page="business-card" role="menuitem">
+                <span class="dropdown-icon">🪪</span>
+                <span class="dropdown-text">명함 만들기</span>
+              </a>
+            </li>
+            <li role="none">
+              <a href="resume-builder.html" class="dropdown-link" data-page="resume-builder" role="menuitem">
+                <span class="dropdown-icon">📄</span>
+                <span class="dropdown-text">이력서 및 자기소개서</span>
+              </a>
+            </li>
+            <li role="none">
+              <a href="habit-challenge.html" class="dropdown-link" data-page="habit-challenge" role="menuitem">
+                <span class="dropdown-icon">✅</span>
+                <span class="dropdown-text">습관 챌린지</span>
+              </a>
+            </li>
+            <li role="none">
+              <a href="life-time-calc.html" class="dropdown-link" data-page="life-time-calc" role="menuitem">
+                <span class="dropdown-icon">⏳</span>
+                <span class="dropdown-text">살아온 시간 계산기</span>
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </nav>
@@ -58,9 +119,9 @@
         </label>
       </div>
 
-      <a href="speed-math.html" class="btn btn-primary btn-sm">
-        <span>🔥 암산왕 도전</span>
-      </a>
+      <button class="mobile-nav-toggle" id="mobileNavBtn" aria-label="메뉴 토글" aria-expanded="false">
+        ☰
+      </button>
     </div>
   </div>
 </header>

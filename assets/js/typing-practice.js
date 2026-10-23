@@ -10,227 +10,253 @@
   // 1. 연습 콘텐츠 데이터베이스 (한글 / 영문 방대한 데이터)
   // ==========================================================================
 
-  // 한글 낱말 (100개 이상, 난이도 및 카테고리별)
-  const KO_WORDS = [
-    // 일상 & 감정
-    "사과", "바람", "여행", "컴퓨터", "키보드", "하늘", "설렘", "도전", "목표", "집중",
-    "시간", "연습", "성장", "기록", "바다", "노을", "기차", "운동", "음악", "영화",
-    "사랑", "행복", "미소", "우정", "희망", "용기", "감사", "평화", "기쁨", "친절",
-    // 학교 & 직장 & 기술
-    "학교", "도서관", "선생님", "학생", "공부", "시험", "교실", "연필", "공책", "지우개",
-    "직장", "회의", "프로젝트", "업무", "성공", "아이디어", "기획", "보고서", "동료", "일정",
-    "스마트폰", "인터넷", "인공지능", "모니터", "마우스", "데이터", "네트워크", "알고리즘", "소프트웨어", "프로그래밍",
-    // 음식 & 자연 & 취미
-    "커피", "녹차", "초콜릿", "딸기", "포도", "수박", "아침식사", "도시락", "따뜻한밥", "신선한과일",
-    "봄날", "여름비", "가을단풍", "겨울눈", "숲속", "산책로", "별빛", "달빛", "은하수", "무지개",
-    "그림", "독서", "피아노", "기타", "자전거", "사진", "요리", "등산", "수영", "캠핑",
-    // 동물 & 식물 & 사회
-    "강아지", "고양이", "다람쥐", "토끼", "돌고래", "호랑이", "참새", "나비", "꽃잎", "해바라기",
-    "대한민국", "세계여행", "문화", "역사", "미래", "환경", "나눔", "존중", "소통", "약속"
+  // ==========================================================================
+  // [1-1] 한글 낱말 (초급 / 중급 / 고급 명확 분리)
+  // ==========================================================================
+  // 초급: 1~2음절 기본 낱말 (받침 없거나 기본 단받침, 일상 기초 어휘)
+  const KO_WORDS_EASY = [
+    "봄", "여름", "가을", "겨울", "하늘", "바다", "구름", "나무", "바람", "소리",
+    "마음", "사랑", "친구", "나비", "우산", "시계", "모자", "물", "불", "달",
+    "별", "해", "산", "강", "길", "집", "문", "눈", "꽃", "새",
+    "차", "책", "밥", "꿈", "밤", "낮", "손", "발", "입", "귀",
+    "노래", "편지", "선물", "미소", "기쁨", "행복", "평화", "아침", "저녁", "하루"
   ];
 
-  // 영문 낱말 (100개 이상, 초급/중급/고급)
-  const EN_WORDS = [
-    // 초급
-    "apple", "book", "time", "water", "dream", "home", "happy", "music", "world", "friend",
-    "light", "heart", "smile", "peace", "star", "green", "cloud", "river", "space", "earth",
-    "sound", "paper", "phone", "plant", "ocean", "bread", "train", "sunny", "laugh", "sweet",
-    // 중급
-    "practice", "keyboard", "journey", "discover", "creative", "improve", "balance", "learning",
-    "mountain", "sunshine", "freedom", "success", "courage", "harmony", "horizon", "inspire",
-    "together", "treasure", "dynamic", "explore", "forward", "genuine", "history", "imagine",
-    "morning", "network", "patient", "reflect", "silence", "thought", "victory", "whisper",
-    // 고급
-    "communication", "responsibility", "determination", "productivity", "collaboration",
-    "extraordinary", "transformation", "understanding", "revolutionary", "sustainability",
-    "infrastructure", "accomplishment", "comprehensive", "enthusiastic", "philosophical",
-    "significance", "unprecedented", "consciousness", "environmental", "perseverance",
-    "sophisticated", "characteristic", "distinguished", "indispensable", "strengthening",
-    "vulnerability", "interconnected", "recommendation", "breakthrough", "synchronize",
-    "inspirational", "trustworthy", "transparency", "versatility", "accessibility",
-    "innovation", "achievement", "confidence", "leadership", "excellence", "dedication",
-    "experience", "opportunity", "efficiency", "creativity", "motivation", "resilience"
+  // 중급: 2~4음절 실생활/비즈니스/학습 복합어 (복모음, 일반 복합 단어)
+  const KO_WORDS_MID = [
+    "컴퓨터", "키보드", "스마트폰", "도서관", "프로젝트", "아이디어", "알고리즘", "소프트웨어",
+    "성취감", "회복탄력성", "대중교통", "인공지능", "네트워크", "프레젠테이션", "자기계발",
+    "스트레스", "커뮤니케이션", "다이어리", "문화유산", "지구온난화", "상호작용", "백과사전",
+    "협력관계", "창의력", "집중력", "문제해결", "프로그래밍", "데이터베이스", "업무효율",
+    "고객만족", "가치창출", "지속가능", "의사소통", "디지털시대", "환경보호", "동기부여"
   ];
 
-  // 한글 짧은 글 (40문장 이상)
-  const KO_SHORT_SENTENCES = [
-    // 초급 (짧고 일상적)
-    "오늘의 작은 노력이 내일의 변화를 만듭니다.",
-    "새로운 것을 배우는 일은 언제나 즐겁습니다.",
-    "따뜻한 햇살이 창문 사이로 들어왔습니다.",
-    "꾸준한 연습은 실력을 조금씩 성장시킵니다.",
-    "여행은 익숙한 일상에서 새로운 시선을 발견하게 합니다.",
-    "좋은 습관은 작은 실천에서 시작됩니다.",
-    "책상 위에 놓인 커피가 천천히 식어갑니다.",
-    "목표를 향해 한 걸음씩 나아가고 있습니다.",
-    "맑은 하늘 아래 사람들이 천천히 걸어갑니다.",
-    "오늘 하루도 나만의 속도로 살아가면 됩니다.",
-    "가벼운 산책으로 지친 몸과 마음에 활력을 채웁니다.",
-    "친구와 나눈 따뜻한 대화가 마음에 남습니다.",
-    "시원한 바람이 불어와 기분 좋은 하루를 만듭니다.",
-    "음악을 들으며 편안한 휴식을 취해봅니다.",
-    "매일 조금씩 성장하는 나를 응원합니다.",
-    // 중급 (문장부호 및 어휘 다양성)
-    "작은 성취가 모여 단단한 자신감을 이루는 밑거름이 됩니다.",
-    "바쁜 일상 속에서도 잠시 멈추어 하늘을 올려다보세요.",
-    "실패를 두려워하지 않고 다시 도전하는 태도가 소중합니다.",
-    "책 속에 담긴 지혜는 삶을 더욱 풍요롭게 만들어 줍니다.",
-    "서로를 배려하는 따뜻한 말 한마디가 큰 힘이 됩니다.",
-    "지금 이 순간에 온전히 집중할 때 최고의 몰입이 생깁니다.",
-    "비가 내린 뒤에 땅이 더욱 굳어지듯 시련은 우리를 단단하게 합니다.",
-    "스스로를 믿고 묵묵히 걷다 보면 어느새 목표에 닿아 있습니다.",
-    "건강한 신체에 건강한 정신이 깃든다는 말을 기억하세요.",
-    "자연이 주는 평온함 속에서 지친 일상을 치유받습니다.",
-    "새로운 아침은 누구에게나 공평하게 주어지는 선물입니다.",
-    "생각을 정리하고 일기를 쓰며 하루를 차분히 마무리합니다.",
-    "깊은 바다처럼 넓고 흔들림 없는 마음가짐을 가지고 싶습니다.",
-    "타인의 성공을 진심으로 축하해줄 수 있는 여유가 필요합니다.",
-    "단정한 책상 정리는 명확한 사고를 돕는 첫걸음입니다.",
-    // 고급 (복합 문장 및 숫자, 특수문자 포함)
-    "2026년 새해 목표를 위해 매일 30분씩 꾸준히 연습하고 있습니다.",
-    "정확도 98% 이상을 유지하며 빠른 타수를 기록하는 것은 멋진 도전입니다!",
-    "소통(Communication)과 배려(Empathy)는 성숙한 인간관계의 핵심 요소입니다.",
-    "“시작이 반이다”라는 옛말처럼, 첫 글자를 타이핑하는 용기가 중요합니다.",
-    "기술의 발전(AI, 클라우드) 속에서도 사람다운 따뜻함은 변치 않습니다.",
-    "매일 1%씩 성장한다면 1년 뒤에는 약 37배(37.78)의 성장을 이룹니다.",
-    "키보드 위에 손을 얹고 바른 자세로 타자 연습을 시작해 볼까요?",
-    "노력의 대가는 결코 사라지지 않으며, 때가 되면 결실을 맺습니다.",
-    "어제의 나와 오늘의 나를 비교하며 긍정적인 자극을 얻어보세요.",
-    "준비된 자에게 기회가 찾아온다는 격언을 가슴에 새깁니다."
+  // 고급: 겹받침 (ㄳ, ㄵ, ㄶ, ㄺ, ㄻ, ㄼ, ㄽ, ㄾ, ㄿ, ㅀ, ㅄ), 사자성어, 고난도 어휘
+  const KO_WORDS_HARD = [
+    // 겹받침 집중 어휘
+    "갉아먹다", "닭볶음탕", "흙먼지", "읊조리다", "넋두리", "옭아매다", "훑어보다", "굶주림",
+    "떫은맛", "맑은물", "값어치", "넙치구이", "앉은뱅이", "여덟째", "곪아터지다", "끊임없이",
+    "끓어오르다", "얹어놓다", "핥아먹다", "삯바느질", "홑이불", "넓적다리", "읊는소리", "옭매이다",
+    // 사자성어 및 고난도 어휘
+    "일취월장", "마부위침", "역지사지", "감언이설", "온고지신", "결초보은", "고진감래", "주경야독",
+    "동고동락", "괄목상대", "전광석화", "천고마비", "유비무환", "파죽지세", "이심전심", "전화위복",
+    "대동소이", "수수방관", "자포자기", "권토중래", "교학상장", "침소봉대", "군계일학", "풍전등화"
   ];
 
-  // 영문 짧은 글 (40문장 이상)
-  const EN_SHORT_SENTENCES = [
-    // 초급
-    "Practice makes progress every day.",
-    "Small steps can lead to big changes.",
-    "Every new day brings another opportunity.",
-    "Learning something new takes patience.",
-    "A good habit begins with a simple action.",
-    "The morning sunlight filled the room.",
-    "Keep moving forward at your own pace.",
-    "A quiet moment can bring a fresh idea.",
-    "Believe in yourself and take the first step.",
-    "Happiness is found in the little things.",
-    "Music has the power to brighten your day.",
-    "Kind words can make a big difference.",
-    "Focus on what you can control right now.",
-    "Stay curious and keep exploring the world.",
-    "A smile is the universal language of kindness.",
-    // 중급
-    "Success is the sum of small efforts repeated day in and day out.",
-    "The only limit to our realization of tomorrow is our doubts of today.",
+  // ==========================================================================
+  // [1-2] 영문 낱말 (초급 / 중급 / 고급 명확 분리)
+  // ==========================================================================
+  // 초급: 3~4글자 기초 단어
+  const EN_WORDS_EASY = [
+    "sun", "sky", "sea", "tree", "book", "pen", "cup", "car", "bus", "run",
+    "walk", "red", "blue", "milk", "fish", "star", "moon", "home", "time", "food",
+    "love", "hand", "foot", "door", "wind", "rain", "snow", "bird", "cat", "dog",
+    "park", "desk", "road", "ship", "song", "game", "gold", "fire", "leaf", "city"
+  ];
+
+  // 중급: 5~8글자 표준 단어
+  const EN_WORDS_MID = [
+    "practice", "keyboard", "monitor", "library", "student", "teacher", "computer", "internet",
+    "program", "balance", "creative", "harmony", "explore", "forward", "journey", "dynamic",
+    "patient", "reflect", "silence", "thought", "victory", "morning", "network", "project",
+    "develop", "science", "future", "culture", "respect", "freedom", "calendar", "weather",
+    "machine", "strength", "energy", "history", "imagine", "whisper", "comfort", "element"
+  ];
+
+  // 고급: 9~16글자 전문/학술 단어
+  const EN_WORDS_HARD = [
+    "synchronization", "conscientiousness", "incomprehensible", "vulnerability", "extraordinary",
+    "transformation", "sustainability", "philosophical", "unprecedented", "characteristic",
+    "indispensable", "infrastructure", "accomplishment", "comprehensive", "environmental",
+    "distinguished", "revolutionary", "perseverance", "sophisticated", "interconnected",
+    "acknowledgment", "claustrophobia", "maneuverability", "reconnaissance", "troubleshooting",
+    "interoperability", "proportionality", "experimentation", "responsiveness", "generalization"
+  ];
+
+  // ==========================================================================
+  // [1-3] 한글 짧은 글 (초급 / 중급 / 고급 명확 분리)
+  // ==========================================================================
+  // 초급: 10~18자 내외 단순 기초 단문
+  const KO_SHORT_SENTENCES_EASY = [
+    "맑은 하늘이 참 예쁩니다.",
+    "오늘 하루도 힘차게 시작해요.",
+    "시원한 바람이 솔솔 불어옵니다.",
+    "따뜻한 물을 천천히 마셔요.",
+    "새로운 아침이 밝았습니다.",
+    "매일 조금씩 꾸준히 연습해요.",
+    "친구와 함께 산책을 합니다.",
+    "책상 위를 깨끗이 정돈해요.",
+    "새들의 맑은 노랫소리가 울려요.",
+    "달콤한 과일을 맛있게 먹어요.",
+    "음악을 들으며 편안히 쉬어요.",
+    "서로 웃으며 인사를 나눕니다.",
+    "푸른 바다를 보며 힐링합니다.",
+    "작은 일에도 감사함을 느껴요.",
+    "포기하지 않고 끝까지 해봐요."
+  ];
+
+  // 중급: 25~45자 쉼표, 복문 구조, 감정 및 일상 사색
+  const KO_SHORT_SENTENCES_MID = [
+    "작은 성취가 모여, 단단한 자신감을 이루는 밑거름이 됩니다.",
+    "바쁜 일상 속에서도 잠시 멈추어, 파란 하늘을 올려다보세요.",
+    "실패를 두려워하지 않고 다시 도전하는 용기가 가장 값집니다.",
+    "따뜻한 차 한 잔을 마시며, 지나간 하루를 차분히 정리합니다.",
+    "비가 내린 뒤에 땅이 굳어지듯, 시련은 우리를 성장시킵니다.",
+    "타인의 성공을 진심으로 축하할 줄 아는 너그러움이 필요합니다.",
+    "매일 10분씩 독서하는 습관이, 깊이 있는 생각을 만들어 줍니다.",
+    "서로를 배려하는 따뜻한 말 한마디가, 얼어붙은 마음을 녹입니다.",
+    "자연이 주는 평온함 속에서, 지친 몸과 마음에 활력을 채웁니다.",
+    "목표를 향해 묵묵히 걷다 보면, 어느새 정상에 닿아 있습니다.",
+    "스스로를 믿고 신중하게 결정할 때, 후회 없는 선택을 하게 됩니다.",
+    "좋은 습관을 만드는 시간은 길지만, 그 결과는 평생을 지탱합니다."
+  ];
+
+  // 고급: 45~75자 숫자, 영문, 특수기호(!, ?, %, "", '', [], ()), 겹받침 밀집
+  const KO_SHORT_SENTENCES_HARD = [
+    "2026년 AI·클라우드 환경에서 정확도 99.5% 이상의 초고속 타자(CPM 600+)를 달성해 보세요!",
+    "‘시작이 반이다’라는 격언처럼, 키보드[Shift/Ctrl]와 겹받침(ㄳ, ㄵ, ㄶ, ㄺ) 연습이 중요합니다.",
+    "소통(Communication)과 회복탄력성(Resilience)은 프로젝트 성공의 90% 이상을 좌우합니다.",
+    "매일 1%씩 성장한다면 1년(365일) 뒤에는 약 37.78배의 눈부신 성취를 거두게 됩니다.",
+    "흙먼지 속에서도 맑고 밝은 꿈을 잃지 않고, 넙치처럼 넙죽 엎드리기보다 당당히 전진합시다!",
+    "디지털 대전환(DX) 시대, 창의적 문제 해결력(Creative Problem Solving)과 정밀 타건 능력을 기릅시다.",
+    "역지사지(易地思之)의 태도로 상대방의 넋두리를 경청하는 배려가 조직의 시너지를 극대화합니다.",
+    "어제의 한계(Limit)를 깨뜨리고 오늘의 나를 120% 뛰어넘는 열정으로 도전을 계속하세요!",
+    "읊조리듯 시를 낭송하며 끊임없이(Endless) 자판을 두드리는 연습은 고도의 집중력을 요구합니다.",
+    "‘마부위침(磨斧爲針)’의 끈기로 매일 15분씩 연습하면, 누구나 최고급 타자왕이 될 수 있습니다!"
+  ];
+
+  // ==========================================================================
+  // [1-4] 영문 짧은 글 (초급 / 중급 / 고급 명확 분리)
+  // ==========================================================================
+  // 초급: 15~25자 단순 단문
+  const EN_SHORT_SENTENCES_EASY = [
+    "The sun rises in the morning.",
+    "Practice makes better every day.",
+    "A good book opens a new world.",
+    "Keep smiling and stay positive.",
+    "Walking in the park is relaxing.",
+    "Small steps bring great results.",
+    "Fresh air gives good energy.",
+    "Music brings joy to everyone.",
+    "Kind words make people happy.",
+    "Believe in yourself each day.",
+    "Drink water and stay healthy.",
+    "Every day is a fresh start."
+  ];
+
+  // 중급: 35~55자 콤마, 복합문 구조
+  const EN_SHORT_SENTENCES_MID = [
+    "Success is the sum of small efforts, repeated day in and day out.",
+    "When you focus on the good, the good around you gets even better.",
     "Consistency is the true foundation of meaningful mastery and growth.",
-    "Do not be afraid of moving slowly, be afraid only of standing still.",
-    "Great things are done by a series of small things brought together.",
-    "Your attitude determines your direction in both life and work.",
-    "Take time to appreciate how far you have already come today.",
-    "Clear thinking requires courage rather than sheer intelligence.",
-    "Every accomplishment starts with the decision to try your best.",
     "Difficult roads often lead to beautiful and unexpected destinations.",
-    "Reading good books is like having a conversation with the finest minds.",
-    "True confidence comes from preparation, persistence, and self-respect.",
-    "Find joy in the process rather than stressing over the final outcome.",
-    "A disciplined routine brings freedom and long-term peace of mind.",
-    "The secret of getting ahead is simply getting started right away.",
-    // 고급
-    "In 2026, consistent digital literacy and typing speed are essential skills.",
-    "Strive for 99% accuracy; speed will naturally follow with practice!",
-    "Effective communication requires listening twice as much as speaking.",
-    "“The journey of a thousand miles begins with a single step.” — Lao Tzu",
-    "Technological innovation transforms how we live, work, and collaborate.",
-    "Focus 100% on quality first; high velocity is a byproduct of precision.",
-    "Keep your back straight and hands relaxed while typing on the keyboard.",
-    "Cultivate resilience in the face of temporary setbacks and challenges.",
-    "Compare yourself only to who you were yesterday, not to someone else today.",
-    "Dedication, patience, and enthusiasm are the keys to lasting achievement."
+    "Clear thinking requires courage rather than sheer intelligence alone.",
+    "Find joy in the process itself, rather than stressing over the outcome.",
+    "A disciplined routine brings lasting freedom and genuine peace of mind.",
+    "The secret of getting ahead is simply having the bravery to begin.",
+    "True confidence grows quietly through daily preparation and self-respect.",
+    "Reading good literature is like conversing with history's finest minds."
   ];
 
-  // 한글 긴 글 (10개, 각 300~600자)
-  const KO_LONG_TEXTS = [
+  // 고급: 60~95자 기호, 인용구, 약어, 기술 복합문
+  const EN_SHORT_SENTENCES_HARD = [
+    "In 2026, mastering high-speed typing (650+ CPM) with 99.8% accuracy is essential for IT/AI careers!",
+    "“The secret of change is to focus all of your energy not on fighting the old, but on building the new.” — Socrates",
+    "Effective cross-functional communication (API, UX/UI, DevOps) requires empathy, agility, and 100% dedication.",
+    "Keep your back straight (90° posture), wrists elevated, and fingers positioned precisely on the 'ASDF / JKL;' home row!",
+    "Technological innovation [Cloud & LLMs] accelerates productivity by 35%~50% across multidisciplinary domains.",
+    "“Success isn't always about greatness; it's about consistency. Consistent hard work leads to success.” — Dwayne Johnson",
+    "Are you ready to test your cognitive agility, typing velocity, and keyboard coordination under 60-second pressure?",
+    "Mastering complex programming paradigms (OOP, Functional, Reactive) demands continuous curiosity & resilience!"
+  ];
+
+  // ==========================================================================
+  // [1-5] 한글 긴 글 (초급 / 중급 / 고급 명확 분리 및 행별 줄바꿈 \n 지원)
+  // ==========================================================================
+  // 초급 긴 글: 100~150자 내외, 3~4개의 명확한 행, 쉬운 어휘 (각 행 끝 Enter로 줄바꿈)
+  const KO_LONG_TEXTS_EASY = [
     {
-      title: "작은 습관의 놀라운 힘",
-      content: "우리는 매일 수많은 결정을 내리고 행동하며 살아갑니다. 하지만 하루의 많은 부분은 의식적인 선택보다 무의식적인 습관에 의해 움직입니다. 아주 사소해 보이는 좋은 습관 하나가 1년, 5년, 10년이 지나면 상상할 수 없을 만큼 커다란 삶의 차이를 만듭니다. 매일 아침 물 한 잔을 마시는 습관, 하루 10분씩 책을 읽거나 타자 연습을 하는 작은 노력들이 모여 우리의 삶을 건강하고 단단하게 바꿉니다. 처음에는 우리가 습관을 만들지만, 결국 그 습관이 우리의 미래를 만듭니다. 오늘부터 실천할 수 있는 나만의 작은 좋은 습관을 시작해 보세요."
+      title: "봄날의 아침 산책",
+      content: "따뜻한 봄바람이 살랑살랑 불어옵니다.\n파란 하늘 위로 하얀 구름이 천천히 흘러갑니다.\n나무마다 파릇파릇한 새싹이 기분 좋게 돋아납니다.\n오늘 하루도 힘차고 즐겁게 시작해 봅니다."
     },
     {
-      title: "계절이 머무는 숲길",
-      content: "푸른 나무들이 우거진 숲길을 걷다 보면 마음속에 쌓여 있던 복잡한 생각들이 잔잔하게 가라앉습니다. 나뭇잎 사이로 부서져 내리는 햇살과 뺨을 스치는 시원한 바람은 지친 일상에 다정한 위로를 건넵니다. 발걸음을 옮길 때마다 사각거리는 흙의 감촉과 은은한 풀내음은 오랫동안 잊고 지냈던 자연의 온기를 일깨워 줍니다. 서두르지 않고 계절의 변화를 온몸으로 느끼며 천천히 걷는 시간은 삶의 속도를 늦추고 내면을 돌아보는 소중한 선물이 됩니다. 자연은 언제나 그 자리에서 묵묵히 우리를 기다리고 있습니다."
+      title: "책 한 권의 여유",
+      content: "조용한 방 안에 앉아 책장을 천천히 넘깁니다.\n은은한 종이 냄새가 마음을 편안하게 감싸줍니다.\n새로운 이야기를 읽으며 작은 행복을 느낍니다.\n차 한 잔과 함께하는 여유로운 시간입니다."
     },
     {
-      title: "새로운 배움의 즐거움",
-      content: "새로운 지식을 배우고 경험을 쌓는 일은 나이와 상관없이 삶에 생기와 열정을 불어넣어 줍니다. 낯선 악기를 배우거나, 새로운 언어를 익히고, 키보드 타자 실력을 키우는 모든 과정은 뇌를 자극하고 호기심을 깨웁니다. 처음에는 손에 익지 않아 서투르고 실수가 잦을 수 있지만, 매일 반복하며 조금씩 익숙해지는 순간에 느끼는 뿌듯함은 그 무엇과도 바꿀 수 없습니다. 배움은 정해진 종착역이 있는 레이스가 아니라 평생을 걸쳐 즐기는 흥미진진한 여행입니다. 오늘 새로운 첫걸음을 떼어보세요."
-    },
-    {
-      title: "기다림과 차 한 잔의 여유",
-      content: "따뜻한 물을 붓고 찻잎이 천천히 우러나기를 기다리는 시간은 바쁜 현대 사회에서 누릴 수 있는 특별한 휴식입니다. 급하게 마시기보다 찻잔에서 피어오르는 은은한 김을 바라보며 향기를 음미할 때 비로소 진정한 차의 매력을 느낄 수 있습니다. 조급한 마음을 잠시 내려놓고 기다림의 미학을 배우는 일은 우리 삶의 태도와도 닮아 있습니다. 조급해한다고 해서 원하는 결과가 더 빨리 오지는 않습니다. 충분히 무르익을 때까지 기다릴 줄 아는 여유가 삶의 깊이를 더해줍니다."
-    },
-    {
-      title: "독서가 선사하는 세상",
-      content: "책장을 한 장씩 넘길 때마다 우리는 시공간을 초월하여 전혀 다른 세상으로 여행을 떠납니다. 다른 사람의 깊은 사유와 삶의 경험을 활자로 마주하며 우리의 시야는 한층 더 넓어집니다. 책은 우리가 가보지 못한 곳을 보여주고, 미처 생각하지 못했던 질문을 던지며 내면의 세계를 풍요롭게 채워줍니다. 하루 단 15분이라도 조용한 공간에서 책을 펼치는 습관은 번잡한 세상 속에서 나만의 중심을 지킬 수 있는 단단한 힘을 길러줍니다. 오늘 밤 책 한 권과 함께 평온한 사색에 잠겨보세요."
-    },
-    {
-      title: "여행이 남기는 소중한 기억",
-      content: "일상의 테두리를 벗어나 낯선 장소로 떠나는 여행은 언제나 가슴을 설레게 합니다. 낯선 언어와 새로운 풍경, 우연히 마주친 사람들의 따뜻한 미소는 익숙한 일상에서 굳어있던 감각을 새롭게 일깨웁니다. 여행지에서 겪는 뜻밖의 실수나 우연한 길 잃음조차도 시간이 지나면 잊지 못할 추억의 한 페이지가 됩니다. 여행은 단순히 새로운 명소를 구경하는 것이 아니라, 낯선 환경 속에서 새로운 나를 발견하는 특별한 시간입니다. 마음속에 품어둔 목적지로 떠나보세요."
-    },
-    {
-      title: "실패를 바라보는 시선",
-      content: "어떤 일에 도전하다 보면 누구나 원치 않는 실수나 실패를 마주하게 됩니다. 그러나 실패는 결코 끝이 아니라 올바른 방향을 찾아가는 소중한 이정표입니다. 실패를 겪지 않았다는 것은 새로운 도전을 하지 않았다는 뜻일 수도 있습니다. 넘어졌을 때 주저앉아 자책하기보다는 무엇을 배웠는지 돌아보고 다시 흙을 털고 일어나는 회복탄력성이 중요합니다. 성공한 사람들은 실패가 없었던 사람이 아니라, 실패할 때마다 다시 일어선 사람들입니다. 당신의 도전을 끝까지 응원합니다."
-    },
-    {
-      title: "디지털 시대의 아날로그 감성",
-      content: "스마트폰과 초고속 인터넷이 지배하는 오늘날에도 손편지나 종이책, 아날로그 시계 같은 감성이 여전히 많은 사람들에게 깊은 사랑을 받고 있습니다. 빠르고 편리한 것만이 삶의 전부는 아니기 때문입니다. 손가락으로 키보드를 정성스럽게 두드리며 전하는 메시지 속에서도 상대를 향한 진심과 따뜻한 정성은 고스란히 담길 수 있습니다. 화면 너머로 오가는 텍스트 한 글자 한 글자에 온기를 싣는 연습은 각박한 현대 사회에서 우리의 마음을 부드럽게 지켜줍니다. 기술의 편리함을 지혜롭게 활용하되 사람 사이의 따뜻한 정서와 교감을 결코 잃지 않는 것, 그것이 바로 디지털 시대를 살아가는 우리가 지켜내야 할 가장 소중한 균형입니다."
-    },
-    {
-      title: "맑은 아침을 맞이하는 태도",
-      content: "눈을 떴을 때 창밖으로 비치는 아침 햇살을 마주하는 순간은 하루 전체의 기분과 생산성을 결정짓는 매우 중요한 시간입니다. 피곤하다는 불평 대신 '오늘도 나에게 새로운 기회의 하루가 주어졌구나'라는 감사의 마음을 품어보세요. 가벼운 스트레칭과 깊은 심호흡으로 굳어있던 몸을 부드럽게 깨우고, 오늘 해야 할 일들을 차분하게 정리하는 아침 루틴은 삶에 긍정적인 통제감을 부여합니다. 하루의 시작이 밝고 평온하면 오후에 찾아오는 뜻밖의 피로와 예상치 못한 변수들도 한결 너그럽고 침착하게 받아들일 수 있습니다. 매일 아침 나 자신을 다정하게 격려하는 습관을 들여보세요."
-    },
-    {
-      title: "성공적인 협력과 배려",
-      content: "혼자 가면 빨리 갈 수 있지만 함께 가면 훨씬 더 멀리 갈 수 있다는 아프리카 속담이 있습니다. 복잡하고 다양한 문제를 지혜롭게 해결해야 하는 현대 사회에서 팀워크와 배려의 가치는 그 어느 때보다 중요해졌습니다. 서로의 다른 점을 비난하거나 단점으로 보지 않고 상호 보완해야 할 개성으로 바라보며, 동료의 의견을 진심으로 경청하는 열린 자세가 진정한 시너지를 만듭니다. 신뢰를 바탕으로 한 건강한 소통과 서로를 북돋아 주는 따뜻한 격려는 개인의 성장은 물론 공동체 전체를 풍요롭고 단단하게 만드는 가장 강력한 힘입니다. 함께하는 사람들의 존재에 감사해 보세요."
+      title: "작은 다짐의 시작",
+      content: "매일 조금씩 꾸준히 연습하는 습관을 기릅니다.\n처음에는 서툴러도 하루하루 실력이 늘어갑니다.\n어제보다 조금 더 성장한 나를 발견합니다.\n오늘도 밝은 미소로 나의 꿈을 응원합니다."
     }
   ];
 
-  // 영문 긴 글 (10개, 각 300~600자)
-  const EN_LONG_TEXTS = [
+  // 중급 긴 글: 250~350자 내외, 6~8행, 표준 수필/에세이
+  const KO_LONG_TEXTS_MID = [
+    {
+      title: "작은 습관이 만드는 큰 변화",
+      content: "우리는 매일 수많은 결정을 내리고 행동하며 살아갑니다.\n사소해 보이는 좋은 습관 하나가 모여 삶 전체를 바꿉니다.\n매일 아침 시원한 물 한 잔을 마시는 작은 습관,\n하루 15분씩 책을 읽거나 타자 연습을 하는 꾸준한 정성이\n우리의 일상을 더욱 단단하고 건강하게 채워줍니다.\n조급한 마음을 내려놓고 작은 목표를 끈기 있게 실천해 보세요.\n처음에는 우리가 습관을 만들지만, 결국 그 습관이\n우리의 찬란한 미래를 만들어 갈 것입니다."
+    },
+    {
+      title: "숲길을 걸으며 찾는 평온",
+      content: "푸른 나무들이 우거진 조용한 숲길을 천천히 걸어봅니다.\n복잡했던 머릿속 생각들이 맑은 공기 속에 잔잔하게 가라앉습니다.\n나뭇잎 사이로 부서져 내리는 눈부신 햇살과\n뺨을 스치는 시원한 바람이 지친 일상에 다정한 위로를 건넵니다.\n발걸음을 옮길 때마다 사각거리는 흙과 낙엽의 감촉은\n자연이 우리에게 건네는 가장 순수하고 따뜻한 선물입니다.\n서두르지 않고 온전히 나 자신에게 집중하는 시간을 가져보세요."
+    },
+    {
+      title: "새로운 배움과 지혜의 여정",
+      content: "새로운 지식을 배우고 경험을 쌓아가는 모든 과정은\n나이와 상관없이 우리 삶에 깊은 활기를 불어넣어 줍니다.\n키보드 위에서 손가락이 유연하게 움직이는 순간마다\n매일 조금씩 익숙해지는 뿌듯함을 온전히 맛볼 수 있습니다.\n실수를 두려워하지 않고 한 걸음씩 나아가는 용기야말로\n더 넓은 세상으로 도약할 수 있는 진정한 밑거름입니다.\n배움이란 정해진 종착역이 있는 경쟁이 아니라,\n평생을 걸쳐 스스로를 발견해 나가는 아름다운 여행입니다."
+    }
+  ];
+
+  // 고급 긴 글: 450~600자 내외, 8~12행, 전문 어휘, 겹받침, 숫자, 영문, 철학/사설 텍스트
+  const KO_LONG_TEXTS_HARD = [
+    {
+      title: "디지털 대전환(DX)과 인공지능(AI) 시대의 통찰",
+      content: "2026년 인공지능(AI)과 클라우드 컴퓨팅 기술은 사회 전반을 획기적으로 재편하고 있습니다.\n방대한 빅데이터(Big Data)와 복합 신경망 알고리즘의 발전 속에서도 인간 고유의 통찰력은 여전히 핵심입니다.\n단순한 첨단 기술의 수동적 소비자에 머무르지 않고, 창의적 문제 해결사(Problem Solver)로 도약해야 합니다.\n키보드를 신속·정밀하게 조작하는 타건 능력(CPM 600+)과 디지털 문해력(Digital Literacy)은 필수 무기입니다.\n흙먼지 가득한 거친 환경에서도 맑은 꿈을 잃지 않는 강인한 회복탄력성(Resilience)을 함께 길러야 합니다.\n‘마부위침(磨斧爲針)’의 끈기로 매일 역량을 연마할 때, 기술은 비로소 인류 번영을 향한 강력한 날개가 됩니다.\n끊임없는 호기심과 불굴의 탐구 정신으로 미래 사회의 새로운 지평(Horizon)을 당당하게 열어가세요."
+    },
+    {
+      title: "회복탄력성과 불요불굴(不撓不屈)의 개척 정신",
+      content: "인생의 여정에서 마주하는 뜻밖의 좌절과 시련은 결코 우리를 옭아매는 실패의 종착점이 아닙니다.\n오히려 곪아터진 상처를 치유하고 내면의 단단한 정신적 근육을 단련하는 값진 전환점(Turning Point)입니다.\n누구나 넋두리를 읊조리며 주저앉고 싶은 순간을 겪지만, 다시 흙을 털고 꿋꿋이 일어나는 용기가 중요합니다.\n떫은맛의 고통 속에서도 향기로운 결실을 맺는 열매처럼, 인내와 헌신은 찬란한 성공의 밑거름이 됩니다.\n역지사지(易地思之)의 너그러운 배려로 주변 동료들과 동고동락(同苦同樂)하며 협력의 시너지를 발휘해 보세요.\n스스로 설정한 한계선(Limit)을 120% 뛰어넘으려는 불요불굴(不撓不屈)의 도전 정신이 진정한 기적을 만듭니다.\n어제보다 오늘 한 걸음 더 전진하는 당신의 묵묵한 노력은 반드시 값진 열매로 보답받을 것입니다."
+    },
+    {
+      title: "기술 문명 속 인간다움의 가치와 성찰",
+      content: "초연결 사회(Hyper-Connected Society)의 눈부신 편리함 속에서 우리는 종종 내면의 고요를 잃어버립니다.\n수많은 디지털 알림과 단편적인 정보의 홍수 속에서 사유(Deep Reflection)의 깊이는 얕아지기 십상입니다.\n하지만 인류의 참된 지혜는 속도(Velocity)보다 깊이 있는 철학적 성찰과 따뜻한 감정적 교감(Empathy)에서 비롯됩니다.\n타인을 훑어보며 가볍게 재단하기보다, 진심 어린 눈빛으로 경청하는 태도가 훨씬 값어치 있고 고귀합니다.\n‘온고지신(溫故知新)’의 지혜로 옛 성현들의 가르침을 되새기며, 첨단 기술과 인문학의 조화로운 공존을 모색해야 합니다.\n기계가 흉내 낼 수 없는 인간 고유의 온기와 도덕적 품격을 지켜낼 때, 미래 공동체는 진정으로 성숙해집니다.\n화려한 기교보다 진실한 정성을 담아 키보드를 두드리는 순간, 우리의 언어는 세상에 선한 영향력을 전합니다."
+    }
+  ];
+
+  // ==========================================================================
+  // [1-6] 영문 긴 글 (초급 / 중급 / 고급 명확 분리 및 행별 줄바꿈 \n 지원)
+  // ==========================================================================
+  // 초급 긴 글: 100~150자 내외, 4행, 기초 영문
+  const EN_LONG_TEXTS_EASY = [
+    {
+      title: "A Sunny Morning Walk",
+      content: "The bright morning sun shines in the sky.\nGentle birds are singing sweet songs in the green trees.\nWalking along the quiet path brings a peaceful smile.\nToday is a wonderful day to learn and grow."
+    },
+    {
+      title: "Reading Good Books",
+      content: "Sitting in a cozy room with a warm cup of tea.\nTurning each clean page opens up a new dream.\nQuiet words bring calm thoughts to the heart.\nEnjoy this simple moment of peace today."
+    }
+  ];
+
+  // 중급 긴 글: 250~350자 내외, 6~8행
+  const EN_LONG_TEXTS_MID = [
     {
       title: "The Power of Atomic Habits",
-      content: "It is so easy to overestimate the importance of one defining moment and underestimate the value of making small improvements on a daily basis. Too often, we convince ourselves that massive success requires massive action. However, improving by one percent isn't particularly notable, sometimes it isn't even noticeable, but it can be far more meaningful in the long run. The difference a tiny improvement can make over time is astounding. If you can get one percent better each day for one year, you will end up thirty-seven times better by the time you are done. Small habits matter tremendously."
+      content: "It is so easy to overestimate the importance of one defining moment\nand underestimate the value of making small improvements on a daily basis.\nImproving by just one percent each day may not be noticeable at first,\nbut it compounds into extraordinary results over the course of a year.\nIf you stay dedicated to positive routines, your habits will shape your future.\nSmall actions, practiced consistently, create lasting personal mastery."
     },
     {
-      title: "Embracing the Digital Future",
-      content: "Technology continues to evolve at a breathtaking pace, transforming the fundamental ways we communicate, learn, and collaborate across international borders. Artificial intelligence, cloud infrastructure, and modern web applications have opened up unprecedented opportunities for personal productivity and creative problem solving. However, as the digital world becomes faster and more integrated, foundational digital literacy skills such as fast and accurate typing remain indispensable. Mastering your interaction with the keyboard empowers you to express your thoughts with speed and clarity."
+      title: "The Serenity of Morning Light",
+      content: "There is an ethereal tranquility in the quiet moments before dawn.\nThe soft golden glow slowly illuminates the sleeping horizon.\nTaking time to breathe deeply and reflect anchors the mind for the day.\nWhen we approach our mornings with calm mindfulness rather than hurried rush,\nwe establish a resilient inner foundation that gracefully endures any challenge."
+    }
+  ];
+
+  // 고급 긴 글: 450~600자 내외, 8~12행, 전문 기술 및 철학
+  const EN_LONG_TEXTS_HARD = [
+    {
+      title: "Technological Transformation and Human Wisdom",
+      content: "In 2026, artificial intelligence (AI) and cloud computing infrastructures\nare fundamentally transforming how humanity communicates, collaborates, and creates.\nWhile computational velocity increases exponentially across digital ecosystems,\nfoundational cognitive capabilities—such as critical thinking and typing dexterity—remain vital.\nMastering keyboard ergonomics with high accuracy (99.8%) and 600+ CPM allows seamless ideation.\nWe must balance technological acceleration with ethical wisdom, empathy, and philosophical introspection.\nOnly when advanced algorithms serve humanistic values can global society flourish sustainably."
     },
     {
-      title: "The Beauty of Morning Light",
-      content: "There is an ethereal serenity in the early morning before the rest of the world awakens. The soft glow of dawn slowly illuminates the quiet horizon, casting gentle shadows across tranquil neighborhoods and silent avenues. Taking a quiet moment to breathe deeply, sip a hot cup of coffee, and listen to the faint melodies of waking birds can anchor your spirit for the entire day ahead. When we greet the morning with calm mindfulness rather than hurried stress, we create a resilient foundation capable of handling whatever challenges arise."
-    },
-    {
-      title: "Continuous Learning and Curiosity",
-      content: "Curiosity is the engine of intellectual growth and creative achievement. When we maintain a childlike sense of wonder toward the unknown, learning ceases to be a tedious chore and becomes an exhilarating journey of discovery. Reading insightful literature, exploring novel philosophies, and honing practical technical abilities keep our cognitive faculties sharp and youthful. Growth requires humility because we must acknowledge the boundaries of our current understanding before we can expand them. Commit yourself to being a lifelong student."
-    },
-    {
-      title: "Resilience in Difficult Seasons",
-      content: "Adversity is an inevitable dimension of the human condition, yet it often carries the seeds of profound inner strength. When plans unravel and circumstances disappoint, our true character is forged through resilience and determined persistence. Rather than allowing temporary setbacks to define our identity, we can view them as rigorous masterclasses in patience and perseverance. The oak tree grows strong not in spite of turbulent storms, but because resisting the harsh winds forces its roots to dig deeper into the earth."
-    },
-    {
-      title: "The Art of Thoughtful Reflection",
-      content: "In our hyper-connected society driven by instant notifications and relentless speed, genuine reflection has become a rare and endangered luxury. Taking the time to disconnect from digital noise and introspect allows us to align our daily actions with our core values. Journaling, quiet walks in nature, and honest self-examination help clarify ambiguous feelings and generate strategic insights. Without deliberate periods of pause, we risk running swiftly in directions we never intended to pursue. Guard your quiet hours with fierce loyalty."
-    },
-    {
-      title: "Collaborative Synergy and Teamwork",
-      content: "While individual brilliance can spark remarkable breakthroughs, enduring triumphs are almost universally the product of harmonious collective cooperation. When diverse minds unite with a shared objective, individual limitations are offset by complementary talents. Genuine teamwork flourishes within an atmosphere of psychological safety, open vulnerability, and mutual respect. Celebrating one another's successes fosters a generous culture where everyone is inspired to contribute their highest and best efforts without hesitation."
-    },
-    {
-      title: "Mindfulness in Everyday Moments",
-      content: "Mindfulness is not an esoteric ritual reserved for quiet mountaintops; it is the practical art of inhabiting the present moment with non-judgmental awareness. Whether washing dishes, typing an email, or savoring an ordinary meal, bringing complete attention to your current activity infuses mundane routines with rich vitality. When our thoughts constantly dwell on past regrets or fret over anticipated futures, we forfeit the only reality we truly possess: the precious and vibrant present moment right now."
-    },
-    {
-      title: "Cultivating Genuine Empathy",
-      content: "Empathy is the gentle bridge that connects separate human souls across chasms of misunderstanding and emotional isolation. It demands that we step outside our own preconceptions and strive to perceive reality through the perspective and feelings of another person. Listening with generous, unhurried attention is often the most profound kindness we can offer to someone who feels overlooked. When empathy guides our discourse, conflict softens into constructive dialog and shared humanity prevails over ideological division."
-    },
-    {
-      title: "The Discipline of Creative Mastery",
-      content: "Many romanticize inspiration as an unpredictable lightning bolt that strikes the chosen few, but true creative mastery is primarily the child of disciplined consistency. Professional writers, artists, and engineers show up at their desks regardless of whether mood and motivation align. They understand that creative momentum is generated through the physical act of starting. By establishing reliable daily rituals and honoring the craft with focused patience, ordinary effort is eventually transmuted into extraordinary excellence."
+      title: "Cultivating Psychological Resilience and Grit",
+      content: "Adversity is an inevitable facet of human experience, yet it holds transformative power.\nWhen complex projects encounter unexpected friction, genuine character is forged through grit.\nResilient innovators view temporary setbacks not as insurmountable roadblocks,\nbut as rigorous empirical masterclasses in strategic troubleshooting and perseverance.\nMaintain 100% focus on iterative progress rather than dwelling on temporary mistakes.\nThrough disciplined routines, continuous curiosity, and emotional fortitude,\nordinary effort is transmuted into world-class excellence and enduring triumph."
     }
   ];
 
@@ -392,43 +418,54 @@
   function loadContentList() {
     let list = [];
     const isKo = (state.lang === 'ko');
-    const diff = state.difficulty;
+    const diff = state.difficulty; // 'all' | 'easy' | 'mid' | 'hard'
 
     if (state.mode === 'word') {
-      const full = isKo ? KO_WORDS : EN_WORDS;
+      const db = isKo
+        ? { easy: KO_WORDS_EASY, mid: KO_WORDS_MID, hard: KO_WORDS_HARD }
+        : { easy: EN_WORDS_EASY, mid: EN_WORDS_MID, hard: EN_WORDS_HARD };
+
       if (diff === 'easy') {
-        list = full.slice(0, Math.floor(full.length * 0.35));
+        list = [...db.easy];
       } else if (diff === 'mid') {
-        list = full.slice(Math.floor(full.length * 0.35), Math.floor(full.length * 0.7));
+        list = [...db.mid];
       } else if (diff === 'hard') {
-        list = full.slice(Math.floor(full.length * 0.7));
+        list = [...db.hard];
       } else {
-        list = [...full];
+        list = [...db.easy, ...db.mid, ...db.hard];
       }
       list = shuffleArray(list);
     } else if (state.mode === 'short' || state.mode === 'test1' || state.mode === 'test3') {
-      const full = isKo ? KO_SHORT_SENTENCES : EN_SHORT_SENTENCES;
+      const db = isKo
+        ? { easy: KO_SHORT_SENTENCES_EASY, mid: KO_SHORT_SENTENCES_MID, hard: KO_SHORT_SENTENCES_HARD }
+        : { easy: EN_SHORT_SENTENCES_EASY, mid: EN_SHORT_SENTENCES_MID, hard: EN_SHORT_SENTENCES_HARD };
+
       if (diff === 'easy') {
-        list = full.slice(0, 15);
+        list = [...db.easy];
       } else if (diff === 'mid') {
-        list = full.slice(15, 30);
+        list = [...db.mid];
       } else if (diff === 'hard') {
-        list = full.slice(30);
+        list = [...db.hard];
       } else {
-        list = [...full];
+        list = [...db.easy, ...db.mid, ...db.hard];
       }
       list = shuffleArray(list);
     } else if (state.mode === 'long') {
-      const texts = isKo ? KO_LONG_TEXTS : EN_LONG_TEXTS;
-      let selected = texts;
+      const db = isKo
+        ? { easy: KO_LONG_TEXTS_EASY, mid: KO_LONG_TEXTS_MID, hard: KO_LONG_TEXTS_HARD }
+        : { easy: EN_LONG_TEXTS_EASY, mid: EN_LONG_TEXTS_MID, hard: EN_LONG_TEXTS_HARD };
+
+      let selected = [];
       if (diff === 'easy') {
-        selected = texts.slice(0, 3);
+        selected = [...db.easy];
       } else if (diff === 'mid') {
-        selected = texts.slice(3, 7);
+        selected = [...db.mid];
       } else if (diff === 'hard') {
-        selected = texts.slice(7);
+        selected = [...db.hard];
+      } else {
+        selected = [...db.easy, ...db.mid, ...db.hard];
       }
-      list = selected.map(t => `${t.title}\n\n${t.content}`);
+      list = selected.map(t => `${t.title}\n${t.content}`);
     } else if (state.mode === 'custom') {
       list = state.customTexts.length > 0 ? [...state.customTexts] : ["연습할 문장을 직접 등록해보세요."];
     }
@@ -438,15 +475,16 @@
   }
 
   function setCurrentTarget() {
-    if (state.currentList.length === 0) loadContentList();
+    if (!state.currentList || state.currentList.length === 0) loadContentList();
 
     if (state.currentIndex >= state.currentList.length) {
-      // 순환 및 재셔플
-      state.currentList = shuffleArray(state.currentList);
+      // 순환 및 재셔플 (단어/짧은글은 재셔플, 긴글은 순환)
+      state.currentList = (state.mode === 'long') ? state.currentList : shuffleArray(state.currentList);
       state.currentIndex = 0;
     }
 
-    state.targetText = state.currentList[state.currentIndex];
+    const rawTarget = state.currentList[state.currentIndex] || '';
+    state.targetText = rawTarget.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
     state.userInput = '';
   }
 
@@ -456,6 +494,7 @@
   // - 틀린 글자 (char-wrong)
   // - 현재 입력 위치 (char-current + 커서)
   // - 아직 입력하지 않은 글자 (char-pending)
+  // - 줄바꿈 엔터 기호 (char-enter)
   // ==========================================================================
   function renderTypingDisplay() {
     const target = state.targetText;
@@ -466,16 +505,9 @@
     let targetLen = target.length;
     let inputLen = input.length;
 
-    // 긴 글 모드 처리 (줄바꿈 보존)
     for (let i = 0; i < targetLen; i++) {
       const targetChar = target[i];
       let charClass = 'char-pending';
-      let displayChar = targetChar;
-
-      if (displayChar === '\n') {
-        $display.append('<br>');
-        continue;
-      }
 
       if (i < inputLen) {
         const inputChar = input[i];
@@ -488,6 +520,12 @@
         charClass = 'char-current';
       }
 
+      // 줄바꿈 문자(\n) 처리: 시각적인 Enter 배지와 br 줄바꿈 태그 렌더링
+      if (targetChar === '\n') {
+        $display.append(`<span class="type-char char-enter ${charClass}" title="Enter 키로 줄바꿈">↵</span><br>`);
+        continue;
+      }
+
       // 공백 표시 최적화
       let textContent = targetChar;
       if (targetChar === ' ') {
@@ -495,6 +533,18 @@
       }
 
       $display.append(`<span class="type-char ${charClass}">${textContent}</span>`);
+    }
+
+    // 커서 자동 수직 스크롤: 현재 입력 위치(char-current)가 박스 내에서 항상 보이도록 유지
+    const $current = $display.find('.char-current');
+    if ($current.length > 0) {
+      const displayEl = $display[0];
+      const currentEl = $current[0];
+      const currentTop = currentEl.offsetTop - displayEl.offsetTop;
+      const targetScroll = currentTop - (displayEl.clientHeight / 2) + (currentEl.clientHeight / 2);
+      if (Math.abs(displayEl.scrollTop - targetScroll) > 15) {
+        displayEl.scrollTop = Math.max(0, targetScroll);
+      }
     }
 
     // 진행률 업데이트 (섹션 12)
@@ -634,6 +684,22 @@
           return;
         }
       }
+
+      // 긴 글 / 커스텀 모드에서 엔터 키 처리
+      if (state.mode === 'long' || state.mode === 'custom') {
+        if (e.key === 'Enter' && !isComposing) {
+          // 텍스트 전체를 다 입력했거나 마지막 글자까지 타이핑했을 때 Enter 누르면 즉시 완료
+          if (state.userInput.length >= state.targetText.length) {
+            e.preventDefault();
+            if (state.mode === 'long') {
+              checkLongTextComplete();
+            } else {
+              checkSentenceComplete();
+            }
+            return;
+          }
+        }
+      }
     });
 
     // 붙여넣기 방지 (공식 테스트 및 일반 연습 공정성)
@@ -651,7 +717,8 @@
       state.sessionStartTime = Date.now();
     }
 
-    const val = $('#typingInput').val();
+    const rawVal = $('#typingInput').val() || '';
+    const val = rawVal.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
     state.userInput = val;
 
     // 실시간 디스플레이 갱신
@@ -902,6 +969,34 @@
     $('#resultModal').fadeIn(200);
   }
 
+  // 결과 이미지 저장 (Canvas PNG)
+  function handleDownloadResultImage() {
+    const mode = $('#resMode').text() || '타자 연습';
+    const cpm = $('#resCpm').text() || '0 타/분';
+    const maxCpm = $('#resMaxCpm').text() || '0 타/분';
+    const accuracy = $('#resAccuracy').text() || '100%';
+    const time = $('#resTime').text() || '0초';
+
+    if (typeof window.downloadGameResultImage === 'function') {
+      window.downloadGameResultImage({
+        title: '스마트 타자 연습',
+        category: 'TYPING MASTERY',
+        rankBadge: '⌨️',
+        grade: '[ TYPING RESULT ]',
+        gradeDesc: mode,
+        stats: [
+          { label: '평균 타수', value: cpm, color: '#0284c7' },
+          { label: '최고 순간 타수', value: maxCpm, color: '#db2777' },
+          { label: '최종 정확도', value: accuracy, color: '#059669' },
+          { label: '연습 시간', value: time, color: '#d97706' }
+        ],
+        filename: '타자연습_결과'
+      });
+    } else {
+      alert('결과 이미지 생성 모듈을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+    }
+  }
+
   // ==========================================================================
   // 11. 개인 기록 저장 & 대시보드 통계 (섹션 15 & 16)
   // ==========================================================================
@@ -1075,7 +1170,15 @@
     } else {
       $('#pauseBtn').prop('disabled', false).removeClass('opacity-50').attr('title', '연습 일시정지');
       $('#testStartAction').hide();
-      $('#typingInput').prop('disabled', false).attr('placeholder', '위의 문장을 보고 그대로 타이핑하세요...');
+      $('#typingInput').prop('disabled', false);
+
+      if (newMode === 'word') {
+        $('#typingInput').attr('placeholder', '단어를 입력하고 스페이스바 또는 Enter 키를 누르세요...');
+      } else if (newMode === 'long') {
+        $('#typingInput').attr('placeholder', '위의 글을 보고 그대로 타이핑하세요... (줄바꿈 위치에서 Enter 키)');
+      } else {
+        $('#typingInput').attr('placeholder', '위의 문장을 보고 그대로 타이핑하세요... (완료 시 Enter 키)');
+      }
     }
 
     loadContentList();
@@ -1259,6 +1362,8 @@
       $('#resultModal').fadeOut(150);
       resetPracticeSession();
     });
+
+    $('#downloadResultImgBtn').on('click', handleDownloadResultImage);
 
     // 대시보드 필터 변경
     $('.dash-filter-btn').on('click', function () {

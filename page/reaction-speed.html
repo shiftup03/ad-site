@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1분 반응 속도 테스트 - 색이 바뀌는 순간, 얼마나 빨리 클릭할 수 있을까? | 1-Min Challenge</title>
+  <meta name="description" content="화면의 색상이 바뀌면 최대한 빠르게 클릭하세요! 60초 동안 나의 반응 속도(ms)를 측정하고 평균 기록과 반응 속도 등급을 확인해보세요.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <!-- Anti-flash Dark Mode Theme Initializer -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('challenge_1min_theme') || 'light';
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/common.css">
+  <link rel="stylesheet" href="../assets/css/reaction-speed.css">
+</head>
+<body data-current-page="reaction-speed" data-is-subpage="true">
+
+  <div class="app-wrapper">
+    <!-- 공통 헤더 컴포넌트 마운트 영역 -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="main-content">
+      <div class="container container-md flex flex-col gap-3">
+
+        <!-- 서브페이지 공통 히어로 -->
+        <section class="subpage-hero">
+          <div class="hero-badge">⚡ 순발력 &amp; 반사신경 테스트</div>
+          <h1 class="hero-title">
+            색이 바뀌는 순간,<br>
+            <span class="gradient-text">얼마나 빨리 반응할 수 있을까요?</span>
+          </h1>
+          <p class="hero-desc">
+            화면의 색상이 초록색으로 변하면 최대한 빠르게 클릭하세요.<br>
+            60초 동안 나의 반응 속도를 측정하고 평균 기록과 등급을 확인해보세요.
+          </p>
+        </section>
+
+        <!-- 상단 컨트롤 툴바 -->
+        <section class="reaction-toolbar" aria-label="테스트 제어 툴바">
+          <div class="toolbar-info">
+            <span>⏱️ 제한시간: <strong>60초</strong></span>
+            <span style="color: var(--border-color);">|</span>
+            <span>🎯 타이밍: <strong>1~4초 무작위</strong></span>
+          </div>
+
+          <div class="toolbar-actions">
+            <!-- 사운드 토글 -->
+            <button type="button" class="btn btn-outline btn-sm" id="soundToggleBtn">
+              <span>🔊 효과음 <strong class="sound-status">OFF</strong></span>
+            </button>
+
+            <!-- 시작 버튼 -->
+            <button type="button" class="btn btn-primary btn-sm" id="startTestBtn">
+              <span>🔥 1분 테스트 시작</span>
+            </button>
+
+            <!-- 진행 중단 버튼 -->
+            <button type="button" class="btn btn-outline btn-sm" id="stopTestBtn" style="display: none; color: var(--danger); border-color: var(--danger);">
+              <span>🛑 테스트 중단</span>
+            </button>
+
+            <!-- 재시작 버튼 -->
+            <button type="button" class="btn btn-outline btn-sm" id="restartTestBtn" style="display: none;">
+              <span>🔄 다시 시작</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- 실시간 지표 대시보드 -->
+        <section class="live-status-board" aria-label="실시간 반응 지표">
+          <div class="status-card">
+            <span class="status-label">남은 시간</span>
+            <div class="status-val text-primary" id="liveTimer">60.0s</div>
+          </div>
+          <div class="status-card">
+            <span class="status-label">현재 라운드</span>
+            <div class="status-val text-accent" id="liveRound">0</div>
+          </div>
+          <div class="status-card">
+            <span class="status-label">정상 반응</span>
+            <div class="status-val text-success">
+              <span id="liveSuccessCount">0</span><span class="status-unit">회</span>
+            </div>
+          </div>
+          <div class="status-card">
+            <span class="status-label">성급한 클릭</span>
+            <div class="status-val text-danger">
+              <span id="liveFalseStarts">0</span><span class="status-unit">회</span>
+            </div>
+          </div>
+          <div class="status-card">
+            <span class="status-label">현재 평균</span>
+            <div class="status-val text-secondary" id="liveAvgTime">-</div>
+          </div>
+          <div class="status-card">
+            <span class="status-label">현재 최고</span>
+            <div class="status-val text-warning" id="liveBestTime">-</div>
+          </div>
+        </section>
+
+        <!-- 60초 진행률 게이지 바 -->
+        <div class="timer-progress-wrap">
+          <div class="progress-meta">
+            <span>60초 진행률</span>
+            <span><span id="liveTimerMini">60.0s</span> 남음</span>
+          </div>
+          <div class="timer-progress-track">
+            <div class="timer-progress-bar" id="timerProgressBar"></div>
+          </div>
+        </div>
+
+        <!-- 메인 반응 무대 (Reaction Stage) -->
+        <section class="reaction-stage-wrapper">
+          <div class="reaction-stage status-ready" id="reactionStage" role="button" tabindex="0" aria-label="반응 속도 측정 영역: 클릭 또는 터치 시 시작">
+            <div class="stage-icon" id="stageIcon">⚡</div>
+            <h2 class="stage-title" id="stageTitle">화면을 클릭(터치)하여 시작하세요</h2>
+            <p class="stage-sub" id="stageSub">화면을 누르거나 상단 시작 버튼을 클릭하면 3초 준비 후 측정이 시작됩니다.</p>
+          </div>
+
+          <p class="keyboard-hint">
+            💡 화면을 직접 클릭·터치하거나, PC에서는 <kbd>Space</kbd> / <kbd>Enter</kbd> 키를 눌러도 시작하고 반응할 수 있습니다.
+          </p>
+        </section>
+
+        <!-- 개인 기록 대시보드 -->
+        <section class="dashboard-card" aria-label="개인 반응 속도 기록실">
+          <div class="dashboard-header">
+            <h2 class="dashboard-title">
+              <span>📊</span> 나의 1분 반응 속도 기록실
+            </h2>
+            <div style="font-size: 0.85rem; color: var(--text-dim);">
+              최근 최대 30개 기록 보관 (정상 반응 3회 이상 유효)
+            </div>
+          </div>
+
+          <!-- 통계 지표 카드 그리드 -->
+          <div class="dashboard-summary-grid">
+            <div class="summary-item-card">
+              <div class="summary-label">🏆 개인 최고 평균</div>
+              <div class="summary-num text-primary" id="dashBestAvg">-</div>
+            </div>
+            <div class="summary-item-card">
+              <div class="summary-label">⚡ 최근 평균 속도</div>
+              <div class="summary-num text-secondary" id="dashRecentAvg">-</div>
+            </div>
+            <div class="summary-item-card">
+              <div class="summary-label">🎯 총 테스트 횟수</div>
+              <div class="summary-num text-accent" id="dashTotalTests">0회</div>
+            </div>
+            <div class="summary-item-card">
+              <div class="summary-label">📊 누적 정상 반응</div>
+              <div class="summary-num text-success" id="dashTotalSuccess">0회</div>
+            </div>
+          </div>
+
+          <!-- 최근 10회 평균 반응 시간 CSS 막대 차트 -->
+          <div class="chart-section">
+            <div class="chart-header">
+              <span>📈 최근 테스트 평균 반응 시간 (최근 10회)</span>
+              <span style="font-size: 0.8rem; color: var(--text-dim);">※ 낮을수록 빠른 반응 (단위: ms)</span>
+            </div>
+            <div class="chart-bars-wrapper" id="chartBarsWrapper">
+              <!-- 자바스크립트로 막대 요소 렌더링 -->
+            </div>
+          </div>
+
+          <!-- 최근 기록 목록 테이블 -->
+          <div class="table-responsive">
+            <table class="record-table">
+              <thead>
+                <tr>
+                  <th>측정 일시</th>
+                  <th>평균 반응 속도</th>
+                  <th>최고 속도</th>
+                  <th>성공 / 성급한 클릭</th>
+                  <th>결과 등급</th>
+                </tr>
+              </thead>
+              <tbody id="recordTableBody">
+                <!-- 자바스크립트로 tr 렌더링 -->
+              </tbody>
+            </table>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+            <span style="font-size: 0.8rem; color: var(--text-dim);">
+              ※ 측정 기록은 현재 브라우저 로컬 저장소(localStorage)에 안전하게 보관됩니다.
+            </span>
+            <button type="button" class="btn btn-outline btn-xs" id="clearRecordsBtn" style="color: var(--danger); border-color: var(--danger);">
+              내 기록 전체 삭제
+            </button>
+          </div>
+        </section>
+
+        <!-- 반응 속도 가이드 및 FAQ 아코디언 (섹션 23) -->
+        <section class="guide-faq-section" aria-label="반응 속도 안내 및 자주 묻는 질문">
+          <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+            <span>💡</span> 반응 속도 테스트 가이드 &amp; FAQ
+          </h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.4rem;">
+            측정 결과는 사용 중인 기기와 브라우저 환경에 따라 달라질 수 있습니다. 재미와 개인 기록 비교를 위한 참고 수치로 활용해주세요.
+          </p>
+
+          <div class="faq-grid">
+            <div class="faq-item-card">
+              <div class="faq-question">
+                <span>Q.</span> 테스트 시간은 정확히 1분인가요?
+              </div>
+              <div class="faq-answer">
+                네, 시작 버튼 클릭 후 3초 준비 카운트다운이 끝나면 정확히 60.0초 동안 테스트가 진행됩니다.
+              </div>
+            </div>
+
+            <div class="faq-item-card">
+              <div class="faq-question">
+                <span>Q.</span> 색이 바뀌기 전에 클릭하면 어떻게 되나요?
+              </div>
+              <div class="faq-answer">
+                빨간색 대기 화면에서 미리 클릭하면 '성급한 클릭'으로 판정되어 해당 라운드는 무효가 되며 정상 평균 기록에 포함되지 않습니다.
+              </div>
+            </div>
+
+            <div class="faq-item-card">
+              <div class="faq-question">
+                <span>Q.</span> 반응 속도는 어떤 단위로 측정하나요?
+              </div>
+              <div class="faq-answer">
+                1초의 1,000분의 1을 뜻하는 밀리초(ms) 단위로 측정합니다. 예를 들어 200ms는 0.2초를 의미합니다.
+              </div>
+            </div>
+
+            <div class="faq-item-card">
+              <div class="faq-question">
+                <span>Q.</span> 기기마다 결과가 달라지는 이유는 무엇인가요?
+              </div>
+              <div class="faq-answer">
+                모니터의 화면 주사율(60Hz, 144Hz 등), 마우스/터치스크린 입력 지연(Input Lag), 브라우저 성능에 따라 약간의 하드웨어 지연 차이가 발생할 수 있습니다.
+              </div>
+            </div>
+
+            <div class="faq-item-card">
+              <div class="faq-question">
+                <span>Q.</span> 반응 속도 등급은 어떻게 정해지나요?
+              </div>
+              <div class="faq-answer">
+                정상 반응 3회 이상인 경우 200ms 미만(번개 반응), 200~249ms(매우 빠름), 250~299ms(빠른 편), 300~399ms(보통), 400ms 이상 등으로 자체 분류됩니다.
+              </div>
+            </div>
+
+            <div class="faq-item-card">
+              <div class="faq-question">
+                <span>Q.</span> 테스트 기록은 어디에 저장되나요?
+              </div>
+              <div class="faq-answer">
+                회원가입 없이 사용자의 웹 브라우저 로컬 저장소(localStorage)에 최대 30개까지 안전하게 보관됩니다.
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- 공통 푸터 컴포넌트 마운트 영역 -->
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <!-- 결과 팝업 모달 -->
+  <div class="result-modal-backdrop" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="resHeadline">
+    <div class="result-card-modal">
+      <div class="result-icon-badge">⚡</div>
+      <div id="newRecordBadge" class="new-record-alert" style="display: none;">
+        🎉 새로운 개인 최고 기록 달성!
+      </div>
+      <h3 class="result-title">60초 테스트 완료!</h3>
+      <div class="result-headline" id="resHeadline">반응 속도 측정이 완료되었습니다.</div>
+
+      <div class="result-grid-stats">
+        <div class="result-stat-box">
+          <div class="stat-label-mini">평균 반응 속도</div>
+          <div class="stat-val-highlight text-primary" id="resAvgTime">0 ms</div>
+        </div>
+        <div class="result-stat-box">
+          <div class="stat-label-mini">반응 등급</div>
+          <div class="stat-val-highlight text-secondary" id="resGrade" style="font-size: 1.15rem;">-</div>
+        </div>
+        <div class="result-stat-box">
+          <div class="stat-label-mini">가장 빠른 반응</div>
+          <div class="stat-val-highlight text-success" id="resBestTime">0 ms</div>
+        </div>
+        <div class="result-stat-box">
+          <div class="stat-label-mini">가장 느린 반응</div>
+          <div class="stat-val-highlight text-warning" id="resWorstTime">0 ms</div>
+        </div>
+        <div class="result-stat-box">
+          <div class="stat-label-mini">정상 반응 횟수</div>
+          <div class="stat-val-highlight text-accent" id="resSuccessCount">0회</div>
+        </div>
+        <div class="result-stat-box">
+          <div class="stat-label-mini">성급한 클릭</div>
+          <div class="stat-val-highlight text-danger" id="resFalseCount">0회</div>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button type="button" class="btn btn-primary" id="modalRestartBtn">
+          <span>🔥 다시 도전하기</span>
+        </button>
+        <button type="button" class="btn btn-secondary" id="downloadResultImgBtn">
+          <span>📷 결과 이미지 저장 (PNG)</span>
+        </button>
+        <button type="button" class="btn btn-outline" id="closeResultModalBtn">
+          <span>확인 닫기</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <!-- jQuery 3.7.1 CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- 공통 컴포넌트 로더 & 다크모드 -->
+  <script src="../assets/js/common.js"></script>
+  <!-- 1분 반응 속도 로직 스크립트 -->
+  <script src="../assets/js/reaction-speed.js"></script>
+</body>
+</html>
