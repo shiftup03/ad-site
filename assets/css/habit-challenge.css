@@ -516,107 +516,121 @@
   gap: 1.25rem;
 }
 
+/* 간소화된 챌린지 카드 박스 (Simplified Challenge Card) */
 .challenge-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   padding: 1.25rem;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.85rem;
   position: relative;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
 }
 
 .challenge-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+  border-color: rgba(79, 70, 229, 0.25);
 }
 
 .ch-card-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .ch-title-wrap {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  min-width: 0;
 }
 
 .ch-icon-box {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: var(--radius-md);
-  background: var(--bg-card-sub);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
+  font-size: 1.45rem;
   flex-shrink: 0;
 }
 
 .ch-title-wrap h4 {
   margin: 0;
   font-size: 1.05rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text-main);
+  line-height: 1.3;
 }
 
 .ch-badge-status {
-  padding: 0.2rem 0.6rem;
+  padding: 0.22rem 0.65rem;
   border-radius: var(--radius-full);
   font-size: 0.72rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .ch-badge-status.active {
-  background: rgba(16, 185, 129, 0.15);
+  background: rgba(16, 185, 129, 0.12);
   color: var(--success);
 }
 
 .ch-badge-status.completed {
-  background: rgba(79, 70, 229, 0.15);
+  background: rgba(79, 70, 229, 0.12);
   color: var(--primary);
 }
 
 .ch-badge-status.paused {
-  background: rgba(107, 114, 128, 0.15);
+  background: rgba(107, 114, 128, 0.12);
   color: var(--text-muted);
 }
 
 .ch-desc-text {
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   color: var(--text-muted);
   line-height: 1.45;
   margin: 0;
 }
 
 .ch-date-range {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--text-dim);
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
+  margin-top: 2px;
 }
 
+/* 간소화된 통계 지표 영역 (Simplified & Clean Metrics) */
 .ch-metrics-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
   background: var(--bg-card-sub);
-  padding: 0.65rem 0.5rem;
+  padding: 0.6rem 0.5rem;
   border-radius: var(--radius-sm);
   text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] .ch-metrics-row {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
 }
 
 .ch-metric-item span {
   display: block;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
   margin-bottom: 0.15rem;
+  font-weight: 500;
 }
 
 .ch-metric-item strong {
@@ -624,19 +638,88 @@
   font-weight: 800;
 }
 
-/* 챌린지 카드 하단 액션 바 */
-.ch-card-actions {
+/* 간소화된 프로그레스 바 영역 */
+.challenge-card .th-progress-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.challenge-card .th-progress-labels {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.challenge-card .th-progress-track {
+  height: 6px;
+  background: var(--bg-card-sub);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.challenge-card .th-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+/* 간소화된 하단 버튼 그리드 (버튼 보존 및 2단/3단 균형 배치) */
+.ch-card-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   gap: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border-color);
+  width: 100%;
+  margin-top: auto;
+  padding-top: 0.25rem;
+  border-top: none;
+}
+
+.ch-card-actions .btn {
+  width: 100% !important;
+  min-height: 38px !important;
+  height: 38px !important;
+  padding: 0 0.75rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  border-radius: var(--radius-sm) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  transition: all var(--transition-fast) !important;
+  cursor: pointer !important;
+}
+
+.ch-card-actions .btn-outline {
+  background: transparent !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+.ch-card-actions .btn-outline:hover {
+  border-color: var(--primary) !important;
+  background: rgba(79, 70, 229, 0.06) !important;
+  color: var(--primary) !important;
+  transform: translateY(-1px);
+}
+
+.ch-card-actions .btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 2px 10px rgba(79, 70, 229, 0.25) !important;
+}
+
+.ch-card-actions .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(219, 39, 119, 0.35) !important;
 }
 
 .ch-btn-group-left {
-  display: flex;
-  gap: 0.35rem;
+  display: contents;
 }
 
 /* 6. 통계 및 시각화 섹션 */

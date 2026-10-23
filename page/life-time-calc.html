@@ -70,22 +70,34 @@
 
             <form id="lifeCalcForm" class="calc-form" onsubmit="return false;">
               <div class="form-grid-row">
-                <!-- 필수: 생년월일 -->
+                <!-- 필수: 생년월일 (커서 직접 입력 + 달력 선택 팝업 기능 유지) -->
                 <div class="form-group flex-2">
                   <label for="inputBirthDate">
                     생년월일 <span class="required">*</span>
                   </label>
-                  <input type="date" id="inputBirthDate" class="form-control" required>
-                  <span class="input-hint" id="birthDateHint">예: 1998-05-15</span>
+                  <div class="custom-cursor-input-wrap">
+                    <input type="text" id="inputBirthDate" class="form-control date-text-input" placeholder="YYYY-MM-DD (예: 1998-05-15)" maxlength="10" autocomplete="off" required>
+                    <button type="button" class="btn-picker-trigger" id="btnDatePick" title="달력에서 날짜 선택" aria-label="달력에서 날짜 선택">
+                      <span class="picker-icon">📅</span>
+                    </button>
+                    <input type="date" id="inputBirthDateNative" class="hidden-native-picker" tabindex="-1" aria-label="달력 팝업 선택창">
+                  </div>
+                  <span class="input-hint" id="birthDateHint">커서 직접 입력(예: 1998-05-15) 또는 📅 달력 아이콘으로 선택</span>
                 </div>
 
-                <!-- 선택: 출생 시각 -->
+                <!-- 선택: 출생 시각 (커서 직접 입력 + 시각 선택 팝업 기능 유지) -->
                 <div class="form-group flex-1">
                   <label for="inputBirthTime">
                     출생 시각 <span class="optional-badge">(선택)</span>
                   </label>
-                  <input type="time" id="inputBirthTime" class="form-control" value="00:00">
-                  <span class="input-hint">모를 경우 00:00 유지</span>
+                  <div class="custom-cursor-input-wrap">
+                    <input type="text" id="inputBirthTime" class="form-control time-text-input" placeholder="00:00" maxlength="5" value="00:00" autocomplete="off">
+                    <button type="button" class="btn-picker-trigger" id="btnTimePick" title="출생 시각 선택" aria-label="출생 시각 선택">
+                      <span class="picker-icon">⏰</span>
+                    </button>
+                    <input type="time" id="inputBirthTimeNative" class="hidden-native-picker" tabindex="-1" aria-label="시각 팝업 선택창" value="00:00">
+                  </div>
+                  <span class="input-hint">커서 직접 입력(예: 14:30) 또는 ⏰ 시각 아이콘으로 선택</span>
                 </div>
               </div>
 

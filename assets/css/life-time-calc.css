@@ -64,8 +64,8 @@
 
 /* 2. 입력 카드 섹션 */
 .lifetime-input-section {
-  max-width: 760px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
   width: 100%;
 }
 
@@ -73,49 +73,49 @@
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 1.75rem 1.5rem;
+  padding: 2.25rem 2.25rem;
   box-shadow: var(--shadow-md);
   position: relative;
 }
 
 .card-head-title {
-  margin-bottom: 1.25rem;
+  margin-bottom: 2rem;
   text-align: center;
 }
 
 .card-head-title h3 {
-  margin: 0 0 0.35rem;
-  font-size: 1.2rem;
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
   font-weight: 800;
   color: var(--text-main);
 }
 
 .card-head-title p {
   margin: 0;
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   color: var(--text-muted);
 }
 
 .calc-form .form-grid-row {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 0.75rem;
+  gap: 1.75rem;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
 
 .calc-form .form-group {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.85rem;
 }
 
-.calc-form .flex-2 { flex: 2; min-width: 220px; }
-.calc-form .flex-1 { flex: 1; min-width: 140px; }
+.calc-form .flex-2 { flex: 2; min-width: 240px; }
+.calc-form .flex-1 { flex: 1; min-width: 160px; }
 
 .calc-form label {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--text-main);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.55rem;
 }
 
 .calc-form .required {
@@ -123,55 +123,130 @@
 }
 
 .calc-form .optional-badge {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: normal;
   color: var(--text-muted);
 }
 
+/* 커서 직접 입력창 + 달력/시각 팝업 선택 통합 래퍼 */
+.custom-cursor-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.custom-cursor-input-wrap .form-control {
+  width: 100%;
+  padding: 0.85rem 3.1rem 0.85rem 1.15rem;
+  font-size: 1rem;
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  outline: none;
+  cursor: text !important;
+  letter-spacing: 0.02em;
+  box-sizing: border-box;
+}
+
+.custom-cursor-input-wrap .form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  background: var(--bg-card);
+}
+
+.btn-picker-trigger {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  z-index: 2;
+}
+
+.btn-picker-trigger:hover {
+  background: var(--bg-card-sub);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.btn-picker-trigger .picker-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+/* 숨겨진 네이티브 팝업 트리거 (클릭 시 달력/시간 팝업 오픈) */
+.hidden-native-picker {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 3;
+  border: none;
+  background: transparent;
+}
+
 .input-hint {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
-  margin-top: 0.25rem;
+  margin-top: 0.45rem;
+  line-height: 1.35;
 }
 
 .time-notice-alert {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   background: rgba(99, 102, 241, 0.06);
   border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: var(--radius-sm);
-  padding: 0.6rem 0.85rem;
-  font-size: 0.78rem;
+  padding: 0.85rem 1.15rem;
+  font-size: 0.82rem;
   color: var(--text-dim);
-  margin: 0.75rem 0 1rem;
+  margin: 1.25rem 0 1.5rem;
+  line-height: 1.45;
 }
 
 .time-notice-alert .notice-icon {
-  font-size: 1rem;
+  font-size: 1.15rem;
   flex-shrink: 0;
 }
 
 /* 동의 체크박스 */
 .save-consent-wrap {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.75rem;
   padding: 0.5rem 0;
 }
 
 .consent-checkbox-label {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.65rem;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--text-main);
   user-select: none;
 }
 
 .consent-checkbox-label input {
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   cursor: pointer;
 }
 
@@ -181,24 +256,24 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  padding-top: 0.75rem;
+  gap: 1.15rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--border-color);
 }
 
 .form-actions-bar .actions-left {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .error-feedback-box {
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
+  margin-top: 1.25rem;
+  padding: 0.85rem 1.15rem;
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: var(--radius-sm);
   color: #dc2626;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   font-weight: 600;
 }
 
@@ -325,30 +400,49 @@
   gap: 0.75rem;
 }
 
+/* 4-1. 결과 래퍼 컨테이너 (결과 섹션 간 여백 대폭 확장) */
+.results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  margin-top: 2.5rem;
+}
+
 /* 5. 실시간 누적 시간 카운터 */
+.lifetime-realtime-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.lifetime-realtime-section .section-title-bar {
+  margin-bottom: 0.5rem;
+}
+
 .compound-time-display-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 2rem;
   text-align: center;
   box-shadow: var(--shadow-sm);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .compound-label {
   display: block;
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 800;
   color: var(--text-muted);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
 }
 
 .compound-digits-row {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1.25rem;
   flex-wrap: wrap;
 }
 
@@ -356,15 +450,16 @@
   background: var(--bg-card-sub);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 0.75rem 1rem;
-  min-width: 80px;
+  padding: 1.15rem 1.6rem;
+  min-width: 95px;
   text-align: center;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
 }
 
 .c-val {
   display: block;
   font-family: 'JetBrains Mono', 'Montserrat', monospace;
-  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
   font-weight: 800;
   color: var(--text-main);
   line-height: 1.1;
@@ -372,10 +467,10 @@
 
 .c-lbl {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--text-muted);
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
 }
 
 .c-unit-box.is-seconds {
@@ -388,26 +483,28 @@
 }
 
 .c-colon {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 800;
   color: var(--text-muted);
+  margin: 0 0.15rem;
 }
 
 /* 3단 메트릭 카드 */
 .time-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 .time-metric-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.15rem 1.25rem;
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.6rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
   box-shadow: var(--shadow-sm);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
@@ -418,9 +515,9 @@
 }
 
 .t-icon {
-  font-size: 2rem;
-  width: 48px;
-  height: 48px;
+  font-size: 2.2rem;
+  width: 52px;
+  height: 52px;
   border-radius: var(--radius-md);
   background: var(--bg-card-sub);
   display: flex;
@@ -435,15 +532,15 @@
 }
 
 .t-label {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
   font-weight: 700;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
 }
 
 .t-value {
   font-family: 'JetBrains Mono', 'Montserrat', monospace;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 800;
   line-height: 1.15;
 }
@@ -451,89 +548,95 @@
 /* 6. 나이 및 다음 생일 2열 그리드 */
 .age-birthday-dual-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 1.75rem;
 }
 
 .detail-info-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: 2rem 2.25rem;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
+  gap: 1.5rem;
 }
 
 .dcard-head {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.85rem;
+  padding-bottom: 1.15rem;
 }
 
 .dcard-icon {
-  font-size: 1.75rem;
+  font-size: 1.85rem;
 }
 
 .dcard-head h4 {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: var(--text-main);
 }
 
 .dcard-sub {
-  margin: 0.15rem 0 0;
-  font-size: 0.78rem;
+  margin: 0.25rem 0 0;
+  font-size: 0.82rem;
   color: var(--text-muted);
+}
+
+.dcard-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .age-highlight-box {
   display: flex;
   align-items: baseline;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .age-label {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--text-muted);
 }
 
 .age-value {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 900;
 }
 
 .age-sub {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
 }
 
 .calendar-duration-box {
   background: var(--bg-card-sub);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem;
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.35rem;
+  margin: 0.25rem 0;
 }
 
 .dur-label {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
   font-weight: 600;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.35rem;
 }
 
 .dur-val {
   display: block;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: var(--text-main);
 }
@@ -541,57 +644,58 @@
 .birth-trivia-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.65rem;
+  margin-top: 0.25rem;
 }
 
 .trivia-chip {
-  padding: 0.25rem 0.65rem;
+  padding: 0.35rem 0.85rem;
   border-radius: var(--radius-full);
   background: var(--bg-card-sub);
   border: 1px solid var(--border-color);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--text-dim);
 }
 
 .leap-year-notice {
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
+  margin-top: 0.65rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
   background: rgba(245, 158, 11, 0.08);
   border-left: 3px solid #f59e0b;
-  padding: 0.5rem 0.75rem;
+  padding: 0.6rem 0.85rem;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
 /* 다음 생일 카드 상세 */
 .next-bday-lead {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--text-muted);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.65rem;
 }
 
 .next-bday-timer-wrap {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.45rem;
-  margin-bottom: 0.5rem;
+  gap: 0.75rem;
+  margin: 0.5rem 0 0.85rem;
 }
 
 .nb-box {
   background: var(--bg-card-sub);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 0.65rem 0.35rem;
+  border-radius: var(--radius-md);
+  padding: 0.85rem 0.45rem;
   text-align: center;
 }
 
 .nb-box strong {
   display: block;
   font-family: 'JetBrains Mono', 'Montserrat', monospace;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--text-main);
   line-height: 1.1;
@@ -599,10 +703,10 @@
 
 .nb-box span {
   display: block;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
   font-weight: 700;
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
 }
 
 .nb-box.is-sec {
@@ -615,9 +719,9 @@
 }
 
 .next-bday-tail {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--text-muted);
-  margin: 0 0 0.85rem;
+  margin: 0.25rem 0 1.25rem;
   font-weight: 700;
 }
 
@@ -625,8 +729,8 @@
   background: var(--bg-card-sub);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-full);
-  padding: 0.4rem 0.85rem;
-  font-size: 0.8rem;
+  padding: 0.5rem 1.15rem;
+  font-size: 0.85rem;
   color: var(--text-dim);
   display: inline-block;
 }
@@ -636,17 +740,23 @@
 }
 
 /* 7. 특별한 누적 일수 기념일 */
+.milestones-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
 .nearest-milestone-banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1.5rem;
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(16, 185, 129, 0.1));
   border: 1.5px solid rgba(99, 102, 241, 0.3);
   border-radius: var(--radius-lg);
-  padding: 1.25rem 1.5rem;
+  padding: 1.6rem 2rem;
   box-shadow: var(--shadow-sm);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.5rem;
   flex-wrap: wrap;
 }
 
@@ -706,19 +816,19 @@
 /* 기념일 카드 그리드 */
 .milestones-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.5rem;
 }
 
 .milestone-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.1rem;
+  border-radius: var(--radius-lg);
+  padding: 1.35rem 1.45rem;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
   position: relative;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
@@ -796,23 +906,27 @@
 /* 8. 사용자 지정 계산기 2열 그리드 */
 .custom-calc-dual-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 1.75rem;
 }
 
 .custom-calc-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: 2rem 2.25rem;
   box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
 }
 
 .cc-head {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.15rem;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .cc-icon {
@@ -1008,19 +1122,19 @@
 /* 10. 개인 기념일 관리 */
 .anniversaries-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.5rem;
 }
 
 .anniv-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 1.15rem;
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.5rem;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
   position: relative;
 }
 

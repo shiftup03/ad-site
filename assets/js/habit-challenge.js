@@ -540,7 +540,7 @@
               <div>
                 <h4>${escapeHtml(h.name)}</h4>
                 <div class="ch-date-range">
-                  <span>📅 ${h.startDate} ~ ${h.endDate} (${h.duration}일)</span>
+                  <span>🗓️ ${h.startDate} ~ ${h.endDate} (${h.duration}일)</span>
                 </div>
               </div>
             </div>
@@ -575,11 +575,9 @@
           </div>
 
           <div class="ch-card-actions">
-            <div class="ch-btn-group-left">
-              <button type="button" class="btn btn-outline btn-xs btn-open-detail" data-id="${h.id}">캘린더 / 상세</button>
-              <button type="button" class="btn btn-outline btn-xs btn-edit-habit" data-id="${h.id}">수정</button>
-            </div>
-            ${m.computedStatus !== 'active' ? `<button type="button" class="btn btn-primary btn-xs btn-retry-habit" data-id="${h.id}">다시 도전</button>` : ''}
+            <button type="button" class="btn btn-outline btn-open-detail" data-id="${h.id}">캘린더 / 상세</button>
+            <button type="button" class="btn btn-outline btn-edit-habit" data-id="${h.id}">수정</button>
+            ${m.computedStatus !== 'active' ? `<button type="button" class="btn btn-primary btn-retry-habit" data-id="${h.id}">다시 도전</button>` : ''}
           </div>
         </div>
       `;

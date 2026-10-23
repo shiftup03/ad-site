@@ -840,8 +840,10 @@
         const userData = JSON.parse(rawUser);
         if (userData && userData.birthDateStr) {
           $('#inputBirthDate').val(userData.birthDateStr);
+          $('#inputBirthDateNative').val(userData.birthDateStr);
           if (userData.birthTimeStr) {
             $('#inputBirthTime').val(userData.birthTimeStr);
+            $('#inputBirthTimeNative').val(userData.birthTimeStr);
           }
           $('#checkSaveConsent').prop('checked', true);
           $('#btnClearSavedData').show();
@@ -884,6 +886,10 @@
       state.timerInterval = null;
     }
     $('#lifeCalcForm')[0].reset();
+    $('#inputBirthDate').val('');
+    $('#inputBirthDateNative').val('');
+    $('#inputBirthTime').val('00:00');
+    $('#inputBirthTimeNative').val('00:00');
     $('#calcErrorBox').hide().text('');
     $('#resultsContainer').fadeOut(150);
     state.birthDate = null;
@@ -895,8 +901,22 @@
      계산 실행
      ======================================================== */
   function executeCalculate() {
-    const dateStr = $('#inputBirthDate').val();
-    const timeStr = $('#inputBirthTime').val() || '00:00';
+    let dateStr = ($('#inputBirthDate').val() || '').trim();
+    let timeStr = ($('#inputBirthTime').val() || '').trim() || '00:00';
+
+    // 8자리 연속 숫자 입력(예: 19980515) 자동 포맷팅
+    if (/^\d{8}$/.test(dateStr)) {
+      dateStr = `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`;
+      $('#inputBirthDate').val(dateStr);
+    }
+    $('#inputBirthDateNative').val(dateStr);
+
+    // 4자리 연속 숫자 시각(예: 1430) 자동 포맷팅
+    if (/^\d{4}$/.test(timeStr)) {
+      timeStr = `${timeStr.slice(0, 2)}:${timeStr.slice(2, 4)}`;
+      $('#inputBirthTime').val(timeStr);
+    }
+    $('#inputBirthTimeNative').val(timeStr);
 
     const validation = validateBirthDate(dateStr, timeStr);
     if (!validation.valid) {
@@ -1020,17 +1040,96 @@
     // 1. 계산 버튼 클릭
     $('#btnCalculate').on('click', executeCalculate);
 
-    // 날짜 입력 변경 시 자동 유효성 검사 및 계산
-    $('#inputBirthDate').on('change', function() {
-      const dateStr = $(this).val();
-      if (dateStr && dateStr <= getTodayLocalDateString()) {
+    // 날짜 입력 타이핑(커서 입력) 및 자동 포맷팅
+    $('#inputBirthDate').on('input', function() {
+      let val = $(this).val().replace(/[^\d-]/g, '');
+      // 8자리 입력 시 자동 YYYY-MM-DD 변환
+      if (val.length === 8 && !val.includes('-')) {
+        val = `${val.slice(0, 4)}-${val.slice(4, 6)}-${val.slice(6, 8)}`;
+        $(this).val(val);
+      }
+      if (/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+        $('#inputBirthDateNative').val(val);
+        const todayStr = getTodayLocalDateString();
+        if (val <= todayStr) {
+          executeCalculate();
+        }
+      }
+    });
+
+    $('#inputBirthDate').on('change blur', function() {
+      let val = $(this).val().trim();
+      if (/^\d{8}$/.test(val)) {
+        val = `${val.slice(0, 4)}-${val.slice(4, 6)}-${val.slice(6, 8)}`;
+        $(this).val(val);
+      }
+      if (val && val <= getTodayLocalDateString()) {
+        $('#inputBirthDateNative').val(val);
         executeCalculate();
       }
     });
 
-    $('#inputBirthTime').on('change', function() {
+    // 출생 시각 타이핑(커서 입력) 및 자동 포맷팅
+    $('#inputBirthTime').on('input', function() {
+      let val = $(this).val().replace(/[^\d:]/g, '');
+      if (val.length === 4 && !val.includes(':')) {
+        val = `${val.slice(0, 2)}:${val.slice(2, 4)}`;
+        $(this).val(val);
+      }
+      if (/^\d{2}:\d{2}$/.test(val)) {
+        $('#inputBirthTimeNative').val(val);
+        if (state.birthDate) {
+          executeCalculate();
+        }
+      }
+    });
+
+    $('#inputBirthTime').on('change blur', function() {
+      let val = $(this).val().trim();
+      if (/^\d{4}$/.test(val)) {
+        val = `${val.slice(0, 2)}:${val.slice(2, 4)}`;
+        $(this).val(val);
+      }
       if (state.birthDate) {
+        $('#inputBirthTimeNative').val(val || '00:00');
         executeCalculate();
+      }
+    });
+
+    // 네이티브 달력 팝업에서 선택 시 동기화
+    $('#inputBirthDateNative').on('change', function() {
+      const val = $(this).val();
+      if (val) {
+        $('#inputBirthDate').val(val);
+        executeCalculate();
+      }
+    });
+
+    // 네이티브 시각 팝업에서 선택 시 동기화
+    $('#inputBirthTimeNative').on('change', function() {
+      const val = $(this).val();
+      if (val) {
+        $('#inputBirthTime').val(val);
+        if (state.birthDate) {
+          executeCalculate();
+        }
+      }
+    });
+
+    // 달력/시각 버튼 클릭 시 피커 열기
+    $('#btnDatePick').on('click', function(e) {
+      e.preventDefault();
+      const el = document.getElementById('inputBirthDateNative');
+      if (el && typeof el.showPicker === 'function') {
+        try { el.showPicker(); } catch (err) { el.focus(); }
+      }
+    });
+
+    $('#btnTimePick').on('click', function(e) {
+      e.preventDefault();
+      const el = document.getElementById('inputBirthTimeNative');
+      if (el && typeof el.showPicker === 'function') {
+        try { el.showPicker(); } catch (err) { el.focus(); }
       }
     });
 
