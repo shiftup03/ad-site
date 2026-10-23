@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1분 카드 색상 매칭 챌린지 - 1-Min Challenge</title>
+  <meta name="description" content="1분(60초) 안에 카드를 뒤집어 같은 색상과 아이콘의 짝을 최대한 많이 맞춰보세요! 순발력과 순간 기억력 두뇌 트레이닝.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <!-- Anti-flash Dark Mode Theme Initializer -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('challenge_1min_theme') || 'light';
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/common.css">
+  <link rel="stylesheet" href="../assets/css/color-match.css">
+</head>
+<body data-current-page="color-match" data-is-subpage="true">
+
+  <div class="app-wrapper">
+    <!-- 공통 헤더 컴포넌트 영역 -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="main-content">
+      <div class="container container-md flex flex-col gap-3">
+        
+        <!-- 공통 페이지 헤더 컴포넌트 (타이틀, 설명) -->
+        <header class="page-header">
+          <h1 class="page-title">
+            <span class="text-gradient">🎨 1분 카드 색상 매칭</span>
+          </h1>
+          <p class="page-desc">
+            제한 시간 <strong class="text-primary font-bold">60초</strong>! 카드를 뒤집어 같은 색상과 이모지의 짝을 찾아내세요. 연속 매칭 시 콤보 보너스!
+          </p>
+        </header>
+
+        <!-- 상단 대시보드 카드 컴포넌트 (타이머, 점수, 맞춘 수, 콤보) -->
+        <section class="card status-dashboard" aria-label="게임 상태 현황판">
+          <div class="status-box timer-box" id="timerBox">
+            <span class="status-label">남은 시간</span>
+            <div class="status-value"><span id="timeDisplay">60</span>s</div>
+          </div>
+          <div class="status-box score-box">
+            <span class="status-label">현재 점수</span>
+            <div class="status-value text-secondary" id="scoreDisplay">0</div>
+          </div>
+          <div class="status-box matched-box">
+            <span class="status-label">맞춘 카드</span>
+            <div class="status-value text-success"><span id="matchedDisplay">0</span>쌍</div>
+          </div>
+          <div class="status-box combo-box">
+            <span class="status-label">현재 콤보</span>
+            <div class="status-value text-warning" id="comboDisplay">x0</div>
+          </div>
+        </section>
+
+        <!-- 공통 타이머 진행 바 컴포넌트 -->
+        <div class="timer-bar-wrapper">
+          <div class="timer-bar-progress" id="timerBar"></div>
+        </div>
+
+        <!-- 게임 무대 카드 컴포넌트 -->
+        <div class="card game-stage-wrapper">
+          
+          <!-- 게임 시작 전 안내 오버레이 -->
+          <div class="stage-overlay" id="readyOverlay">
+            <div class="overlay-icon">⚡</div>
+            <h2 class="text-2xl font-display font-extrabold text-main mb-1">1분 두뇌 피지컬 챌린지</h2>
+            <p class="text-muted text-sm max-w-md mb-3" style="max-width: 440px;">
+              16장의 카드 뒤에 숨겨진 8가지 감각적인 컬러를 맞춰보세요.<br>
+              한 판을 다 맞추면 <strong class="text-primary font-bold">+5초 보너스</strong>와 함께 새 라운드가 시작됩니다!
+            </p>
+            <button type="button" class="btn btn-primary btn-lg" id="startBtn">
+              <span>🚀 챌린지 시작 (60초)</span>
+            </button>
+          </div>
+
+          <!-- 라운드 클리어 배너 -->
+          <div class="stage-clear-banner" id="stageClearBanner">
+            ROUND CLEAR! ⏰ +5초 보너스!
+          </div>
+
+          <!-- 카드 그리드 (16장) -->
+          <div class="cards-grid" id="cardsGrid">
+            <!-- JavaScript로 동적 렌더링 -->
+          </div>
+
+        </div>
+
+        <!-- 하단 최고 기록 및 컨트롤 공통 카드 컴포넌트 -->
+        <div class="card flex flex-between flex-wrap items-center gap-2">
+          <div class="flex gap-3 text-sm">
+            <div>
+              <span class="text-dim">내 최고 점수: </span>
+              <strong class="text-secondary font-bold" id="bestScoreDisplay">0점</strong>
+            </div>
+            <div>
+              <span class="text-dim">최고 매칭 기록: </span>
+              <strong class="text-success font-bold" id="bestPairsDisplay">0쌍</strong>
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn btn-secondary btn-sm" id="restartBtn">
+              🔄 재도전하기
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- 결과 모달 -->
+    <div class="result-modal-backdrop" id="resultModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="resultModalTitle">
+      <div class="result-modal">
+        <div class="result-rank-badge" id="resultBadge">👑</div>
+        <h3 class="result-title" id="resultModalTitle">시간 종료! 챌린지 완료</h3>
+        <p class="result-grade" id="resultGrade">[ Rank S ] - 순간 기억력의 달인</p>
+        
+        <div id="newRecordAlert" style="display: none; background: #fef3c7; border: 1px solid #fde68a; color: #b45309; padding: 0.5rem; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; margin-bottom: 1.2rem;">
+          🎉 축하합니다! 새로운 최고 기록을 달성했습니다!
+        </div>
+
+        <div class="result-stats-grid">
+          <div class="result-stat-item">
+            <div class="stat-item-label">최종 점수</div>
+            <div class="stat-item-value" id="finalScore" style="color: var(--secondary);">0점</div>
+          </div>
+          <div class="result-stat-item">
+            <div class="stat-item-label">맞춘 짝</div>
+            <div class="stat-item-value" id="finalPairs" style="color: var(--success);">0쌍</div>
+          </div>
+          <div class="result-stat-item">
+            <div class="stat-item-label">최대 콤보</div>
+            <div class="stat-item-value" id="finalCombo" style="color: var(--warning);">0회</div>
+          </div>
+          <div class="result-stat-item">
+            <div class="stat-item-label">매칭 정확도</div>
+            <div class="stat-item-value" id="finalAccuracy" style="color: var(--accent);">0%</div>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button type="button" class="btn btn-primary" id="modalRestartBtn">
+            <span>🔥 다시 도전</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="shareBtn">
+            <span>📋 결과 공유</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 공통 푸터 컴포넌트 영역 -->
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <!-- Scripts -->
+  <!-- jQuery 3.7.1 CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- 공통 컴포넌트 & 공통 스크립트 -->
+  <script src="../assets/js/common.js"></script>
+  <!-- 1분 카드 매칭 게임 로직 -->
+  <script src="../assets/js/color-match.js"></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1분 스피드 암산왕 챌린지 - 1-Min Challenge</title>
+  <meta name="description" content="1분(60초) 안에 화면에 나타나는 사칙연산(+, -, ×, ÷) 문제를 신속하게 계산하고 정답을 맞춰보세요! 순발력과 수리 집중력 두뇌 트레이닝.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <!-- Anti-flash Dark Mode Theme Initializer -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('challenge_1min_theme') || 'light';
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/common.css">
+  <link rel="stylesheet" href="../assets/css/speed-math.css">
+</head>
+<body data-current-page="speed-math" data-is-subpage="true">
+
+  <div class="app-wrapper">
+    <!-- 공통 헤더 컴포넌트 영역 -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="main-content">
+      <div class="container container-md flex flex-col gap-3">
+        
+        <!-- 공통 페이지 헤더 컴포넌트 (타이틀, 설명) -->
+        <header class="page-header">
+          <h1 class="page-title">
+            <span class="text-gradient">🔢 1분 스피드 암산왕</span>
+          </h1>
+          <p class="page-desc">
+            제한 시간 <strong class="text-accent font-bold">60초</strong>! 무작위로 쏟아지는 <strong class="text-secondary font-bold">+, -, ×, ÷</strong> 사칙연산을 빠르게 암산해 맞추세요.
+          </p>
+        </header>
+
+        <!-- 상단 대시보드 카드 컴포넌트 (타이머, 점수, 맞춘 수, 콤보) -->
+        <section class="card status-dashboard" aria-label="게임 상태 현황판">
+          <div class="status-box timer-box" id="timerBox">
+            <span class="status-label">남은 시간</span>
+            <div class="status-value"><span id="timeDisplay">60</span>s</div>
+          </div>
+          <div class="status-box score-box">
+            <span class="status-label">현재 점수</span>
+            <div class="status-value text-secondary" id="scoreDisplay">0</div>
+          </div>
+          <div class="status-box solved-box">
+            <span class="status-label">맞춘 문제</span>
+            <div class="status-value text-success"><span id="solvedDisplay">0</span>개</div>
+          </div>
+          <div class="status-box combo-box">
+            <span class="status-label">현재 콤보</span>
+            <div class="status-value text-warning" id="comboDisplay">x0</div>
+          </div>
+        </section>
+
+        <!-- 공통 타이머 진행 바 컴포넌트 -->
+        <div class="timer-bar-wrapper">
+          <div class="timer-bar-progress" id="timerBar"></div>
+        </div>
+
+        <!-- 게임 무대 카드 컴포넌트 -->
+        <div class="card math-stage-wrapper">
+          
+          <!-- 게임 시작 전 안내 오버레이 -->
+          <div class="stage-overlay" id="readyOverlay">
+            <div class="overlay-icon">🧠</div>
+            <h2 class="text-2xl font-display font-extrabold text-main mb-1">1분 초고속 두뇌 암산</h2>
+            <p class="text-muted text-sm max-w-md mb-3" style="max-width: 440px;">
+              화면에 나타나는 덧셈, 뺄셈, 곱셈, 나눗셈 식의 답을 맞추세요.<br>
+              키보드 숫자키/엔터 또는 화면의 키패드를 이용해 정답을 입력할 수 있습니다!
+            </p>
+            <button type="button" class="btn btn-accent btn-lg" id="startBtn">
+              <span>🚀 챌린지 시작 (60초)</span>
+            </button>
+          </div>
+
+          <!-- 수식 문제 컨테이너 -->
+          <div class="question-container">
+            <div>
+              <span class="badge badge-primary mb-2" id="levelBadge">LEVEL 1 · 워밍업</span>
+            </div>
+
+            <!-- 수식 디스플레이 -->
+            <div class="equation-display" id="equationBox">
+              <span>READY</span>
+            </div>
+
+            <!-- 정답 입력창 -->
+            <div class="answer-box-wrapper">
+              <input type="text" id="answerInput" class="answer-input" placeholder="정답 입력" autocomplete="off" inputmode="numeric" />
+              <div class="answer-hint text-dim text-xs mt-1">💡 키보드 Enter 또는 아래 [확인] 버튼으로 제출 (Esc: 패스)</div>
+            </div>
+
+            <!-- 온스크린 키패드 (모바일 및 마우스 조작) -->
+            <div class="keypad-grid">
+              <button type="button" class="keypad-btn" data-key="1">1</button>
+              <button type="button" class="keypad-btn" data-key="2">2</button>
+              <button type="button" class="keypad-btn" data-key="3">3</button>
+              
+              <button type="button" class="keypad-btn" data-key="4">4</button>
+              <button type="button" class="keypad-btn" data-key="5">5</button>
+              <button type="button" class="keypad-btn" data-key="6">6</button>
+              
+              <button type="button" class="keypad-btn" data-key="7">7</button>
+              <button type="button" class="keypad-btn" data-key="8">8</button>
+              <button type="button" class="keypad-btn" data-key="9">9</button>
+              
+              <button type="button" class="keypad-btn action-clear" data-key="clear" title="한 글자 지우기">⌫</button>
+              <button type="button" class="keypad-btn" data-key="0">0</button>
+              <button type="button" class="keypad-btn action-submit" data-key="submit" title="정답 제출">↵ 확인</button>
+            </div>
+
+            <!-- 패스 버튼 -->
+            <div class="btn-skip-wrap">
+              <button type="button" class="btn btn-outline btn-sm" id="skipBtn">⏩ 모르면 패스하기</button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- 하단 최고 기록 및 컨트롤 공통 카드 컴포넌트 -->
+        <div class="card flex flex-between flex-wrap items-center gap-2">
+          <div class="flex gap-3 text-sm">
+            <div>
+              <span class="text-dim">내 최고 점수: </span>
+              <strong class="text-secondary font-bold" id="bestMathScoreDisplay">0점</strong>
+            </div>
+            <div>
+              <span class="text-dim">최다 정답 기록: </span>
+              <strong class="text-success font-bold" id="bestMathSolvedDisplay">0개</strong>
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn btn-secondary btn-sm" id="restartBtn">
+              🔄 재도전하기
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- 결과 모달 -->
+    <div class="result-modal-backdrop" id="resultModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="resultModalTitle">
+      <div class="result-modal">
+        <div class="result-rank-badge" id="resultBadge">👑</div>
+        <h3 class="result-title" id="resultModalTitle">시간 종료! 챌린지 완료</h3>
+        <p class="result-grade" id="resultGrade">[ Rank S ] - 스피드 암산 마스터</p>
+        
+        <div id="newRecordAlert" style="display: none; background: #fef3c7; border: 1px solid #fde68a; color: #b45309; padding: 0.5rem; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; margin-bottom: 1.2rem;">
+          🎉 축하합니다! 새로운 최고 기록을 달성했습니다!
+        </div>
+
+        <div class="result-stats-grid">
+          <div class="result-stat-item">
+            <div class="stat-item-label">최종 점수</div>
+            <div class="stat-item-value" id="finalScore" style="color: var(--secondary);">0점</div>
+          </div>
+          <div class="result-stat-item">
+            <div class="stat-item-label">맞춘 문제</div>
+            <div class="stat-item-value" id="finalSolved" style="color: var(--success);">0개</div>
+          </div>
+          <div class="result-stat-item">
+            <div class="stat-item-label">최대 콤보</div>
+            <div class="stat-item-value" id="finalCombo" style="color: var(--warning);">0회</div>
+          </div>
+          <div class="result-stat-item">
+            <div class="stat-item-label">정답률</div>
+            <div class="stat-item-value" id="finalAccuracy" style="color: var(--accent);">0%</div>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button type="button" class="btn btn-accent" id="modalRestartBtn">
+            <span>🔥 다시 도전</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="shareBtn">
+            <span>📋 결과 공유</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 공통 푸터 컴포넌트 영역 -->
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <!-- Scripts -->
+  <!-- jQuery 3.7.1 CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- 공통 컴포넌트 & 공통 스크립트 -->
+  <script src="../assets/js/common.js"></script>
+  <!-- 1분 스피드 암산 게임 로직 -->
+  <script src="../assets/js/speed-math.js"></script>
+</body>
+</html>

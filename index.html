@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1-Min Challenge (1분 챌린지) - 매일 1분 두뇌 트레이닝</title>
+  <meta name="description" content="1분(60초) 동안 펼쳐지는 극한의 집중력 챌린지! 카드 색상 맞추기, 스피드 암산 등 다양한 1분 게임을 즐겨보세요.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <!-- Anti-flash Dark Mode Theme Initializer -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('challenge_1min_theme') || 'light';
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <style>
+    /* Home Hero Section */
+    .home-hero {
+      text-align: center;
+      padding: 3rem 1rem 4rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      background: rgba(79, 70, 229, 0.08);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.3rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .hero-title span.gradient-text {
+      background: linear-gradient(135deg, #0f172a 20%, var(--primary) 65%, var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      margin-bottom: 2.2rem;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Challenge Grid Section */
+    .section-title-wrap {
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .section-subtitle {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .game-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .game-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(79, 70, 229, 0.3);
+      box-shadow: var(--shadow-md);
+    }
+
+    .game-card:hover::before {
+      opacity: 1;
+    }
+
+    .game-card.disabled {
+      opacity: 0.65;
+      background: var(--bg-card-sub);
+    }
+
+    .game-card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      width: 56px;
+      height: 56px;
+      background: var(--bg-card-sub);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .game-card-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .game-card-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .game-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.2rem;
+    }
+
+    .game-card-meta {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    /* Record Summary Bar */
+    .record-banner {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .record-info h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .record-info p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .record-stats {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .record-stat-box {
+      text-align: right;
+    }
+
+    .record-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .record-stat-num {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--secondary);
+    }
+  </style>
+</head>
+<body data-current-page="home">
+
+  <div class="app-wrapper">
+    <!-- 공통 헤더 컴포넌트 마운트 영역 -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="main-content">
+      
+      <!-- 히어로 배너 -->
+      <section class="home-hero">
+        <div class="hero-badge">⚡ 매일 1분의 두뇌 스파크</div>
+        <h1 class="hero-title">
+          하루 딱 1분,<br>
+          <span class="gradient-text">당신의 순간 피지컬을 시험하세요!</span>
+        </h1>
+        <p class="hero-desc">
+          바쁜 일상 속 가볍지만 짜릿한 60초 승부.<br>
+          카드를 맞추고, 빠르게 계산하고, 순간 반응속도로 두뇌를 깨워보세요.
+        </p>
+        <div class="hero-actions">
+          <a href="page/color-match.html" class="btn btn-primary btn-lg">
+            <span>🎨 1분 카드 매칭</span>
+          </a>
+          <a href="page/speed-math.html" class="btn btn-accent btn-lg">
+            <span>🔢 1분 스피드 암산</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 내 최고 기록 배너 -->
+      <div class="record-banner">
+        <div class="record-info">
+          <h3>🏆 나의 1분 챌린지 최고 기록실</h3>
+          <p>브라우저에 자동 저장된 카드 매칭 및 스피드 암산 최고 기록입니다.</p>
+        </div>
+        <div class="record-stats" style="flex-wrap: wrap; gap: 1.5rem;">
+          <div class="record-stat-box">
+            <div class="record-stat-label">카드 매칭 점수</div>
+            <div class="record-stat-num" id="homeBestScore">0점</div>
+          </div>
+          <div class="record-stat-box">
+            <div class="record-stat-label">카드 매칭 짝</div>
+            <div class="record-stat-num" id="homeBestPairs" style="color: var(--success);">0쌍</div>
+          </div>
+          <div class="record-stat-box" style="border-left: 1px solid #c7d2fe; padding-left: 1.5rem;">
+            <div class="record-stat-label">스피드 암산 점수</div>
+            <div class="record-stat-num" id="homeMathScore" style="color: var(--accent);">0점</div>
+          </div>
+          <div class="record-stat-box">
+            <div class="record-stat-label">암산 맞춘 문제</div>
+            <div class="record-stat-num" id="homeMathSolved" style="color: var(--warning);">0개</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 챌린지 목록 섹션 -->
+      <section id="challengeList">
+        <div class="section-title-wrap">
+          <div>
+            <h2 class="section-title">⚡ 1분 챌린지 라인업</h2>
+            <p class="section-subtitle">다양한 두뇌 피지컬 게임을 선택해 60초 동안 도전해보세요.</p>
+          </div>
+        </div>
+
+        <div class="game-grid">
+          
+          <!-- 서비스 1: 1분 카드 색상 매칭 (활성화) -->
+          <article class="game-card">
+            <div class="game-card-icon">🎨</div>
+            <h3 class="game-card-title">
+              1분 카드 색상 매칭
+              <span class="badge badge-success">PLAY NOW</span>
+            </h3>
+            <p class="game-card-desc">
+              16장의 카드 뒤에 숨겨진 8가지 감각적인 컬러와 이모지의 짝을 60초 안에 최대한 많이 찾아내는 순간 기억력 챌린지입니다.
+            </p>
+            <div class="game-card-footer">
+              <div class="game-card-meta">
+                <span>⏱️ 제한시간: 60초</span>
+                <span>🔥 콤보 시스템</span>
+              </div>
+              <a href="page/color-match.html" class="btn btn-primary btn-sm">
+                도전하기 →
+              </a>
+            </div>
+          </article>
+
+          <!-- 서비스 2: 1분 스피드 암산왕 (신규 오픈 & 활성화) -->
+          <article class="game-card">
+            <div class="game-card-icon">🔢</div>
+            <h3 class="game-card-title">
+              1분 스피드 암산왕
+              <span class="badge badge-primary">PLAY NOW</span>
+            </h3>
+            <p class="game-card-desc">
+              1분 동안 화면에 끊임없이 쏟아지는 +, -, ×, ÷ 사칙연산 문제를 풀어 몇 개나 맞췄는지 겨루는 스피드 수학 챌린지입니다.
+            </p>
+            <div class="game-card-footer">
+              <div class="game-card-meta">
+                <span>⏱️ 제한시간: 60초</span>
+                <span>🧠 +, -, ×, ÷ 연산</span>
+              </div>
+              <a href="page/speed-math.html" class="btn btn-accent btn-sm">
+                도전하기 →
+              </a>
+            </div>
+          </article>
+
+          <!-- 서비스 3: 1분 반응속도 챌린지 (준비중) -->
+          <article class="game-card disabled">
+            <div class="game-card-icon">⚡</div>
+            <h3 class="game-card-title">
+              1분 반응속도 챌린지
+              <span class="badge badge-warning">COMING SOON</span>
+            </h3>
+            <p class="game-card-desc">
+              신호가 바뀌는 순간을 포착하여 1분 동안 가장 빠른 반사신경으로 터치하는 순발력 테스트 챌린지입니다.
+            </p>
+            <div class="game-card-footer">
+              <div class="game-card-meta">
+                <span>⏱️ 제한시간: 60초</span>
+                <span>⚡ 순발력 테스트</span>
+              </div>
+              <button type="button" class="btn btn-outline btn-sm disabled-link">
+                준비중
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 공통 푸터 컴포넌트 마운트 영역 -->
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    // 홈 화면에서 각 챌린지 최고 기록 로드
+    $(document).ready(function() {
+      // 카드 매칭 기록
+      const colorScore = localStorage.getItem('challenge_1min_color_best_score') || 0;
+      const colorPairs = localStorage.getItem('challenge_1min_color_best_pairs') || 0;
+      $('#homeBestScore').text(Number(colorScore).toLocaleString() + '점');
+      $('#homeBestPairs').text(colorPairs + '쌍');
+
+      // 스피드 암산 기록
+      const mathScore = localStorage.getItem('challenge_1min_math_best_score') || 0;
+      const mathSolved = localStorage.getItem('challenge_1min_math_best_solved') || 0;
+      $('#homeMathScore').text(Number(mathScore).toLocaleString() + '점');
+      $('#homeMathSolved').text(mathSolved + '개');
+    });
+  </script>
+</body>
+</html>
