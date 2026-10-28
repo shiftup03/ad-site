@@ -602,6 +602,12 @@
   align-items: center;
 }
 
+.chart-unit {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-dim);
+}
+
 .chart-bars-wrapper {
   display: flex;
   align-items: flex-end;
@@ -729,6 +735,81 @@
 
 .custom-textarea:focus {
   border-color: var(--primary);
+}
+
+.custom-modal-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.custom-modal-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.custom-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+.stat-highlight-sm {
+  font-size: 1.05rem !important;
+}
+
+.stat-highlight-pair {
+  font-size: 1.15rem !important;
+}
+
+.timer-card-danger {
+  border-color: #f43f5e !important;
+}
+
+.timer-card-danger .status-label,
+.timer-card-danger .status-val {
+  color: #f43f5e !important;
+}
+
+#testTimerBox,
+#testStartAction {
+  display: none;
+}
+
+.test-start-action-wrap {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.table-footer-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.table-footer-notice {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.typing-guide-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.typing-guide-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 0.4rem;
 }
 
 /* 9. 하단 타자 안내 아티클 (섹션 22) */

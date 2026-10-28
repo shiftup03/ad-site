@@ -173,9 +173,9 @@
               <span id="completedCountDisplay">0</span><span class="status-unit">개</span>
             </div>
           </div>
-          <div class="status-card" id="testTimerBox" style="display: none; border-color: #f43f5e;">
-            <span class="status-label" style="color: #f43f5e;">남은 시간</span>
-            <div class="status-val" style="color: #f43f5e;" id="testTimerDisplay">60s</div>
+          <div class="status-card timer-card-danger" id="testTimerBox">
+            <span class="status-label">남은 시간</span>
+            <div class="status-val" id="testTimerDisplay">60s</div>
           </div>
         </section>
 
@@ -212,7 +212,7 @@
           </div>
 
           <!-- 1분/3분 모드 전용 시작 버튼 배너 -->
-          <div id="testStartAction" style="display: none; text-align: center; margin-bottom: 1.5rem;">
+          <div id="testStartAction" class="test-start-action-wrap">
             <button type="button" class="btn btn-primary btn-lg" id="startTestBtn">
               <span>🔥 3초 카운트다운 후 테스트 시작</span>
             </button>
@@ -314,7 +314,7 @@
           <div class="chart-section">
             <div class="chart-header">
               <span>📈 최근 타수 추이 (최근 10회)</span>
-              <span style="font-size: 0.8rem; color: var(--text-dim);">단위: 타/분</span>
+              <span class="chart-unit">단위: 타/분</span>
             </div>
             <div class="chart-bars-wrapper" id="chartBarsWrapper">
               <!-- 자바스크립트로 막대 엘리먼트 렌더링 -->
@@ -340,11 +340,11 @@
             </table>
           </div>
 
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-            <span style="font-size: 0.8rem; color: var(--text-dim);">
+          <div class="table-footer-wrap">
+            <span class="table-footer-notice">
               ※ 모든 기록은 사용자의 브라우저 로컬 저장소(localStorage)에 안전하게 보관됩니다.
             </span>
-            <button type="button" class="btn btn-outline btn-xs" id="clearRecordsBtn" style="color: var(--danger); border-color: var(--danger);">
+            <button type="button" class="btn btn-outline btn-xs text-danger" id="clearRecordsBtn">
               내 기록 전체 삭제
             </button>
           </div>
@@ -352,10 +352,10 @@
 
         <!-- 타자 연습 이용 꿀팁 가이드 아티클 (섹션 22) -->
         <section class="typing-guide-section" aria-label="타자 연습 가이드">
-          <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+          <h2 class="typing-guide-title">
             <span>💡</span> 타자 실력을 키우는 실전 연습 가이드
           </h2>
-          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.4rem;">
+          <p class="typing-guide-desc">
             무리하게 속도만 올리기보다 올바른 습관과 정확도를 지킬 때 타자 실력이 꾸준히 성장합니다.
           </p>
 
@@ -415,7 +415,7 @@
       <div class="result-grid-stats">
         <div class="result-stat-box">
           <div class="stat-label-mini">연습 모드</div>
-          <div class="stat-val-highlight" id="resMode" style="font-size: 1.05rem;">한글 · 짧은 글</div>
+          <div class="stat-val-highlight stat-highlight-sm" id="resMode">한글 · 짧은 글</div>
         </div>
         <div class="result-stat-box">
           <div class="stat-label-mini">평균 타수</div>
@@ -435,7 +435,7 @@
         </div>
         <div class="result-stat-box">
           <div class="stat-label-mini">정타 수 / 오타 수</div>
-          <div class="stat-val-highlight" style="font-size: 1.15rem;">
+          <div class="stat-val-highlight stat-highlight-pair">
             <span id="resCorrect" class="text-success">0</span> / <span id="resTypo" class="text-danger">0</span>
           </div>
         </div>
@@ -461,16 +461,16 @@
   <!-- 사용자 직접 문장 등록 모달 -->
   <div class="custom-modal-backdrop" id="customModal" role="dialog" aria-modal="true" aria-labelledby="customModalTitle">
     <div class="custom-modal">
-      <h3 id="customModalTitle" style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem;">
+      <h3 id="customModalTitle" class="custom-modal-title">
         ✏️ 나만의 문장 등록하기
       </h3>
-      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">
+      <p class="custom-modal-desc">
         직접 타이핑 연습하고 싶은 문장이나 글을 입력하세요. 줄바꿈(Enter)으로 문장을 구분할 수 있습니다. (최대 2,000자)
       </p>
 
       <textarea id="customTextInput" class="custom-textarea" placeholder="여기에 연습할 문장을 붙여넣거나 직접 작성하세요..."></textarea>
 
-      <div style="display: flex; justify-content: flex-end; gap: 0.6rem;">
+      <div class="custom-modal-actions">
         <button type="button" class="btn btn-outline btn-sm" id="cancelCustomBtn">취소</button>
         <button type="button" class="btn btn-primary btn-sm" id="saveCustomBtn">연습 시작하기</button>
       </div>
