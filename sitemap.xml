@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- 메인 홈 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 온라인 타자 연습 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/page/typing-practice.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 1분 카드 매칭 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/page/color-match.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 1분 스피드 암산 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/page/speed-math.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 1분 반응 속도 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/page/reaction-speed.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 연애 성향 테스트 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/page/love-test.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 감정 비율 테스트 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/page/emotion-ratio.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 나만의 명함 만들기 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/page/business-card.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 스마트 이력서·자소서 작성기 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/page/resume-builder.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 21일 습관 챌린지 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/page/habit-challenge.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 살아온 시간 계산기 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/page/life-time-calc.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

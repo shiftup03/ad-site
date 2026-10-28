@@ -751,7 +751,7 @@
     ctx.font = '400 20px "Noto Sans KR", sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('※ 본 테스트는 자기성찰용 도구이며 의학적 진단을 제공하지 않습니다.', 540, 1240);
-    ctx.fillText('https://shiftup03.github.io/ad-site · 1-Min Challenge', 540, 1275);
+    ctx.fillText('https://ad-site-piyd.vercel.app · 1-Min Challenge', 540, 1275);
   }
 
   function wrapText(ctx, text, x, y, maxWidth, lineHeight) {

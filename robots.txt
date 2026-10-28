@@ -1,0 +1,6 @@
+# robots.txt for 1-Min Challenge
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://ad-site-piyd.vercel.app/sitemap.xml

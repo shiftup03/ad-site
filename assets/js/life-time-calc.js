@@ -814,7 +814,7 @@
     ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
     ctx.font = '400 22px "Noto Sans KR", sans-serif';
     ctx.fillText(`기록 일시: ${formatKoreanDate(now)}`, 540, 1220);
-    ctx.fillText('https://shiftup03.github.io/ad-site · 100% 무료 시간 계산기', 540, 1260);
+    ctx.fillText('https://ad-site-piyd.vercel.app · 100% 무료 시간 계산기', 540, 1260);
   }
 
   function downloadCanvasAsPng() {
