@@ -713,8 +713,8 @@
 
     if (!pcBox && !mobileBox) return;
 
-    // 이미 iframe이 생성되어 있으면 중복 렌더링 방지
-    if ((pcBox && pcBox.querySelector('iframe')) || (mobileBox && mobileBox.querySelector('iframe'))) {
+    // 두 배너 모두 이미 iframe이 생성되어 있으면 중복 렌더링 방지
+    if ((pcBox && pcBox.querySelector('iframe')) && (mobileBox && mobileBox.querySelector('iframe'))) {
       return;
     }
 
