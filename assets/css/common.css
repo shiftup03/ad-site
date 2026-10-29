@@ -1038,6 +1038,150 @@ input:checked + .theme-slider .icon-moon {
   color: var(--primary);
 }
 
+/* ==========================================================================
+   쿠팡 파트너스 와이드 배너 & 마퀴 안내 영역
+   ========================================================================== */
+.coupang-banner-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem 1rem 0.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.coupang-banner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* PC 배너 (680px) */
+.coupang-banner-pc {
+  width: 680px;
+  min-height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius-sm, 8px);
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--border-color, #e2e8f0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all var(--transition-normal, 0.25s ease);
+}
+
+/* 모바일 배너 (280px) */
+.coupang-banner-mobile {
+  width: 280px;
+  min-height: 140px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius-sm, 8px);
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--border-color, #e2e8f0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all var(--transition-normal, 0.25s ease);
+}
+
+.coupang-banner-pc ins,
+.coupang-banner-mobile ins {
+  display: inline-block !important;
+  line-height: 0 !important;
+}
+
+.coupang-banner-pc iframe,
+.coupang-banner-mobile iframe {
+  display: block !important;
+}
+
+/* 배너 하단 마퀴 래퍼 (글자 폰트사이즈 10px, 오른쪽에서 왼쪽으로 흐르는 효과) */
+.coupang-marquee-wrapper {
+  width: 100%;
+  max-width: 680px;
+  margin-top: 8px;
+  overflow: hidden;
+  position: relative;
+  font-size: 10px;
+  line-height: 1.4;
+  padding: 4px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  user-select: none;
+}
+
+.coupang-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: coupangMarqueeFlow 25s linear infinite;
+}
+
+.coupang-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.coupang-marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.coupang-marquee-text {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text-muted, #64748b);
+}
+
+.coupang-marquee-sep {
+  display: inline-block;
+  margin: 0 16px;
+  font-size: 10px;
+  color: var(--text-dim, #94a3b8);
+  opacity: 0.6;
+}
+
+/* 우측에서 좌측으로 흐르는 무한 마퀴 애니메이션 */
+@keyframes coupangMarqueeFlow {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .coupang-banner-section {
+    padding: 0.75rem 0.5rem 0.25rem;
+  }
+
+  .coupang-banner-container {
+    max-width: 280px;
+  }
+
+  .coupang-banner-pc {
+    display: none !important;
+  }
+
+  .coupang-banner-mobile {
+    display: flex !important;
+  }
+
+  .coupang-marquee-wrapper {
+    max-width: 280px !important;
+  }
+}
+
 /* Site Footer */
 .site-footer {
   margin-top: auto;

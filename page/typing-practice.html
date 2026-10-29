@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>무료 온라인 타자 연습 - 오늘의 타자 실력은 몇 타일까? | 1-Min Challenge</title>
   <meta name="description"
     content="한글부터 영어까지, 낱말·짧은 글·긴 글 및 1분·3분 실시간 타자 속도(타/분)와 정확도를 측정해보세요! 회원가입 없이 무료로 즐기는 스마트 온라인 타자 연습.">
-  <meta name="keywords"
-    content="타자연습, 한글타자연습, 영문타자연습, 타자속도측정, 타자검정, 타수측정, 한컴타자연습, 온라인타자, 1분챌린지">
+  <meta name="keywords" content="타자연습, 한글타자연습, 영문타자연습, 타자속도측정, 타자검정, 타수측정, 한컴타자연습, 온라인타자, 1분챌린지">
   <meta name="author" content="1-Min Challenge Lab">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://ad-site-piyd.vercel.app/page/typing-practice.html">
@@ -68,7 +68,7 @@
 
   <!-- Anti-flash Dark Mode Theme Initializer -->
   <script>
-    (function() {
+    (function () {
       var theme = localStorage.getItem('challenge_1min_theme') || 'light';
       if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
     })();
@@ -78,11 +78,15 @@
   <link rel="stylesheet" href="../assets/css/common.css">
   <link rel="stylesheet" href="../assets/css/typing-practice.css">
 </head>
+
 <body data-current-page="typing-practice" data-is-subpage="true">
 
   <div class="app-wrapper">
     <!-- 공통 헤더 컴포넌트 마운트 영역 -->
     <div id="header-placeholder"></div>
+
+    <!-- 공통 쿠팡 파트너스 와이드 배너 컴포넌트 마운트 영역 -->
+    <div id="coupang-banner-placeholder"></div>
 
     <!-- 메인 컨텐츠 영역 -->
     <main class="main-content">
@@ -220,15 +224,9 @@
 
           <!-- 사용자 텍스트 입력 영역 (엔터 줄바꿈 및 전체 모드 완벽 지원) -->
           <div class="typing-input-wrapper">
-            <textarea id="typingInput"
-                      class="typing-input-field"
-                      rows="2"
-                      placeholder="위의 문장을 보고 그대로 타이핑하세요... (줄바꿈은 Enter 키)"
-                      autocomplete="off"
-                      autocorrect="off"
-                      autocapitalize="off"
-                      spellcheck="false"
-                      aria-label="타자 입력창"></textarea>
+            <textarea id="typingInput" class="typing-input-field" rows="2"
+              placeholder="위의 문장을 보고 그대로 타이핑하세요... (줄바꿈은 Enter 키)" autocomplete="off" autocorrect="off"
+              autocapitalize="off" spellcheck="false" aria-label="타자 입력창"></textarea>
           </div>
 
           <!-- 하단 액션 컨트롤러 바 -->
@@ -365,7 +363,9 @@
                 <span>🏠</span> 홈 로우(Home Row) 기본 위치
               </div>
               <p class="guide-box-desc">
-                왼손 검지는 <strong class="text-primary font-bold">F</strong> 키, 오른손 검지는 <strong class="text-primary font-bold">J</strong> 키의 돌기에 자연스럽게 얹고 시작하세요. 타이핑 후에는 항상 이 기준 자리로 손가락을 복귀시키는 것이 빠른 속도의 비결입니다.
+                왼손 검지는 <strong class="text-primary font-bold">F</strong> 키, 오른손 검지는 <strong
+                  class="text-primary font-bold">J</strong> 키의 돌기에 자연스럽게 얹고 시작하세요. 타이핑 후에는 항상 이 기준 자리로 손가락을 복귀시키는 것이 빠른
+                속도의 비결입니다.
               </p>
             </div>
 
@@ -374,7 +374,8 @@
                 <span>🎯</span> 속도보다 정확도가 먼저!
               </div>
               <p class="guide-box-desc">
-                오타를 내고 백스페이스로 수정하는 데 드는 시간은 정타로 입력하는 것보다 2~3배의 시간을 낭비하게 됩니다. <strong class="text-success font-bold">정확도 98% 이상</strong>을 목표로 여유 있게 리듬을 타며 타이핑해보세요.
+                오타를 내고 백스페이스로 수정하는 데 드는 시간은 정타로 입력하는 것보다 2~3배의 시간을 낭비하게 됩니다. <strong class="text-success font-bold">정확도
+                  98% 이상</strong>을 목표로 여유 있게 리듬을 타며 타이핑해보세요.
               </p>
             </div>
 
@@ -392,7 +393,8 @@
                 <span>⏱️</span> 매일 5분의 꾸준함
               </div>
               <p class="guide-box-desc">
-                주말에 한 번 몰아서 1시간 연습하는 것보다, 매일 하루 일과를 시작할 때 딱 5분씩 1분 테스트나 짧은 글을 치는 것이 손가락 근육 기억(Muscle Memory) 형성에 훨씬 효과적입니다.
+                주말에 한 번 몰아서 1시간 연습하는 것보다, 매일 하루 일과를 시작할 때 딱 5분씩 1분 테스트나 짧은 글을 치는 것이 손가락 근육 기억(Muscle Memory) 형성에 훨씬
+                효과적입니다.
               </p>
             </div>
           </div>
@@ -459,7 +461,8 @@
   </div>
 
   <!-- 사용자 직접 문장 등록 모달 -->
-  <div class="custom-modal-backdrop" id="customModal" role="dialog" aria-modal="true" aria-labelledby="customModalTitle">
+  <div class="custom-modal-backdrop" id="customModal" role="dialog" aria-modal="true"
+    aria-labelledby="customModalTitle">
     <div class="custom-modal">
       <h3 id="customModalTitle" class="custom-modal-title">
         ✏️ 나만의 문장 등록하기
@@ -485,4 +488,5 @@
   <!-- 타자 연습 로직 스크립트 -->
   <script src="../assets/js/typing-practice.js"></script>
 </body>
+
 </html>

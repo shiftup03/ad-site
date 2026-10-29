@@ -7,8 +7,8 @@
 
   // 현재 페이지가 subpage(page/ 폴더 내부)인지 확인
   const isSubpage = $('body').data('is-subpage') === true ||
-                    window.location.pathname.indexOf('/page/') !== -1 ||
-                    window.location.pathname.indexOf('\\page\\') !== -1;
+    window.location.pathname.indexOf('/page/') !== -1 ||
+    window.location.pathname.indexOf('\\page\\') !== -1;
 
   const basePath = isSubpage ? '../' : './';
   const pagePath = isSubpage ? './' : 'page/';
@@ -221,6 +221,45 @@
       </div>
     </div>
   </footer>`;
+
+  const FALLBACK_COUPANG_BANNER = `
+  <aside class="coupang-banner-section" aria-label="쿠팡 파트너스 추천 상품 배너">
+    <div class="coupang-banner-container">
+      <!-- PC 배너 (680px) -->
+      <div class="coupang-banner-pc" id="coupang-pc-box">
+        <script src="https://ads-partners.coupang.com/g.js"></script>
+        <script>
+          new PartnersCoupang.G({"id":1044379,"template":"carousel","trackingCode":"AF4759164","width":"680","height":"140","tsource":"","container":"#coupang-pc-box"});
+        </script>
+      </div>
+
+      <!-- 모바일 배너 (280px) -->
+      <div class="coupang-banner-mobile" id="coupang-mobile-box">
+        <script src="https://ads-partners.coupang.com/g.js"></script>
+        <script>
+          new PartnersCoupang.G({"id":1044379,"template":"carousel","trackingCode":"AF4759164","width":"280","height":"140","tsource":"","container":"#coupang-mobile-box"});
+        </script>
+      </div>
+
+      <!-- 배너 하단 안내 문구 (오른쪽에서 왼쪽으로 흐르는 마퀴 효과, 폰트사이즈 10px) -->
+      <div class="coupang-marquee-wrapper" role="region" aria-label="쿠팡 파트너스 제휴 안내">
+        <div class="coupang-marquee-track">
+          <div class="coupang-marquee-group">
+            <span class="coupang-marquee-text">이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</span>
+            <span class="coupang-marquee-sep" aria-hidden="true">•</span>
+            <span class="coupang-marquee-text">이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</span>
+            <span class="coupang-marquee-sep" aria-hidden="true">•</span>
+          </div>
+          <div class="coupang-marquee-group" aria-hidden="true">
+            <span class="coupang-marquee-text">이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</span>
+            <span class="coupang-marquee-sep" aria-hidden="true">•</span>
+            <span class="coupang-marquee-text">이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</span>
+            <span class="coupang-marquee-sep" aria-hidden="true">•</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>`;
 
   // 링크 주소 보정 함수 (외부 html 파일 로드 시 경로를 현재 위치에 맞춤)
   function fixComponentLinks($container) {
@@ -667,6 +706,72 @@
     }
   };
 
+  // 쿠팡 파트너스 배너 위젯 초기화 함수
+  function initCoupangBanner() {
+    const pcBox = document.getElementById('coupang-pc-box') || document.querySelector('.coupang-banner-pc');
+    const mobileBox = document.getElementById('coupang-mobile-box') || document.querySelector('.coupang-banner-mobile');
+
+    if (!pcBox && !mobileBox) return;
+
+    // 이미 iframe이 생성되어 있으면 중복 렌더링 방지
+    if ((pcBox && pcBox.querySelector('iframe')) || (mobileBox && mobileBox.querySelector('iframe'))) {
+      return;
+    }
+
+    function renderWidgets() {
+      if (typeof window.PartnersCoupang === 'undefined' || !window.PartnersCoupang.G) return;
+
+      if (pcBox && !pcBox.querySelector('iframe')) {
+        try {
+          new window.PartnersCoupang.G({
+            id: 1044379,
+            template: "carousel",
+            trackingCode: "AF4759164",
+            width: "680",
+            height: "140",
+            tsource: "",
+            container: pcBox
+          });
+        } catch (e) {
+          console.warn('Coupang PC banner init error:', e);
+        }
+      }
+
+      if (mobileBox && !mobileBox.querySelector('iframe')) {
+        try {
+          new window.PartnersCoupang.G({
+            id: 1044379,
+            template: "carousel",
+            trackingCode: "AF4759164",
+            width: "280",
+            height: "140",
+            tsource: "",
+            container: mobileBox
+          });
+        } catch (e) {
+          console.warn('Coupang Mobile banner init error:', e);
+        }
+      }
+    }
+
+    if (window.PartnersCoupang && window.PartnersCoupang.G) {
+      renderWidgets();
+    } else {
+      let script = document.querySelector('script[src*="ads-partners.coupang.com/g.js"]');
+      if (!script) {
+        script = document.createElement('script');
+        script.src = 'https://ads-partners.coupang.com/g.js';
+        script.async = true;
+        document.head.appendChild(script);
+      }
+      script.addEventListener('load', function () {
+        renderWidgets();
+      });
+      setTimeout(renderWidgets, 300);
+      setTimeout(renderWidgets, 1000);
+    }
+  }
+
   // DOM 로드 즉시 테마 초기 적용 (화면 깜빡임 방지)
   initTheme();
 
@@ -674,6 +779,7 @@
   $(document).ready(function () {
     const headerPath = basePath + 'components/header.html';
     const footerPath = basePath + 'components/footer.html';
+    const coupangBannerPath = basePath + 'components/coupang-banner.html';
 
     loadComponent('#header-placeholder', headerPath, FALLBACK_HEADER, function () {
       highlightCurrentNav();
@@ -681,6 +787,13 @@
       const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
       applyTheme(savedTheme);
     });
+
+    loadComponent('#coupang-banner-placeholder, #ad-banner-placeholder', coupangBannerPath, FALLBACK_COUPANG_BANNER, function () {
+      initCoupangBanner();
+    });
+
+    // 페이지에 인라인 배너가 직접 삽입되어 있는 경우 초기화
+    initCoupangBanner();
 
     loadComponent('#footer-placeholder', footerPath, FALLBACK_FOOTER);
 
