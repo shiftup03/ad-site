@@ -90,4 +90,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- 햄버거 탑 쌓기 -->
+  <url>
+    <loc>https://ad-site-piyd.vercel.app/page/burger-stack.html</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

@@ -1,0 +1,1071 @@
+/* ==========================================================================
+   1-Min Challenge - 햄버거 탑 쌓기 (burger-stack.css)
+   ========================================================================== */
+
+/* 1. 게임 레이아웃 및 래퍼 */
+.burger-game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* 2. 상단 게임 현황판 (HUD) */
+.burger-hud {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.hud-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 0.75rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.hud-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary);
+  opacity: 0.7;
+}
+
+.hud-card.hud-score::before { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+.hud-card.hud-floor::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
+.hud-card.hud-combo::before { background: linear-gradient(90deg, #ec4899, #8b5cf6); }
+.hud-card.hud-best::before { background: linear-gradient(90deg, #6366f1, #3b82f6); }
+
+.hud-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.hud-value {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: var(--text-main);
+  line-height: 1.1;
+  transition: transform 0.15s ease;
+}
+
+.hud-combo .hud-value {
+  color: #ec4899;
+}
+
+.hud-combo.combo-active .hud-value {
+  animation: pulseCombo 0.8s infinite alternate;
+}
+
+@keyframes pulseCombo {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.4)); }
+}
+
+/* 3. 상단 조작 툴바 */
+.burger-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 0.45rem 0.85rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card-sub);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.toolbar-btn:hover {
+  background: var(--primary-bg);
+  border-color: var(--primary-light);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.toolbar-btn.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+/* 4. 메인 게임 아레나 스테이지 */
+.burger-arena {
+  width: 100%;
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--border-color);
+  background: #ffffff;
+}
+
+[data-theme="dark"] .burger-arena {
+  background: #0f172a;
+}
+
+.burger-stage {
+  width: 100%;
+  height: 680px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 25%, #ffffff 0%, #fffbeb 60%, #fef3c7 100%);
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+[data-theme="dark"] .burger-stage {
+  background: radial-gradient(circle at 50% 25%, #1e293b 0%, #0f172a 65%, #020617 100%);
+}
+
+/* 배경 장식 (창문 햇살 & 키친 패턴) */
+.stage-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.45;
+  background-image: 
+    radial-gradient(rgba(245, 158, 11, 0.08) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent 70%);
+  background-size: 24px 24px, 100% 100%;
+}
+
+[data-theme="dark"] .stage-backdrop {
+  opacity: 0.25;
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.3), transparent 70%);
+}
+
+/* 스테이지 하단 테이블 / 카운터 */
+.stage-counter-table {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(180deg, #d97706 0%, #92400e 100%);
+  border-top: 4px solid #f59e0b;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  z-index: 2;
+}
+
+[data-theme="dark"] .stage-counter-table {
+  background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+  border-top: 4px solid #475569;
+}
+
+/* 5. 햄버거 카메라 월드 (스크롤 가능한 월드 컨테이너) */
+.burger-world {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  height: 100%;
+  pointer-events: none;
+  will-change: transform;
+  z-index: 5;
+}
+
+/* 햄버거 접시 */
+.burger-plate {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 26px;
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 70%, #94a3b8 100%);
+  border-radius: 50%;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16), inset 0 2px 3px #ffffff;
+  border: 1px solid #cbd5e1;
+  z-index: 1;
+}
+
+[data-theme="dark"] .burger-plate {
+  background: linear-gradient(180deg, #475569 0%, #334155 70%, #1e293b 100%);
+  border-color: #64748b;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.1);
+}
+
+.burger-stack-group {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 6. 움직이는 재료 레이어 */
+.burger-moving-layer {
+  position: absolute;
+  top: 110px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* 개별 재료 기본 컨테이너 */
+.burger-ingredient {
+  position: absolute !important;
+  pointer-events: none;
+  will-change: transform;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 3px 6px rgba(15, 23, 42, 0.18));
+}
+
+/* ==========================================================================
+   7. 햄버거 재료 10종 고유 디자인 (Pure CSS / SVG Styling)
+   ========================================================================== */
+
+/* ① 아랫빵 (Bottom Bun) */
+.ing-bun-bottom {
+  height: 32px;
+  border-radius: 8px 8px 26px 26px;
+  background: linear-gradient(180deg, #fcd34d 0%, #d97706 70%, #b45309 100%);
+  border: 2px solid #b45309;
+  box-shadow: inset 0 3px 5px rgba(255, 255, 255, 0.45), inset 0 -3px 5px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+.ing-bun-bottom::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 10%;
+  right: 10%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
+}
+
+/* ② 소고기 패티 (Beef Patty) */
+.ing-beef-patty {
+  height: 28px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #78350f 0%, #451a03 75%, #290e02 100%);
+  border: 2px solid #290e02;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.15), inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+}
+/* 그릴 자국 */
+.ing-beef-patty::after {
+  content: '';
+  position: absolute;
+  inset: 2px 8px;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 14px,
+    rgba(0, 0, 0, 0.55) 14px,
+    rgba(0, 0, 0, 0.55) 17px
+  );
+  border-radius: 8px;
+  opacity: 0.85;
+}
+
+/* ③ 체다 치즈 (Cheese) */
+.ing-cheese {
+  height: 16px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 80%, #d97706 100%);
+  border: 1.5px solid #d97706;
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.5), 0 2px 5px rgba(217, 119, 6, 0.35);
+}
+/* 살짝 흘러내리는 4곳의 치즈 모서리 */
+.ing-cheese::before,
+.ing-cheese::after {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 11px solid #f59e0b;
+  filter: drop-shadow(0 2px 2px rgba(180, 83, 9, 0.3));
+}
+.ing-cheese::before { left: 16%; }
+.ing-cheese::after { right: 18%; }
+
+/* ④ 신선한 양상추 (Lettuce) */
+.ing-lettuce {
+  height: 22px;
+  background: linear-gradient(180deg, #4ade80 0%, #22c55e 60%, #15803d 100%);
+  border: 1.5px solid #15803d;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+/* 양상추 물결 잎 주름 */
+.ing-lettuce::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: radial-gradient(circle at 10px 5px, #4ade80 8px, transparent 9px) repeat-x;
+  background-size: 20px 10px;
+}
+.ing-lettuce::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 5px;
+  right: 5px;
+  height: 10px;
+  background: radial-gradient(circle at 10px 5px, #22c55e 8px, transparent 9px) repeat-x;
+  background-size: 22px 10px;
+}
+
+/* ⑤ 완숙 토마토 (Tomato) */
+.ing-tomato {
+  height: 24px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ef4444 0%, #dc2626 70%, #991b1b 100%);
+  border: 2px solid #991b1b;
+  box-shadow: inset 0 3px 4px rgba(255, 255, 255, 0.5), inset 0 -2px 3px rgba(0, 0, 0, 0.2);
+}
+/* 토마토 씨앗과 젤리 표현 */
+.ing-tomato::before {
+  content: '';
+  position: absolute;
+  inset: 4px 14px;
+  background: 
+    radial-gradient(circle at 25% 50%, #fef08a 2.5px, #b91c1c 4px, transparent 6px),
+    radial-gradient(circle at 50% 50%, #fef08a 2.5px, #b91c1c 4px, transparent 6px),
+    radial-gradient(circle at 75% 50%, #fef08a 2.5px, #b91c1c 4px, transparent 6px);
+  opacity: 0.9;
+}
+
+/* ⑥ 적양파 링 (Onion) */
+.ing-onion {
+  height: 18px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #fdf4ff 0%, #fae8ff 50%, #e879f9 100%);
+  border: 2px solid #c026d3;
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.7);
+}
+.ing-onion::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 12px;
+  right: 12px;
+  border: 1.5px solid #d946ef;
+  border-radius: 8px;
+}
+
+/* ⑦ 크리스피 베이컨 (Bacon) */
+.ing-bacon {
+  height: 18px;
+  border-radius: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    #991b1b 0px,
+    #991b1b 18px,
+    #fde68a 18px,
+    #fde68a 26px,
+    #7f1d1d 26px,
+    #7f1d1d 40px
+  );
+  border: 1.5px solid #7f1d1d;
+  box-shadow: 0 2px 4px rgba(127, 29, 29, 0.35);
+  transform: skewX(-4deg);
+}
+
+/* ⑧ 피클 (Pickle) */
+.ing-pickle {
+  height: 16px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #84cc16 0%, #65a30d 70%, #3f6212 100%);
+  border: 2px solid #3f6212;
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.4);
+}
+.ing-pickle::after {
+  content: '';
+  position: absolute;
+  inset: 2px 10px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 8px,
+    rgba(49, 78, 14, 0.5) 8px,
+    rgba(49, 78, 14, 0.5) 10px
+  );
+}
+
+/* ⑨ 반숙 달걀 후라이 (Fried Egg) */
+.ing-egg {
+  height: 24px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 80%, #cbd5e1 100%);
+  border: 1.5px solid #cbd5e1;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.9), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* 노른자 */
+.ing-egg::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fef08a 0%, #f59e0b 60%, #d97706 100%);
+  box-shadow: 0 1px 3px rgba(180, 83, 9, 0.4);
+}
+
+/* ⑩ 윗빵 (Top Bun) - 참깨 브리오슈 번 */
+.ing-bun-top {
+  height: 44px;
+  border-radius: 36px 36px 8px 8px;
+  background: linear-gradient(180deg, #fbbf24 0%, #d97706 60%, #b45309 100%);
+  border: 2px solid #92400e;
+  box-shadow: inset 0 4px 8px rgba(255, 255, 255, 0.6), inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+/* 윗빵 참깨 패턴 */
+.ing-bun-top::before {
+  content: '';
+  position: absolute;
+  inset: 4px 10px;
+  background-image: 
+    radial-gradient(circle at 15% 35%, #fff 1.5px, transparent 2.5px),
+    radial-gradient(circle at 30% 20%, #fff 1.5px, transparent 2.5px),
+    radial-gradient(circle at 45% 38%, #fff 1.5px, transparent 2.5px),
+    radial-gradient(circle at 60% 22%, #fff 1.5px, transparent 2.5px),
+    radial-gradient(circle at 75% 36%, #fff 1.5px, transparent 2.5px),
+    radial-gradient(circle at 85% 26%, #fff 1.5px, transparent 2.5px),
+    radial-gradient(circle at 25% 55%, #fff 1.5px, transparent 2.5px),
+    radial-gradient(circle at 50% 60%, #fff 1.5px, transparent 2.5px),
+    radial-gradient(circle at 70% 55%, #fff 1.5px, transparent 2.5px);
+  filter: drop-shadow(0 1px 1px rgba(120, 53, 15, 0.6));
+}
+
+/* 8. 판정 플로팅 텍스트 & 콤보 팝업 */
+.burger-popup-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.judgment-popup {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-align: center;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.judgment-title {
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.judgment-pts {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-top: -2px;
+}
+
+.judgment-combo-tag {
+  font-size: 0.95rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  color: #ffffff;
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-full);
+  margin-top: 4px;
+  box-shadow: 0 2px 8px rgba(236, 72, 153, 0.4);
+}
+
+/* 판정별 스타일 */
+.judgment-perfect .judgment-title {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.judgment-perfect .judgment-pts { color: #f59e0b; }
+
+.judgment-good .judgment-title {
+  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.judgment-good .judgment-pts { color: #0284c7; }
+
+.judgment-normal .judgment-title {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.judgment-normal .judgment-pts { color: #059669; }
+
+.judgment-miss .judgment-title {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 반짝이 파티클 */
+.sparkle-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: #f59e0b;
+  box-shadow: 0 0 8px #fbbf24;
+}
+
+/* 9. 게임 내 오버레이 (시작, 카운트다운, 일시정지) */
+.stage-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 30;
+  padding: 1.5rem;
+  text-align: center;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.stage-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* 시작 화면 카드 */
+.start-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2.2rem 1.8rem;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: var(--shadow-modal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.start-icon {
+  font-size: 3.5rem;
+  line-height: 1;
+  animation: bounceBurger 1.5s infinite ease-in-out;
+}
+
+@keyframes bounceBurger {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.start-title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.start-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.start-features {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0.25rem 0;
+}
+
+.feature-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-card-sub);
+  color: var(--text-dim);
+  border: 1px solid var(--border-color);
+}
+
+.start-play-btn {
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+/* 카운트다운 화면 */
+.countdown-overlay {
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.countdown-number {
+  font-family: var(--font-display);
+  font-size: 5.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  letter-spacing: -0.02em;
+}
+
+/* 일시정지 화면 */
+.pause-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.5rem;
+  max-width: 340px;
+  width: 100%;
+  box-shadow: var(--shadow-modal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.pause-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.pause-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+/* 10. 하단 조작 가이드 안내 */
+.burger-guide-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.guide-key-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   11. 모달 시스템 (Modal Overlay & Cards)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.modal-overlay.hidden {
+  display: none !important;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  max-width: 520px;
+  width: 100%;
+  padding: 2.25rem 2rem;
+  box-shadow: var(--shadow-modal);
+  position: relative;
+  text-align: center;
+  margin: auto;
+  animation: modalPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-card-history {
+  max-width: 620px;
+}
+
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  z-index: 10;
+}
+
+.modal-close-btn:hover {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-color: var(--primary);
+  transform: rotate(90deg);
+}
+
+/* 결과 모달 (게임 오버) */
+.result-modal-header {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.result-modal-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: var(--text-main);
+  margin-bottom: 0.35rem;
+}
+
+.result-modal-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.new-record-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #ffffff;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 800;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+  animation: pulseRecord 1s infinite alternate;
+}
+
+.new-record-badge.hidden {
+  display: none !important;
+}
+
+@keyframes pulseRecord {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+.result-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.result-stat-box {
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 0.75rem;
+  text-align: center;
+}
+
+.stat-label-mini {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin-bottom: 0.2rem;
+}
+
+.stat-val-highlight {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+.result-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* ==========================================================================
+   12. 기록실 모달 (Record Room)
+   ========================================================================== */
+.history-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.history-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.history-card {
+  background: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 0.5rem;
+  text-align: center;
+}
+
+.history-card .stat-label-mini {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin-bottom: 0.25rem;
+}
+
+.history-card .stat-val-highlight {
+  font-size: 1.25rem;
+}
+
+.history-table-wrapper {
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+}
+
+.history-table-wrapper.hidden {
+  display: none !important;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.history-table th {
+  background: var(--bg-card-sub);
+  color: var(--text-dim);
+  font-weight: 700;
+  padding: 0.65rem 0.45rem;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.history-table td {
+  padding: 0.6rem 0.45rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.history-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.history-table tr:hover {
+  background: var(--primary-bg);
+}
+
+.history-empty {
+  padding: 2.25rem 1rem;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  background: var(--bg-card-sub);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.history-empty.hidden {
+  display: none !important;
+}
+
+.history-footer-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+/* 13. 반응형 미디어 쿼리 */
+@media (max-width: 600px) {
+  .burger-stage {
+    height: 560px;
+  }
+
+  .burger-hud {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .hud-card {
+    padding: 0.65rem 0.5rem;
+  }
+
+  .hud-value {
+    font-size: 1.25rem;
+  }
+
+  .history-summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .modal-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .result-modal-title {
+    font-size: 1.45rem;
+  }
+
+  .result-stats-grid {
+    gap: 0.5rem;
+  }
+
+  .result-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .result-actions .btn {
+    width: 100%;
+  }
+
+  .history-table th, .history-table td {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.76rem;
+  }
+
+  .judgment-title {
+    font-size: 1.65rem;
+  }
+
+  .start-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .start-title {
+    font-size: 1.25rem;
+  }
+}

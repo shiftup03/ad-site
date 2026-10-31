@@ -232,6 +232,9 @@ button {
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
 .grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
 
+/* Display & Visibility */
+.hidden { display: none !important; }
+
 /* Gap */
 .gap-1 { gap: 0.5rem; }
 .gap-2 { gap: 1rem; }

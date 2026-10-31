@@ -53,6 +53,7 @@
     'color-match': 'game',
     'speed-math': 'game',
     'reaction-speed': 'game',
+    'burger-stack': 'game',
     'love-test': 'test',
     'emotion-ratio': 'test',
     'typing-practice': 'tool',
@@ -104,6 +105,12 @@
                 <a href="${pagePath}reaction-speed.html" class="dropdown-link" data-page="reaction-speed" role="menuitem">
                   <span class="dropdown-icon">⚡</span>
                   <span class="dropdown-text">1분 반응 속도</span>
+                </a>
+              </li>
+              <li role="none">
+                <a href="${pagePath}burger-stack.html" class="dropdown-link" data-page="burger-stack" role="menuitem">
+                  <span class="dropdown-icon">🍔</span>
+                  <span class="dropdown-text">햄버거 탑 쌓기</span>
                 </a>
               </li>
             </ul>
@@ -207,6 +214,7 @@
           <li><a href="${pagePath}love-test.html">연애 성향 테스트</a></li>
           <li><a href="${pagePath}typing-practice.html">타자 연습</a></li>
           <li><a href="${pagePath}reaction-speed.html">반응속도</a></li>
+          <li><a href="${pagePath}burger-stack.html">햄버거 탑 쌓기</a></li>
           <li><a href="${pagePath}business-card.html">명함 만들기</a></li>
           <li><a href="${pagePath}resume-builder.html">이력서·자소서</a></li>
           <li><a href="${pagePath}habit-challenge.html">습관 챌린지</a></li>
@@ -280,6 +288,8 @@
         $a.attr('href', isSubpage ? 'typing-practice.html' : 'page/typing-practice.html');
       } else if (href.indexOf('reaction-speed.html') !== -1) {
         $a.attr('href', isSubpage ? 'reaction-speed.html' : 'page/reaction-speed.html');
+      } else if (href.indexOf('burger-stack.html') !== -1) {
+        $a.attr('href', isSubpage ? 'burger-stack.html' : 'page/burger-stack.html');
       } else if (href.indexOf('business-card.html') !== -1) {
         $a.attr('href', isSubpage ? 'business-card.html' : 'page/business-card.html');
       } else if (href.indexOf('resume-builder.html') !== -1) {
